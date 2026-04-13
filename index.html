@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tagalog 互動學習工具 W1-15</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+:root{
+  --c1:#FF6B6B;--c2:#FFA040;--c3:#FFD93D;--c4:#6BCB77;--c5:#4D96FF;--c6:#C77DFF;--c7:#FF6BB5;
+  --bg:#FFF9F0;--card:#fff;--border:#F0E4D0;--muted:#AAA;--text:#2D2D2D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito','Segoe UI',sans-serif;background:var(--bg);color:var(--text);max-width:680px;margin:0 auto;min-height:100vh;padding-bottom:80px}
+
+/* HEADER */
+.hd{background:linear-gradient(135deg,#FF6B6B,#FF9A5C,#FFD93D);padding:18px 16px;color:white;position:relative;overflow:hidden;text-align:center}
+.hd::after{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:rgba(255,255,255,.12);border-radius:50%}
+.hd h1{font-size:1.35em;font-weight:900;position:relative;z-index:1}
+.hd p{font-size:.78em;opacity:.9;margin-top:3px;position:relative;z-index:1}
+.stat-row{display:flex;gap:8px;margin-top:10px;position:relative;z-index:1;justify-content:center;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.25);border-radius:10px;padding:5px 10px;font-size:.75em;font-weight:800}
+
+/* NAV TABS */
+.nav-tabs{display:flex;overflow-x:auto;background:#fff;border-bottom:3px solid var(--c2);-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:0;z-index:100}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:11px 13px;font-size:.76em;cursor:pointer;color:#888;border-bottom:3px solid transparent;white-space:nowrap;margin-bottom:-3px;transition:.2s;font-weight:700;font-family:'Nunito',sans-serif;background:none;border-left:none;border-right:none;border-top:none}
+.nav-tab.active{color:var(--c1);border-bottom-color:var(--c1);font-weight:900}
+
+/* PANELS */
+.panel{display:none;padding:14px}
+.panel.active{display:block}
+
+/* SEARCH */
+.search-wrap{padding:12px 14px 6px}
+.search-box{width:100%;padding:11px 14px 11px 38px;border:2.5px solid var(--border);border-radius:14px;font-size:.92em;font-family:'Nunito',sans-serif;background:white;outline:none;transition:.2s}
+.search-box:focus{border-color:var(--c1)}
+.search-rel{position:relative}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:1em;pointer-events:none}
+
+/* CATEGORY TABS */
+.cat-tabs{display:flex;overflow-x:auto;gap:7px;padding:8px 14px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.cat-tabs::-webkit-scrollbar{display:none}
+.cat-btn{display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:20px;border:2.5px solid var(--border);background:white;font-size:.76em;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:'Nunito',sans-serif;color:#666}
+.cat-btn.active{color:white;border-color:transparent}
+.cat-btn .cnt{background:rgba(255,255,255,.3);border-radius:10px;padding:1px 6px;font-size:.85em}
+
+/* MODE TABS */
+.mode-tabs{display:flex;gap:0;padding:8px 14px 4px}
+.mode-btn{flex:1;padding:9px;border:2px solid var(--border);background:white;font-size:.82em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;color:#888;transition:.15s}
+.mode-btn:first-child{border-radius:12px 0 0 12px}
+.mode-btn:last-child{border-radius:0 12px 12px 0}
+.mode-btn.active{background:var(--c1);color:white;border-color:var(--c1)}
+
+/* VOCAB CARDS */
+.vocab-area{padding:8px 14px}
+.group-header{display:flex;align-items:center;gap:8px;padding:10px 4px 6px;font-size:.72em;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.vcard{background:white;border-radius:14px;margin-bottom:8px;box-shadow:0 2px 10px rgba(0,0,0,.06);overflow:hidden;transition:all .15s;cursor:pointer;border:2px solid transparent}
+.vcard:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.vcard.starred{border-color:var(--c3)}
+.vcard-main{display:grid;grid-template-columns:auto 1fr auto;gap:0;align-items:center}
+.vcard-left{padding:12px 0 12px 14px;display:flex;align-items:center;gap:10px}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.v-tl{font-size:1em;font-weight:800}
+.v-reading{font-size:.73em;color:var(--muted);margin-top:1px}
+.vcard-mid{padding:12px 8px;flex:1}
+.v-zh{font-size:.88em;font-weight:700;color:#555}
+.v-en{font-size:.75em;color:var(--muted);margin-top:2px}
+.vcard-right{padding:12px 14px;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.star-btn{background:none;border:none;cursor:pointer;font-size:1.2em;line-height:1;padding:2px}
+.cat-tag{font-size:.65em;font-weight:800;padding:2px 7px;border-radius:10px}
+.vcard-detail{display:none;padding:0 14px 12px;font-size:.82em;line-height:1.8;border-top:1.5px solid #F5EEE0;color:#555}
+.vcard-detail.open{display:block}
+.detail-row{margin-top:6px}
+.detail-label{font-weight:800;color:var(--c1);font-size:.8em}
+.detail-ex{background:#FFF8EE;border-radius:8px;padding:6px 10px;margin-top:4px;font-size:.9em}
+.detail-ex .tl{font-weight:700;color:#333}
+.detail-ex .cn{color:#777;font-size:.9em}
+
+/* FLASHCARD */
+.fc-area{padding:14px 14px}
+.fc-counter{text-align:center;font-size:.82em;color:var(--muted);margin-bottom:10px;font-weight:700}
+.fc-wrap{perspective:1000px;height:220px;cursor:pointer;margin-bottom:14px}
+.fc-inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.fc-wrap.flip .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--c1),var(--c2));color:white;box-shadow:0 6px 24px rgba(255,107,107,.3)}
+.fc-back{background:white;transform:rotateY(180deg);box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.fc-tl{font-size:1.8em;font-weight:900;margin-bottom:6px}
+.fc-rd{font-size:.88em;opacity:.85}
+.fc-flip-hint{font-size:.72em;opacity:.7;margin-top:12px}
+.fc-zh{font-size:1.3em;font-weight:900;color:var(--c1);margin-bottom:6px}
+.fc-hint{font-size:.8em;color:#777;line-height:1.6}
+.fc-cat{font-size:.7em;background:#F0FFF4;color:var(--c4);border-radius:10px;padding:3px 10px;margin-bottom:8px;font-weight:800}
+.fc-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.fc-btn{padding:11px;border:none;border-radius:13px;font-size:.88em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform .1s}
+.fc-btn:active{transform:scale(.96)}
+.btn-no{background:#FFE8E8;color:#c62828}
+.btn-skip{background:#F5F0E8;color:#888}
+.btn-yes{background:#E8FFF0;color:#1a7a3a}
+.fc-prog{background:#F0E8D8;border-radius:10px;height:7px;margin-bottom:8px}
+.fc-prog-fill{height:7px;border-radius:10px;background:var(--c1);transition:width .3s}
+.fc-session{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;font-size:.78em;color:var(--muted);margin-bottom:12px;font-weight:700}
+.fc-session span{font-size:1.2em;font-weight:900}
+
+/* QUIZ */
+.qz-area{padding:14px 14px}
+.qz-card{background:white;border-radius:18px;padding:18px;box-shadow:0 3px 16px rgba(0,0,0,.08);margin-bottom:12px}
+.qz-meta{display:flex;justify-content:space-between;font-size:.75em;color:var(--muted);margin-bottom:10px;font-weight:700}
+.qz-prog{background:#F0E8D8;border-radius:10px;height:6px;margin-bottom:14px}
+.qz-prog-fill{height:6px;border-radius:10px;background:var(--c1);transition:width .3s}
+.qz-q{font-size:1.05em;font-weight:800;margin-bottom:5px;line-height:1.5}
+.qz-hint{font-size:.8em;color:var(--muted);margin-bottom:14px}
+.qz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qz-opt{padding:11px 10px;background:#F8F4EE;border:2.5px solid #EDE4D4;border-radius:12px;font-size:.88em;font-weight:700;cursor:pointer;transition:all .15s;text-align:left;font-family:'Nunito',sans-serif;color:var(--text)}
+.qz-opt:hover:not(:disabled){border-color:var(--c2);background:#FFF3E0}
+.qz-opt.ok{background:#E8FFF0;border-color:var(--c4);color:#1a7a3a}
+.qz-opt.ng{background:#FFE8E8;border-color:var(--c1);color:#c62828}
+.qz-opt.show{background:#E8FFF0;border-color:var(--c4);color:#1a7a3a}
+.qz-fb{display:none;margin-top:11px;padding:11px 13px;border-radius:12px;font-size:.84em;line-height:1.7}
+.qz-fb.ok{background:#E8FFF0;color:#1a7a3a;border:1.5px solid var(--c4)}
+.qz-fb.ng{background:#FFE8E8;color:#c62828;border:1.5px solid var(--c1)}
+.next-btn{display:none;width:100%;margin-top:10px;padding:11px;background:var(--c1);color:white;border:none;border-radius:12px;font-size:.93em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+
+/* RESULT */
+.result-box{text-align:center;background:white;border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.1);margin:14px}
+.result-big{font-size:3em;font-weight:900;color:var(--c1)}
+.r-btn{background:var(--c1);color:white;border:none;padding:12px 26px;border-radius:13px;font-size:.95em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;margin:4px}
+
+/* COMMON CARDS */
+.card{background:white;border-radius:16px;margin-bottom:14px;box-shadow:0 3px 14px rgba(0,0,0,.07);overflow:hidden}
+.card-header{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f5f0e8}
+.card-emoji{font-size:1.6em}
+.card-word{font-size:1.15em;font-weight:bold}
+.card-reading{font-size:.78em;color:#999}
+.card-meaning{font-size:.85em;color:var(--c1);font-weight:bold}
+.comic-box{background:#fffbf0;margin:12px;border-radius:12px;padding:11px;border:2px dashed #ffd700}
+.comic-text{font-size:.86em;color:#555;line-height:1.8}
+.comic-text b{color:#e94560}
+.sound{display:inline-block;background:#ffd700;color:#333;padding:1px 8px;border-radius:20px;font-weight:bold;font-size:.93em}
+.tip{background:#e8f5e9;margin:10px 12px 12px;border-radius:10px;padding:9px 12px;font-size:.83em;color:#2e7d32;line-height:1.6}
+.tip::before{content:'💡 '}
+.warn{background:#fff3e0;border-left:4px solid #ffa500;margin:8px 12px 12px;border-radius:0 10px 10px 0;padding:10px 12px;font-size:.85em;line-height:1.7}
+.tbl{width:100%;border-collapse:collapse;font-size:.83em}
+.tbl th{background:var(--c1);color:white;padding:8px 9px;text-align:left}
+.tbl td{padding:7px 9px;border-bottom:1px solid #f0e0d0}
+.tbl tr:nth-child(even) td{background:#fff8f0}
+.hl{color:var(--c1);font-weight:bold}
+.hl2{color:#2196F3;font-weight:bold}
+.hl3{color:#4CAF50;font-weight:bold}
+.sec{font-size:.72em;text-transform:uppercase;letter-spacing:2px;color:#bbb;margin:18px 0 10px;padding-left:2px}
+.pattern{background:#f0f4ff;border-radius:12px;padding:12px;margin:8px 0;font-size:.88em;line-height:1.8}
+.dialogue{background:white;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 14px rgba(0,0,0,.07)}
+.dialogue h3{color:var(--c1);margin-bottom:10px;font-size:.95em}
+.dialogue-row{display:grid;grid-template-columns:auto 1fr;gap:6px;margin-bottom:8px;align-items:start}
+.speaker{font-weight:bold;color:var(--c1);font-size:.82em;white-space:nowrap}
+.speech .tl{font-weight:bold;color:#333;font-size:.88em;line-height:1.6}
+.speech .cn{color:#888;font-size:.82em}
+
+/* WEEK FILTER */
+.week-filter{display:flex;overflow-x:auto;gap:6px;padding:8px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.week-filter::-webkit-scrollbar{display:none}
+.wk-btn{padding:6px 12px;border-radius:18px;border:2px solid var(--border);background:white;font-size:.75em;font-weight:800;cursor:pointer;white-space:nowrap;font-family:'Nunito',sans-serif;color:#888;transition:.15s}
+.wk-btn.active{background:var(--c1);color:white;border-color:var(--c1)}
+
+/* EXERCISE */
+.ex-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.ex-tab-btn{padding:7px 12px;background:#f5f5f5;border:2px solid #ddd;border-radius:20px;font-size:.78em;cursor:pointer;color:#666;transition:.2s;font-weight:800;font-family:'Nunito',sans-serif}
+.ex-tab-btn.active{background:var(--c1);border-color:var(--c1);color:white}
+.choice-btn{padding:11px 8px;background:#f5f5f5;border:2px solid #ddd;border-radius:11px;font-size:.9em;cursor:pointer;transition:.2s;font-weight:bold;text-align:left;width:100%;font-family:'Nunito',sans-serif}
+.choice-btn:hover:not(:disabled){border-color:#ffa500;background:#fff3cd}
+.progress-bar{background:#f8f8f8;border-radius:10px;height:6px;margin-bottom:14px}
+.progress-fill{background:var(--c1);border-radius:10px;height:6px;transition:width .3s}
+
+.qmode-btn{width:100%;padding:14px 16px;background:white;border:2px solid #f0d0d0;border-radius:13px;font-size:.9em;cursor:pointer;text-align:left;transition:.2s;color:#333;font-weight:bold;margin-bottom:9px;font-family:'Nunito',sans-serif}
+.qmode-btn:hover{border-color:var(--c1);background:#fff5f5}
+
+.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:.9em}
+
+/* DIALOGUE PRACTICE MODE */
+.dlg-mode-bar{display:flex;gap:8px;padding:4px 14px 8px}
+.dlg-mode-btn{flex:1;padding:8px;border-radius:10px;border:2px solid var(--border);background:white;font-size:.78em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;color:#888;transition:.15s;text-align:center}
+.dlg-mode-btn.active{background:var(--c1);color:white;border-color:var(--c1)}
+.speech .cn.hidden-cn{color:transparent;background:#f0e8d8;border-radius:6px;cursor:pointer;user-select:none;display:inline-block;padding:1px 6px}
+.speech .cn.hidden-cn:hover{background:#e8dcc8}
+.speech .cn.revealed{color:#888;background:none;cursor:default}
+
+/* VOCAB GROUP COLLAPSE */
+.group-header{cursor:pointer;user-select:none}
+.group-header:hover{opacity:.7}
+.group-header .collapse-icon{transition:transform .2s;display:inline-block;margin-left:4px;font-size:.9em}
+.group-header.collapsed .collapse-icon{transform:rotate(-90deg)}
+.group-items.collapsed{display:none}
+
+@media(max-width:400px){
+  .hd h1{font-size:1.15em}
+  .nav-tab{padding:9px 10px;font-size:.7em}
+  .fc-tl{font-size:1.5em}
+}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <h1>Tagalog 互動學習工具</h1>
+  <p>W1-15 完整收錄 - 單字 / 文法 / 對話 / 測驗</p>
+  <div class="stat-row">
+    <div class="stat" id="totalStat">📦 0 個單字</div>
+    <div class="stat" id="starStat">⭐ 0 已收藏</div>
+    <div class="stat" id="learnStat">✅ 0 已學</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-tabs" id="navTabs">
+  <button class="nav-tab active" onclick="showPanel('vocab')">📋 單字庫</button>
+  <button class="nav-tab" onclick="showPanel('memory')">🧠 諧音記憶</button>
+  <button class="nav-tab" onclick="showPanel('grammar')">📐 文法速查</button>
+  <button class="nav-tab" onclick="showPanel('dialogue')">💬 對話練習</button>
+  <button class="nav-tab" onclick="showPanel('exercise')">✏️ 填空練習</button>
+  <button class="nav-tab" onclick="showPanel('quiz')">🎯 測驗</button>
+  <button class="nav-tab" onclick="showPanel('bible')">📖 聖經書卷</button>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 1: VOCAB -->
+<!-- ============================================= -->
+<div id="panel-vocab" class="panel active">
+  <div class="search-wrap" style="padding:12px 0 6px">
+    <div class="search-rel">
+      <span class="search-icon">🔍</span>
+      <input class="search-box" id="searchBox" placeholder="搜尋 Tagalog / 中文 / 拼音..." oninput="doSearch(this.value)">
+    </div>
+  </div>
+  <div class="mode-tabs">
+    <button class="mode-btn active" onclick="setMode('list')">📋 瀏覽</button>
+    <button class="mode-btn" onclick="setMode('flash')">🎴 抽認卡</button>
+    <button class="mode-btn" onclick="setMode('quiz')">🎯 測驗</button>
+  </div>
+  <div class="cat-tabs" id="catTabs"></div>
+  <div id="listArea" class="vocab-area"></div>
+  <div id="flashArea" class="fc-area" style="display:none"></div>
+  <div id="quizArea" class="qz-area" style="display:none"></div>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 2: MEMORY -->
+<!-- ============================================= -->
+<div id="panel-memory" class="panel">
+<div class="sec">代名詞三格 — W1-4核心</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">🤝</div><div>
+    <div class="card-word">Tayo vs Kami</div>
+    <div class="card-reading">他優 vs 卡咪</div>
+    <div class="card-meaning">最高頻考點！</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    <b>Tayo（他優）</b>：「他也優秀你也優秀！大家一起！」→ <b>含你在內</b><br>
+    <b>Kami（卡咪）</b>：「我們去卡拉OK，但沒叫你！」→ <b>不含你</b><br><br>
+    口訣：「<span class="sound">卡咪沒叫你</span>」！Tayo含你，Kami不含你！
+  </div></div>
+  <div class="tip">Tayo/Kami=主格；Natin/Namin=所有格；Atin/Amin=介詞格</div>
+</div>
+
+<div class="card" style="padding:14px">
+  <div style="font-weight:bold;color:var(--c1);margin-bottom:10px">📊 代名詞三格完整速查</div>
+  <table class="tbl">
+    <tr><th>中文</th><th>主格(Ang)</th><th>所有格(Ng)</th><th>介詞格(Sa)</th></tr>
+    <tr><td>我</td><td class="hl">Ako</td><td>Ko（柯）</td><td>Akin（啊金）</td></tr>
+    <tr><td>你</td><td class="hl">Ikaw/Ka</td><td>Mo（摸你）</td><td>Iyo（一優）</td></tr>
+    <tr><td>他/她</td><td class="hl">Siya</td><td>Niya（你亞）</td><td>Kaniya（卡你亞）</td></tr>
+    <tr style="background:#e8f5e9"><td>我們<b>含你</b></td><td class="hl2">Tayo</td><td>Natin（那停）</td><td>Atin（啊停）</td></tr>
+    <tr style="background:#ffebee"><td>我們<b>不含你</b></td><td class="hl">Kami</td><td>Namin（那民）</td><td>Amin（啊民）</td></tr>
+    <tr><td>你們</td><td class="hl">Kayo</td><td>Ninyo（你你哦）</td><td>Inyo（因優）</td></tr>
+    <tr><td>他們</td><td class="hl">Sila</td><td>Nila（你拉）</td><td>Kanila（卡你拉）</td></tr>
+  </table>
+  <div class="tip" style="margin:10px 0 0">Ikaw句首，Ka動詞後！所有格=N+主格縮寫</div>
+</div>
+
+<div class="sec">動詞時態 — 音節複製機！</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">🖨️</div><div>
+    <div class="card-word">時態三公式</div>
+    <div class="card-reading">一個公式記住所有時態！</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    想像一台「<b>音節複製機</b>」🖨️<br><br>
+    ❌ <b>沒按複製 = 過去式</b>（nagbasa）<br>
+    ✅ <b>按一次複製 = 現在式</b>（nag<b>ba</b>basa）<br>
+    ✅ <b>nag改mag + 複製 = 未來式</b>（mag<b>ba</b>basa）<br><br>
+    <span class="sound">um類</span>：kumain→kuma<b>ka</b>in→<b>ka</b>kain<br>
+    <span class="sound">-in被動</span>：b<b>in</b>asa→bi<b>na</b>basa→<b>ba</b>basahin
+  </div></div>
+  <div class="tip">有沒有「重複音節」決定時態！沒重複=過去，有重複=現在，換mag+重複=未來</div>
+</div>
+
+<div class="card" style="padding:14px">
+  <div style="font-weight:bold;color:var(--c1);margin-bottom:10px">高頻動詞速查</div>
+  <table class="tbl">
+    <tr><th>字根</th><th>過去</th><th>現在</th><th>未來</th></tr>
+    <tr><td>kain吃</td><td class="hl">kumain</td><td>kumakain</td><td>kakain</td></tr>
+    <tr><td>basa讀</td><td class="hl">nagbasa</td><td>nagbabasa</td><td>magbabasa</td></tr>
+    <tr><td>punta去</td><td class="hl">pumunta</td><td>pumupunta</td><td>pupunta</td></tr>
+    <tr><td>dalo參加</td><td class="hl">dumalo</td><td>dumadalo</td><td>dadalo</td></tr>
+    <tr><td>gamit用</td><td class="hl">ginamit</td><td>ginagamit</td><td>gagamitin</td></tr>
+    <tr><td>aral學</td><td class="hl">nag-aral</td><td>nag-aaral</td><td>mag-aaral</td></tr>
+    <tr><td>garal傳道</td><td class="hl">nangaral</td><td>nangangaral</td><td>mangangaral</td></tr>
+    <tr><td>inom喝</td><td class="hl">uminom</td><td>umiinom</td><td>iinom</td></tr>
+    <tr><td>laro玩</td><td class="hl">naglaro</td><td>naglalaro</td><td>maglalaro</td></tr>
+    <tr><td>luto煮</td><td class="hl">nagluto</td><td>nagluluto</td><td>magluluto</td></tr>
+  </table>
+</div>
+
+<div class="sec">W9 — ANO vs ANU-ANO</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">❓</div><div>
+    <div class="card-word">Ano vs Anu-ano</div>
+    <div class="card-reading">啊諾 vs 啊努啊諾</div>
+    <div class="card-meaning">問一個 vs 問多個！</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    <b>Ano（問一件事）</b>：Ano ang kaharian ng Diyos?<br>
+    <b>Anu-ano（問多件事）</b>：Anu-ano ang mga katangian ni Jehova?<br><br>
+    <span class="sound">Ano</span>=單數問　<span class="sound">Anu-ano</span>=複數問
+  </div></div>
+  <div class="tip">Anu-ano後面幾乎都要加 ang mga（複數標記）！</div>
+</div>
+
+<div class="sec">W10 — GUSTO / AYAW</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">❤️</div><div>
+    <div class="card-word">Gusto vs Ayaw</div>
+    <div class="card-reading">歸斯托 vs 啊亞</div>
+    <div class="card-meaning">想要 vs 不想要</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    <b>公式：Gusto/Ayaw + 所有格 + 動詞</b><br><br>
+    Gusto <b>ko</b>ng mag-aral ng Bibliya. 我想學聖經。<br>
+    Ayaw <b>ko</b>ng makinig. 我不想聽。（口語：Ayoko）<br><br>
+    <span class="sound">重要</span>：Gusto/Ayaw後的代名詞用<b>所有格</b>（ko、mo、niya、natin...）<br>
+    <span class="sound">口語</span>：Ayaw ko → <b>Ayoko</b>
+  </div></div>
+  <div class="tip">Gusto=具體當下想要；Mahilig=長期喜好</div>
+</div>
+
+<div class="sec">W11 — KAILANGAN 需要</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">💪</div><div>
+    <div class="card-word">Kailangan</div>
+    <div class="card-reading">凱拉安</div>
+    <div class="card-meaning">需要 / 必須</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    <b>需要東西</b>：Kailangan + 所有格 + ng + 東西<br>
+    Kailangan <b>ko</b> ng kape. 我需要咖啡。<br><br>
+    <b>需要做事</b>：Kailangan + 所有格+ng + 動詞<br>
+    Kailangan <b>kong</b> kumain. 我需要吃。<br>
+    Kailangan <b>nating</b> mag-aral. 我們需要學習。<br><br>
+    <b>被需要</b>：Kailangan + 主格<br>
+    Kailangan <b>ako</b> sa trabaho. 工作上需要我。<br>
+    Kailangan <b>kita</b>. 我需要你。
+  </div></div>
+  <div class="tip">Kailangan=實際需要；Dapat=道義應該；Gusto=想要偏好</div>
+</div>
+
+<div class="card" style="padding:14px">
+  <div style="font-weight:bold;color:var(--c1);margin-bottom:10px">Kailangan vs Dapat vs Gusto</div>
+  <table class="tbl">
+    <tr><th>Tagalog</th><th>英文</th><th>用途</th></tr>
+    <tr><td class="hl">Kailangan</td><td>Need / Must</td><td>實際需要、必要性</td></tr>
+    <tr><td class="hl">Dapat</td><td>Should / Ought to</td><td>道義上的應該</td></tr>
+    <tr><td class="hl">Gusto</td><td>Want / Like</td><td>想要、偏好</td></tr>
+  </table>
+</div>
+
+<div class="sec">W12 — KANINO 誰的</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">🏷️</div><div>
+    <div class="card-word">Kanino</div>
+    <div class="card-reading">卡你諾</div>
+    <div class="card-meaning">誰的？/ 給誰？</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    <b>問所有權</b>：Kanino ito? 這是誰的？<br>
+    <b>問方向</b>：Kanino mo ibinigay ang regalo? 你把禮物給誰了？<br>
+    <b>問受益者</b>：Para kanino ito? 這是給誰的？<br><br>
+    <span class="sound">Kaninong</span>=接名詞加-ng：Kaninong libro ito? 這是誰的書？<br>
+    <span class="sound">Kani-kanino</span>=複數：問多人
+  </div></div>
+  <div class="tip">回答用 Sa 格：Sa akin=我的、Sa iyo=你的、Sa amin=我們的、Sa kaniya=他/她的</div>
+</div>
+
+<div class="sec">W12 — KAILAN 何時</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">📅</div><div>
+    <div class="card-word">Kailan</div>
+    <div class="card-reading">凱藍</div>
+    <div class="card-meaning">什麼時候？</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    <b>問時間</b>：Kailan ka aalis? 你什麼時候離開？<br>
+    <b>問活動</b>：Kailan ang asambleya? 大會什麼時候？<br><br>
+    <span class="sound">Kung kailan</span>=當...的時候（whenever）<br>
+    <span class="sound">Kahit kailan</span>=任何時候（every time）<br>
+    <span class="sound">Kailanman</span>=永遠 / 從不（看語境）<br>
+    Mahal kita magpakailanman. 我永遠愛你。
+  </div></div>
+  <div class="tip">問具體幾點用 Anong oras，問日期/時段用 Kailan</div>
+</div>
+
+<div class="sec">W13 — I-VERB（受詞焦點）</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">📤</div><div>
+    <div class="card-word">I-verb</div>
+    <div class="card-reading">以-動詞</div>
+    <div class="card-meaning">把東西移出去 / 給出去</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    I-verb = 焦點在<b>被給予/被移動的東西</b><br><br>
+    <b>Ibigay</b> mo ang libro. 把書給出去。<br>
+    <b>Ituro</b> mo sa akin. 教我。<br><br>
+    <span class="sound">時態變化</span>：<br>
+    原形：i- + 字根 → <b>ituro</b><br>
+    過去：i- + -in- + 字根 → <b>itinuro</b><br>
+    現在：i- + -in- + 重複 + 字根 → <b>itinuturo</b><br>
+    未來：i- + 重複 + 字根 → <b>ituturo</b>
+  </div></div>
+  <div class="tip">母音開頭字根用 ini- 前綴：iuwi → iniuwi（過去）→ iniuuwi（現在）→ iuuwi（未來）</div>
+</div>
+
+<div class="card" style="padding:14px">
+  <div style="font-weight:bold;color:var(--c1);margin-bottom:10px">I-verb 時態速查</div>
+  <table class="tbl">
+    <tr><th>字根</th><th>原形</th><th>過去</th><th>現在</th><th>未來</th></tr>
+    <tr><td>turo 教</td><td class="hl">ituro</td><td>itinuro</td><td>itinuturo</td><td>ituturo</td></tr>
+    <tr><td>bigay 給</td><td class="hl">ibigay</td><td>ibinigay</td><td>ibinibigay</td><td>ibibigay</td></tr>
+    <tr><td>uwi 回家</td><td class="hl">iuwi</td><td>iniuwi</td><td>iniuuwi</td><td>iuuwi</td></tr>
+    <tr><td>lagay 放</td><td class="hl">ilagay</td><td>inilagay</td><td>inilalagay</td><td>ilalagay</td></tr>
+  </table>
+</div>
+
+<div class="sec">W14 — MA-VERB（感受/狀態）</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">😴</div><div>
+    <div class="card-word">Ma-verb</div>
+    <div class="card-reading">媽-動詞</div>
+    <div class="card-meaning">感受 / 身體狀態 / 自然發生的事</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    Ma-verb = 描述<b>感受、身體狀態、非自主動作</b><br><br>
+    <b>感受</b>：matakot（害怕）、mahiya（害羞）<br>
+    <b>身體</b>：matulog（睡覺）、maupo（坐下）<br>
+    <b>自然</b>：mawala（丟失）<br><br>
+    <span class="sound">重點</span>：ma- 變 na- = 過去/現在！<br>
+    <b>Makinig</b> kayo sa Diyos. 聽從上帝。<br>
+    <b>Nakinig</b> kami sa guro. 我們聽了老師。<br>
+    <b>Nakikinig</b> ako sa radyo. 我在聽廣播。<br>
+    <b>Makikinig</b> tayo kay Jehova. 我們會聽耶和華。
+  </div></div>
+  <div class="tip">時態：ma-=原形/未來；na-=過去；na-+重複=現在；ma-+重複=未來</div>
+</div>
+
+<div class="card" style="padding:14px">
+  <div style="font-weight:bold;color:var(--c1);margin-bottom:10px">Ma-verb 時態速查</div>
+  <table class="tbl">
+    <tr><th>字根</th><th>原形</th><th>過去</th><th>現在</th><th>未來</th></tr>
+    <tr><td>tulog 睡</td><td class="hl">matulog</td><td>natulog</td><td>natutulog</td><td>matutulog</td></tr>
+    <tr><td>upo 坐</td><td class="hl">maupo</td><td>naupo</td><td>nauupo</td><td>mauupo</td></tr>
+    <tr><td>kinig 聽</td><td class="hl">makinig</td><td>nakinig</td><td>nakikinig</td><td>makikinig</td></tr>
+    <tr><td>takot 怕</td><td class="hl">matakot</td><td>natakot</td><td>natatakot</td><td>matatakot</td></tr>
+  </table>
+</div>
+
+<div class="sec">W15 — -AN VERB（地點/受者焦點）</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">🎯</div><div>
+    <div class="card-word">-an verb</div>
+    <div class="card-reading">-安 動詞</div>
+    <div class="card-meaning">焦點在接受動作的人/地方</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    -an verb = 焦點在<b>被作用的對象/地點</b><br><br>
+    <b>Hugasan</b> mo ang mga plato. 洗碗盤。<br>
+    <b>Bigyan</b> ninyo ako ng isang aklat. 給我一本書。<br>
+    <b>Tulungan</b> mo ako. 幫幫我。<br><br>
+    <span class="sound">注意</span>：母音結尾用 -han（basahan）<br>
+    有些字根拼法改變：bigay→big<b>yan</b>（非bigayan）
+  </div></div>
+  <div class="tip">Bigyan=給；Tulungan=幫；Hugasan=洗；Utusan=命令</div>
+</div>
+
+<div class="card" style="padding:14px">
+  <div style="font-weight:bold;color:var(--c1);margin-bottom:10px">-an verb 時態速查</div>
+  <table class="tbl">
+    <tr><th>字根</th><th>原形</th><th>過去</th><th>現在</th><th>未來</th></tr>
+    <tr><td>bigay 給</td><td class="hl">bigyan</td><td>binigyan</td><td>binibigyan</td><td>bibigyan</td></tr>
+    <tr><td>tulong 幫</td><td class="hl">tulungan</td><td>tinulungan</td><td>tinutulungan</td><td>tutulungan</td></tr>
+    <tr><td>hugas 洗</td><td class="hl">hugasan</td><td>hinugasan</td><td>hinuhugasan</td><td>huhugasan</td></tr>
+    <tr><td>utos 命令</td><td class="hl">utusan</td><td>inutusan</td><td>inuutusan</td><td>uutusan</td></tr>
+  </table>
+</div>
+
+<div class="sec">W8 — PINAKA- vs NAPAKA-</div>
+<div class="card">
+  <div class="card-header"><div class="card-emoji">🏆</div><div>
+    <div class="card-word">Pinaka- vs Napaka-</div>
+    <div class="card-reading">批那卡 vs 那啪卡</div>
+    <div class="card-meaning">最... vs 非常...</div>
+  </div></div>
+  <div class="comic-box"><div class="comic-text">
+    <b>Pinaka-（最...有比較）</b>：Si Jehova ang <b>pinaka</b>makapangyarihan.<br>
+    <b>Napaka-（非常...強調）</b>：Si Jehova ay <b>napaka</b>makapangyarihan.<br><br>
+    <span class="sound">Pinaka</span>=比較後第一名　<span class="sound">Napaka</span>=超級！非常！
+  </div></div>
+</div>
+
+<div class="sec">傳道/宗教詞彙 — 諧音速記</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>Tagalog</th><th>中文</th><th>諧音</th></tr>
+    <tr><td class="hl">Katangian</td><td>特質</td><td>卡湯阿安</td></tr>
+    <tr><td class="hl">Pag-ibig</td><td>愛</td><td>啪根衣比</td></tr>
+    <tr><td class="hl">Katarungan</td><td>正義</td><td>卡他龍安</td></tr>
+    <tr><td class="hl">Karunungan</td><td>智慧</td><td>卡路農安</td></tr>
+    <tr><td class="hl">Kapangyarihan</td><td>能力</td><td>卡潘亞利漢</td></tr>
+    <tr><td class="hl">Pananampalataya</td><td>信心</td><td>啪那南啪拉他亞</td></tr>
+    <tr><td class="hl">Mabuting balita</td><td>好消息</td><td>媽不停+巴力他</td></tr>
+    <tr><td class="hl">Pangangaral</td><td>傳道</td><td>潘嘎嘎拉</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 3: GRAMMAR -->
+<!-- ============================================= -->
+<div id="panel-grammar" class="panel">
+<div class="sec">語序核心公式</div>
+<div class="card" style="padding:14px">
+  <div class="pattern">
+    <b>動詞/形容詞 → 主語（基本語序）</b><br>
+    <b>主語 + ay + 謂語（倒裝，書面正式）</b><br>
+    <b>時間詞永遠放最後！</b>
+  </div>
+  <table class="tbl">
+    <tr><th>類型</th><th>例句</th><th>中文</th></tr>
+    <tr><td>動詞句</td><td>Nagbabasa <b>siya</b>.</td><td>他正在讀書。</td></tr>
+    <tr><td>ay倒裝</td><td><b>Siya ay</b> nagbabasa.</td><td>（同上，書面版）</td></tr>
+    <tr><td>形容詞句</td><td>Mabait <b>ang tatay ko</b>.</td><td>我爸爸很善良。</td></tr>
+    <tr><td>存在句</td><td>May anghel <b>sa langit</b>.</td><td>天上有天使。</td></tr>
+  </table>
+</div>
+
+<div class="sec">名詞/人名標記</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>標記</th><th>用途</th><th>例</th></tr>
+    <tr><td class="hl">Ang / Ang mga</td><td>一般名詞主語（單/複）</td><td>Ang bahay / Ang mga bata</td></tr>
+    <tr><td class="hl">Si / Sina</td><td>人名主語（單/複）</td><td>Si Jehova / Sina Pedro</td></tr>
+    <tr><td class="hl">ng / Ni / Nina</td><td>所有格/受詞</td><td>ng Bibliya / ni Jehova</td></tr>
+    <tr><td class="hl">Sa</td><td>地點/介詞</td><td>sa Kingdom Hall</td></tr>
+    <tr><td class="hl">Para sa / Para kay</td><td>為了（東西/人）</td><td>para sa pulong / para kay Jehova</td></tr>
+    <tr><td class="hl">Kay / Kina</td><td>給人名（Sa格，單/複）</td><td>kay Jehova / kina Celumusa</td></tr>
+  </table>
+</div>
+
+<div class="sec">DAPAT 應該（W7-9）</div>
+<div class="card" style="padding:14px">
+  <div class="pattern">
+    <b>Dapat + 代名詞 + 動詞</b><br>
+    主動版：Dapat <b>akong</b> bumasa. 我應該讀。<br>
+    被動版：Dapat <b>kong</b> basahin ang Bibliya. 我應該讀聖經。
+  </div>
+  <table class="tbl">
+    <tr><th>主格</th><th>主動</th><th>被動</th></tr>
+    <tr><td>Ako</td><td class="hl">Dapat akong</td><td>Dapat kong</td></tr>
+    <tr><td>Ka</td><td class="hl">Dapat kang</td><td>Dapat mong</td></tr>
+    <tr><td>Siya</td><td class="hl">Dapat siyang</td><td>Dapat niyang</td></tr>
+    <tr style="background:#e8f5e9"><td>Tayo</td><td class="hl2">Dapat tayong</td><td>Dapat nating</td></tr>
+    <tr><td>Kami</td><td class="hl">Dapat kaming</td><td>Dapat naming</td></tr>
+    <tr><td>Kayo</td><td class="hl">Dapat kayong</td><td>Dapat ninyong</td></tr>
+    <tr><td>Sila</td><td class="hl">Dapat silang</td><td>Dapat nilang</td></tr>
+  </table>
+</div>
+
+<div class="sec">GUSTO / AYAW（W10）</div>
+<div class="card" style="padding:14px">
+  <div class="warn">
+    <b>Actor Focus（主動）</b>：Gusto kong uminom <b>ng</b> gatas.（不特定）<br>
+    <b>Object Focus（被動）</b>：Gusto kong inumin <b>ang</b> gatas.（特定那杯）
+  </div>
+  <table class="tbl">
+    <tr><th>主格</th><th>Gusto版</th><th>Ayaw版</th></tr>
+    <tr><td>Ako</td><td class="hl">Gusto kong...</td><td>Ayaw kong / Ayoko...</td></tr>
+    <tr><td>Ka</td><td class="hl">Gusto mong...</td><td>Ayaw mong...</td></tr>
+    <tr><td>Siya</td><td class="hl">Gusto niyang...</td><td>Ayaw niyang...</td></tr>
+    <tr style="background:#e8f5e9"><td>Tayo</td><td class="hl2">Gusto nating...</td><td>Ayaw nating...</td></tr>
+    <tr><td>Kami</td><td class="hl">Gusto naming...</td><td>Ayaw naming...</td></tr>
+    <tr><td>Kayo</td><td class="hl">Gusto ninyong...</td><td>Ayaw ninyong...</td></tr>
+    <tr><td>Sila</td><td class="hl">Gusto nilang...</td><td>Ayaw nilang...</td></tr>
+  </table>
+</div>
+
+<div class="sec">KAILANGAN 需要（W11）</div>
+<div class="card" style="padding:14px">
+  <div class="pattern">
+    <b>需要東西</b>：Kailangan + 所有格 + ng + 名詞<br>
+    Kailangan <b>ko</b> ng kape. 我需要咖啡。<br><br>
+    <b>需要做事</b>：Kailangan + 所有格+ng + 動詞<br>
+    Kailangan <b>kong</b> kumain. 我需要吃。<br>
+    Kailangan <b>nating</b> mag-aral. 我們需要學習。<br><br>
+    <b>被需要</b>：Kailangan + 主格<br>
+    Kailangan <b>ako</b> sa trabaho. 工作上需要我。
+  </div>
+</div>
+
+<div class="sec">KANINO 誰的（W12）</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>用法</th><th>例句</th><th>中文</th></tr>
+    <tr><td>問所有</td><td class="hl">Kanino ito?</td><td>這是誰的？</td></tr>
+    <tr><td>問+名詞</td><td class="hl">Kaninong libro ito?</td><td>這是誰的書？</td></tr>
+    <tr><td>問方向</td><td class="hl">Kanino mo ibinigay ang regalo?</td><td>你把禮物給誰了？</td></tr>
+    <tr><td>問受益</td><td class="hl">Para kanino ito?</td><td>這是給誰的？</td></tr>
+    <tr><td>問持有</td><td class="hl">Na kanino ang libro?</td><td>書在誰那裡？</td></tr>
+  </table>
+  <div class="tip" style="margin:10px 0 0">回答：Sa akin（我的）、Sa iyo（你的）、Sa kaniya（他的）、Sa amin（我們的）、Kay [人名]</div>
+</div>
+
+<div class="sec">KAILAN 何時（W12）</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>用法</th><th>例句</th><th>中文</th></tr>
+    <tr><td>問時間</td><td class="hl">Kailan ka aalis?</td><td>你什麼時候離開？</td></tr>
+    <tr><td>問活動</td><td class="hl">Kailan ang asambleya?</td><td>大會什麼時候？</td></tr>
+    <tr><td>當...時</td><td class="hl">Kung kailan nagtatrabaho ako...</td><td>當我在工作時...</td></tr>
+    <tr><td>永遠</td><td class="hl">Magpakailanman</td><td>永永遠遠</td></tr>
+  </table>
+</div>
+
+<div class="sec">動詞總表（五大類）</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>類型</th><th>焦點</th><th>前綴/後綴</th><th>代表詞</th></tr>
+    <tr><td class="hl">mag-/nag-</td><td>主動主語</td><td>mag-（未來）nag-（過去）</td><td>mag-aral 學習</td></tr>
+    <tr><td class="hl">-um-</td><td>主動主語</td><td>中綴 -um-</td><td>kumain 吃</td></tr>
+    <tr><td class="hl">-in</td><td>被動受詞</td><td>中綴 -in- / 後綴 -in/-hin</td><td>basahin 讀</td></tr>
+    <tr><td class="hl">i-</td><td>被動受詞（移出）</td><td>前綴 i- / i-in-</td><td>ibigay 給</td></tr>
+    <tr><td class="hl">-an</td><td>被動地點/受者</td><td>後綴 -an/-han / in-...-an</td><td>bigyan 給、tulungan 幫</td></tr>
+    <tr><td class="hl">ma-/na-</td><td>感受/狀態</td><td>ma-（原形）na-（過去）</td><td>matulog 睡、makinig 聽</td></tr>
+  </table>
+</div>
+
+<div class="sec">-in 被動動詞速查</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>字根</th><th>過去</th><th>現在</th><th>未來</th></tr>
+    <tr><td>basa讀</td><td class="hl">binasa</td><td>binabasa</td><td>babasahin</td></tr>
+    <tr><td>kain吃</td><td class="hl">kinain</td><td>kinakain</td><td>kakainin</td></tr>
+    <tr><td>gamit用</td><td class="hl">ginamit</td><td>ginagamit</td><td>gagamitin</td></tr>
+    <tr><td>sulat寫</td><td class="hl">sinulat</td><td>sinusulat</td><td>susulatin</td></tr>
+    <tr><td>inom喝</td><td class="hl">ininom</td><td>iniinom</td><td>iinumin</td></tr>
+  </table>
+  <div class="tip" style="margin:10px 0 0">母音結尾加-hin（basahin）；子音結尾加-in（gamitin）</div>
+</div>
+
+<div class="sec">ANO vs ANU-ANO（W9）</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th></th><th>Ano（單數）</th><th>Anu-ano（複數）</th></tr>
+    <tr><td>標記</td><td>ang</td><td>ang mga</td></tr>
+    <tr><td>例句</td><td>Ano ang kaharian ng Diyos?</td><td>Anu-ano ang mga katangian ni Jehova?</td></tr>
+    <tr><td>中文</td><td>上帝的王國是什麼？</td><td>耶和華有哪些特質？</td></tr>
+  </table>
+</div>
+
+<div class="sec">ANG 的兩大用法</div>
+<div class="card" style="padding:14px">
+  <div class="pattern">
+    <b>用法 1：等號（A = B）</b><br>
+    Si Jehova <b>ang</b> tunay na Diyos. 耶和華是真神。<br><br>
+    <b>用法 2：主語焦點</b><br>
+    <b>Ang</b> bata <b>ay</b> nag-aral. 那個孩子學習了。
+  </div>
+  <div class="warn">口語：動詞先（Maganda ang babae.）<br>書面：Ang babae ay maganda.</div>
+</div>
+
+<div class="sec">時間詞速查</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>Tagalog</th><th>中文</th><th>Tagalog</th><th>中文</th></tr>
+    <tr><td class="hl">ngayon</td><td>現在/今天</td><td class="hl">bukas</td><td>明天</td></tr>
+    <tr><td class="hl">kahapon</td><td>昨天</td><td class="hl">mamaya</td><td>等一下</td></tr>
+    <tr><td class="hl">kagabi</td><td>昨晚</td><td class="hl">araw-araw</td><td>每天</td></tr>
+    <tr><td class="hl">nakaraang linggo</td><td>上週</td><td class="hl">susunod na linggo</td><td>下週</td></tr>
+    <tr><td class="hl">bawat linggo</td><td>每週</td><td class="hl">tuwing Linggo</td><td>每週日</td></tr>
+  </table>
+</div>
+
+<div class="sec">助詞 na / pa / ba</div>
+<div class="card" style="padding:14px">
+  <div class="pattern">
+    <b>na（那！）</b>=已經：Kumain <b>na</b> siya. 他已經吃了。<br>
+    也是「的」連接詞：espesyal <b>na</b> pahayag = 特別<b>的</b>演講<br><br>
+    <b>pa（啪！）</b>=還沒：Hindi <b>pa</b> siya kumain. 他還沒吃。<br><br>
+    <b>ba（巴？）</b>=疑問：Dumalo ka <b>ba</b>? 你出席了嗎？
+  </div>
+</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 4: DIALOGUE -->
+<!-- ============================================= -->
+<div id="panel-dialogue" class="panel">
+<div class="dlg-mode-bar">
+  <button class="dlg-mode-btn active" onclick="setDlgMode('read')">📖 閱讀模式</button>
+  <button class="dlg-mode-btn" onclick="setDlgMode('practice')">🎯 練習模式</button>
+</div>
+<div class="week-filter" id="dialogueWeekFilter">
+  <button class="wk-btn active" onclick="filterDialogue('all')">全部</button>
+  <button class="wk-btn" onclick="filterDialogue('w6')">W6-7</button>
+  <button class="wk-btn" onclick="filterDialogue('w8')">W8</button>
+  <button class="wk-btn" onclick="filterDialogue('w9')">W9-10</button>
+  <button class="wk-btn" onclick="filterDialogue('w13')">W13</button>
+  <button class="wk-btn" onclick="filterDialogue('w15')">W14-15</button>
+</div>
+
+<div class="dlg-group" data-week="w9">
+<div class="sec">W9-10 紀念儀式邀請</div>
+<div class="dialogue">
+  <h3>📋 W9 傳道對話</h3>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Hello. Kamusta ka?</div><div class="cn">你好。你好嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Mabuti naman.</div><div class="cn">我很好。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Ako si Vanessa. Nakita kita dito nakaraang linggo. Ano ba ang ginawa mo dito?</div><div class="cn">我是Vanessa。我上週在這裡見過你。你上週在這裡做什麼？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Nagtrabaho ako dito noong nakaraang linggo. Part time lang.</div><div class="cn">我上週在這裡工作，只是兼職。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Ano ba ang ginagawa mo ngayon dito sa Hsinchu?</div><div class="cn">你現在在新竹做什麼？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Ngayon ay naglilibot ako dito. Naghahanap ako ng bagong trabaho.</div><div class="cn">我現在在這裡到處走走，正在找新工作。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Tamang-tama. Alam mo ba ang memoryal ng kamatayan ni Hesus?</div><div class="cn">對了。你知道耶穌受難紀念活動嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Hindi. Hindi ko alam ang memoryal ng kamatayan ni Jesus.</div><div class="cn">不，我不知道耶穌受難紀念。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Nais kitang imbitahan sa Abril 2. Alas-sais ng gabi. Gusto mo bang dumalo?</div><div class="cn">我想邀請你4月2日晚上6點參加。你想來嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Oo, gusto kong dumalo. Saan ba ito gaganapin?</div><div class="cn">是的，我想出席。在哪裡舉行？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Heto ang imbitasyon mo. Nakasulat diyan ang address. Debe mong isuot ang maayos na damit.</div><div class="cn">這是你的邀請函。地址寫在上面。你應該穿著得體的衣服。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Sige. Salamat Vanessa. Mabait ka.</div><div class="cn">好的，謝謝你Vanessa，你真好。</div></div></div>
+</div>
+</div>
+
+<div class="dlg-group" data-week="w8">
+<div class="sec">W8 紀念儀式分發邀請</div>
+<div class="dialogue">
+  <h3>🚪 W8 紀念儀式傳道詞</h3>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Namamahagi po kami ng imbitasyon para sa isang napakahalagang okasyon. Sa Abril 2, milyon-milyon sa buong mundo ang magtitipon-tipon para alalahanin ang kamatayan ni Jesu-Kristo.</div><div class="cn">我們正在分發邀請函。在4月2日，全球數百萬人將聚集紀念耶穌基督的受難。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Wala pong babayaran?</div><div class="cn">這是免費的嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Opo, wala po. May gusto sana akong ipapanood sa iyo ng isang dalawa minutong video tungkol diyan.</div><div class="cn">是的，免費的。我想給您看一個兩分鐘短片。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Nasa imbitasyon ang oras at lugar ng pagtitipon na pinakamalapit sa inyo.</div><div class="cn">邀請函上有距您最近的聚會時間和地點。</div></div></div>
+</div>
+
+<div class="sec">W8 王國主題對話</div>
+<div class="dialogue">
+  <h3>✝️ W8 Field Presentation</h3>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Kristiyano ako.</div><div class="cn">我是基督徒。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Talaga? Nagagalak akong malaman iyan. Sa palagay mo, ano ang tema ng kaniyang pangangaral?</div><div class="cn">真的嗎？你覺得他傳道的主題是什麼？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Hindi ko alam.</div><div class="cn">我不知道。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Pakisuyong basahin ang Lucas 8:1</div><div class="cn">請讀路加福音8:1</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Kaharian ng Diyos.</div><div class="cn">上帝的王國。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Tama po! Nais mo bang malaman ng higit pa tungkol sa Kaharian na ito?</div><div class="cn">正確！你想了解更多關於這個王國嗎？</div></div></div>
+</div>
+</div>
+
+<div class="dlg-group" data-week="w6">
+<div class="sec">W6-7 特別演講邀請</div>
+<div class="dialogue">
+  <h3>🎤 W6 特別演講邀請對話</h3>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Puwede ba tayong mabuhay nang masaya at walang hanggan?</div><div class="cn">我們可以永遠快樂地生活嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Hindi ko po alam.</div><div class="cn">我不知道。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Nais po kitang imbitahan sa isang espesyal na pahayag na gaganapin sa buong daigdig. Ito po ang inyong imbitasyon.</div><div class="cn">我想邀請您參加一個在全球舉行的特別演講。這是您的邀請函。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Okay sige, salamat po.</div><div class="cn">好的，謝謝。</div></div></div>
+</div>
+</div>
+
+<div class="dlg-group" data-week="w9">
+<div class="sec">W10 Gusto/Ayaw 練習對話</div>
+<div class="dialogue">
+  <h3>❤️ W10 Gusto/Ayaw 練習</h3>
+  <div class="dialogue-row"><div class="speaker">例1：</div><div class="speech"><div class="tl">Gusto kong mag-aral ng Bibliya araw-araw.</div><div class="cn">我想每天都研讀聖經。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">例2：</div><div class="speech"><div class="tl">Ayaw niyang maglaro. Gusto niyang gamitin ang aklat na ito.</div><div class="cn">他不想玩。他想使用這本書。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">例3：</div><div class="speech"><div class="tl">Gusto ba niyang mag-aral ng Bibliya?</div><div class="cn">他想學習聖經嗎？</div></div></div>
+</div>
+</div>
+
+<div class="dlg-group" data-week="w13">
+<div class="sec">W13 傳道對話 — 免費聖經學習</div>
+<div class="dialogue">
+  <h3>📖 W13 傳道對話（運用W11-13）</h3>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Hello. Kamusta ka?</div><div class="cn">你好。你好嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Mabuti naman.</div><div class="cn">很好。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Ako si Michael. Nagtatrabaho ka ba dito sa Taiwan?</div><div class="cn">我是Michael。你在台灣工作嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Ako si Willy. Nagtatrabaho ako dito sa Taiwan.</div><div class="cn">我是Willy。我在台灣工作。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Alam mo ba na nag-aalok kami ng libreng pag-aaral sa Bibliya?</div><div class="cn">你知道我們提供免費的聖經學習嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Hindi ko alam. Kanino kayo nagtuturo ng Bibliya? Sa mga Pinoy?</div><div class="cn">我不知道。你們教誰聖經？菲律賓人嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Oo. Itinuturo namin sa mga tao pati na sa mga Pinoy ang susi ng kaligayahan sa buhay. Itinuro sa amin ng Bibliya kung paano haharapin ang mga hamon sa buhay natin ngayon. Nais mo ba ipakita ko sa iyo dito sa Bibliya kung ano ang ituturo sa iyo ng Diyos upang maging mas maligaya tayo?</div><div class="cn">是的。我們教人們，包括菲律賓人，人生幸福的秘訣。聖經教我們如何面對生活中的挑戰。你想讓我從聖經中告訴你上帝會教你什麼嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Sige, pero saglit lang po kasi nagmamadali ako pauwi.</div><div class="cn">好的，但只能一會兒，因為我急著回家。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Walang problema. Okay, heto...</div><div class="cn">沒問題。好的，這就跟你講...</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Salamat. Kailangan ko talaga ang itinuro mo.</div><div class="cn">謝謝。我真的很需要你教的內容。</div></div></div>
+</div>
+</div>
+
+<div class="dlg-group" data-week="w15">
+<div class="sec">W14-15 傳道對話 — 小冊子分享</div>
+<div class="dialogue">
+  <h3>📄 W15 傳道對話（運用W14-15）</h3>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Hello. Kamusta ka?</div><div class="cn">你好。你好嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Mabuti naman.</div><div class="cn">很好。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Ako si Joel. Nagtatrabaho ka ba dito sa Taiwan?</div><div class="cn">我是Joel。你在台灣工作嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Ako si Michael. Nagtatrabaho ako dito sa Taiwan.</div><div class="cn">我是Michael。我在台灣工作。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Bibigyan ka namin ng isang tract salig sa Bibliya. Mababasa mo dito payo ng Diyos para sa atin. Nabasa mo na ba ang Bibliya?</div><div class="cn">我們會給你一份聖經小冊子。你可以在這裡讀到上帝對我們的教導。你讀過聖經嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Hindi ako mahilig magbasa ng Bibliya.</div><div class="cn">我不喜歡讀聖經。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Naunawaan ko. Maraming tao ang hindi mahilig magbasa. Alam mo ba na itinuturo ng Bibliya ang susi ng kaligayahan sa buhay. Tinulungan kami ng Bibliya kung paano haharapin ang mga hamon sa buhay natin ngayon. Nais mo ba mabasa ang tract na ito. Tutulungan ka ng Diyos upang maging mas maligaya tayo.</div><div class="cn">我理解。很多人不喜歡讀書。你知道聖經教導了幸福的秘訣嗎？聖經幫助我們面對生活挑戰。你想讀這份小冊子嗎？上帝會幫助你更快樂。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Sige, babasahin ko ang tract na iyan pag-uwi ko sa dormitory.</div><div class="cn">好的，我回宿舍後會讀那份小冊子。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Nakakatuwa naman. Maari ba kita dalawin sa dormitory mo?</div><div class="cn">真有意思。我可以去你的宿舍拜訪你嗎？</div></div></div>
+  <div class="dialogue-row"><div class="speaker">B:</div><div class="speech"><div class="tl">Pwede naman. Siguro sa susunod na day off ko.</div><div class="cn">沒問題。也許下次休息日吧。</div></div></div>
+  <div class="dialogue-row"><div class="speaker">A:</div><div class="speech"><div class="tl">Salamat Michael. Mabait ka. Kunin ko ang Line account mo.</div><div class="cn">謝謝你Michael。你真好。我來要你的Line帳號。</div></div></div>
+</div>
+</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 5: EXERCISE -->
+<!-- ============================================= -->
+<div id="panel-exercise" class="panel">
+<div style="text-align:center;padding:8px 0 14px">
+  <div style="font-size:1.05em;font-weight:bold;color:var(--c1)">✏️ 互動填空練習</div>
+  <div style="font-size:.82em;color:#999">選主題開始練習！</div>
+</div>
+<div class="ex-tabs" id="exTabs">
+  <button class="ex-tab-btn active" onclick="switchEx('pro')">👤 代名詞</button>
+  <button class="ex-tab-btn" onclick="switchEx('verb')">🏃 動詞</button>
+  <button class="ex-tab-btn" onclick="switchEx('gusto')">❤️ Gusto/Ayaw</button>
+  <button class="ex-tab-btn" onclick="switchEx('dapat')">✅ Dapat/Alam</button>
+  <button class="ex-tab-btn" onclick="switchEx('kailangan')">💪 Kailangan</button>
+  <button class="ex-tab-btn" onclick="switchEx('iverb')">📤 I-verb</button>
+  <button class="ex-tab-btn" onclick="switchEx('anverb')">🎯 -an verb</button>
+</div>
+<div id="ex-area"></div>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 6: QUIZ -->
+<!-- ============================================= -->
+<div id="panel-quiz" class="panel">
+<div id="quiz-mode" style="padding:4px 0">
+  <div style="text-align:center;padding:8px 0 14px">
+    <div style="font-size:1.05em;font-weight:bold;color:var(--c1)">🎯 測驗模式</div>
+    <div style="font-size:.82em;color:#999">選擇範圍開始！</div>
+  </div>
+  <button class="qmode-btn" onclick="startBigQuiz('all')">🏆 完整模擬考（W1-15）<span style="font-size:.78em;color:#aaa;margin-left:8px">50題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('pronoun')">👤 代名詞專項<span style="font-size:.78em;color:#aaa;margin-left:8px">12題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('verb')">🏃 動詞時態專項<span style="font-size:.78em;color:#aaa;margin-left:8px">10題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('gusto')">❤️ Gusto/Ayaw（W10）<span style="font-size:.78em;color:#aaa;margin-left:8px">10題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('dapat')">✅ Dapat/Alam<span style="font-size:.78em;color:#aaa;margin-left:8px">10題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('kailangan')">💪 Kailangan（W11）<span style="font-size:.78em;color:#aaa;margin-left:8px">8題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('w12')">🏷️ Kanino/Kailan（W12）<span style="font-size:.78em;color:#aaa;margin-left:8px">8題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('w13_15')">📤 I-verb / Ma-verb / -an verb（W13-15）<span style="font-size:.78em;color:#aaa;margin-left:8px">10題</span></button>
+  <button class="qmode-btn" onclick="startBigQuiz('vocab')">📚 W8-15詞彙<span style="font-size:.78em;color:#aaa;margin-left:8px">15題</span></button>
+</div>
+<div id="quiz-container" style="display:none"></div>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 7: BIBLE -->
+<!-- ============================================= -->
+<div id="panel-bible" class="panel">
+<div class="sec">希伯來語經卷（舊約）</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>Tagalog</th><th>音標</th><th>中文</th></tr>
+    <tr><td class="hl">Genesis</td><td>Ge-ne-sis</td><td>創世記</td></tr>
+    <tr><td class="hl">Exodo</td><td>Ex-o-do</td><td>出埃及記</td></tr>
+    <tr><td class="hl">Levitico</td><td>Le-vi-ti-co</td><td>利未記</td></tr>
+    <tr><td class="hl">Bilang</td><td>Bi-lang</td><td>民數記</td></tr>
+    <tr><td class="hl">Deuteronomio</td><td>Deu-te-ro-no-mi-o</td><td>申命記</td></tr>
+    <tr><td class="hl">Josue</td><td>Jo-sue</td><td>約書亞記</td></tr>
+    <tr><td class="hl">Mga Hukom</td><td>Hu-kom</td><td>士師記</td></tr>
+    <tr><td class="hl">Ruth</td><td>Ruth</td><td>路得記</td></tr>
+    <tr><td class="hl">1 Samuel / 2 Samuel</td><td>Sa-mu-el</td><td>撒母耳記上/下</td></tr>
+    <tr><td class="hl">1 Hari / 2 Hari</td><td>Ha-ri</td><td>列王紀上/下</td></tr>
+    <tr><td class="hl">1 Cronica / 2 Cronica</td><td>Cro-ni-ca</td><td>歷代志上/下</td></tr>
+    <tr><td class="hl">Ezra</td><td>Ez-ra</td><td>以斯拉記</td></tr>
+    <tr><td class="hl">Nehemias</td><td>Ne-he-mi-as</td><td>尼希米記</td></tr>
+    <tr><td class="hl">Ester</td><td>Es-ter</td><td>以斯帖記</td></tr>
+    <tr><td class="hl">Job</td><td>Job</td><td>約伯記</td></tr>
+    <tr><td class="hl">Awit</td><td>A-wit</td><td>詩篇</td></tr>
+    <tr><td class="hl">Kawikaan</td><td>Ka-wi-ka-an</td><td>箴言</td></tr>
+    <tr><td class="hl">Ecclesiastes</td><td>Ec-cle-si-as-tes</td><td>傳道書</td></tr>
+    <tr><td class="hl">Awit ni Solomon</td><td>So-lo-mon</td><td>雅歌</td></tr>
+    <tr><td class="hl">Isaias</td><td>I-sa-i-as</td><td>以賽亞書</td></tr>
+    <tr><td class="hl">Jeremias</td><td>Je-re-mi-as</td><td>耶利米書</td></tr>
+    <tr><td class="hl">Panaghoy</td><td>Pa-nag-hoy</td><td>耶利米哀歌</td></tr>
+    <tr><td class="hl">Ezekiel</td><td>E-ze-ki-el</td><td>以西結書</td></tr>
+    <tr><td class="hl">Daniel</td><td>Da-ni-el</td><td>但以理書</td></tr>
+    <tr><td class="hl">Oseas - Malakias</td><td></td><td>何西阿書 - 瑪拉基書（12小先知書）</td></tr>
+  </table>
+</div>
+<div class="sec">希臘語經卷（新約）</div>
+<div class="card" style="padding:14px">
+  <table class="tbl">
+    <tr><th>Tagalog</th><th>中文</th><th>Tagalog</th><th>中文</th></tr>
+    <tr><td class="hl">Mateo</td><td>馬太福音</td><td class="hl">1 Tesalonica</td><td>帖前</td></tr>
+    <tr><td class="hl">Marcos</td><td>馬可福音</td><td class="hl">2 Tesalonica</td><td>帖後</td></tr>
+    <tr><td class="hl">Lucas</td><td>路加福音</td><td class="hl">1 Timoteo</td><td>提前</td></tr>
+    <tr><td class="hl">Juan</td><td>約翰福音</td><td class="hl">2 Timoteo</td><td>提後</td></tr>
+    <tr><td class="hl">Gawa</td><td>使徒行傳</td><td class="hl">Tito</td><td>提多書</td></tr>
+    <tr><td class="hl">Roma</td><td>羅馬書</td><td class="hl">Filemon</td><td>腓利門書</td></tr>
+    <tr><td class="hl">1 Corinto</td><td>哥林多前書</td><td class="hl">Hebreo</td><td>希伯來書</td></tr>
+    <tr><td class="hl">2 Corinto</td><td>哥林多後書</td><td class="hl">Santiago</td><td>雅各書</td></tr>
+    <tr><td class="hl">Galacia</td><td>加拉太書</td><td class="hl">1-2 Pedro</td><td>彼得前後書</td></tr>
+    <tr><td class="hl">Efeso</td><td>以弗所書</td><td class="hl">1-3 Juan</td><td>約翰一二三書</td></tr>
+    <tr><td class="hl">Filipos</td><td>腓立比書</td><td class="hl">Judas</td><td>猶大書</td></tr>
+    <tr><td class="hl">Colosas</td><td>歌羅西書</td><td class="hl">Apocalipsis</td><td>啟示錄</td></tr>
+  </table>
+</div>
+<div class="tip" style="margin:0 0 14px">常引用：Lucas 8:1；Mateo 6:9；Genesis 1:1；Awit 83:18</div>
+</div>
+
+<!-- ============================================= -->
+<!-- JAVASCRIPT -->
+<!-- ============================================= -->
+<script>
+// ═══════════════════════════════════════════════
+// MASTER VOCABULARY DATABASE (W1-15)
+// ═══════════════════════════════════════════════
+const CATS={
+  greet:{label:'👋 問候',color:'#FF6B6B',bg:'#FFF0F0'},
+  number:{label:'🔢 數字',color:'#FF9A5C',bg:'#FFF5EE'},
+  weekday:{label:'📅 星期',color:'#FFB020',bg:'#FFFAEE'},
+  month:{label:'🗓️ 月份',color:'#FFD93D',bg:'#FFFDE8'},
+  time:{label:'⏰ 時間',color:'#8BC34A',bg:'#F4FFF0'},
+  pronoun:{label:'👤 代名詞',color:'#4D96FF',bg:'#EEF5FF'},
+  adj:{label:'✨ 形容詞',color:'#7C4DFF',bg:'#F3EEFF'},
+  verb:{label:'🏃 動詞',color:'#00BCD4',bg:'#E8FAFB'},
+  marker:{label:'🏷️ 標記',color:'#FF5722',bg:'#FFF0EC'},
+  bible:{label:'✝️ 聖經',color:'#795548',bg:'#FFF8F5'},
+  ministry:{label:'🚪 傳道',color:'#009688',bg:'#E8FAF8'},
+  body:{label:'🏠 生活',color:'#607D8B',bg:'#F0F5F8'},
+  family:{label:'👨‍👩‍👧 人物',color:'#E91E63',bg:'#FFF0F5'},
+  grammar:{label:'📐 文法',color:'#9C27B0',bg:'#F8F0FF'},
+  w11_15:{label:'📗 W11-15',color:'#2E7D32',bg:'#E8F5E9'},
+};
+
+const VOCAB=[
+// ── 問候 ──
+{id:1,tl:'Kumusta',zh:'你好嗎？',en:'How are you?',reading:'庫木斯塔',cat:'greet',hint:'KUMasta=快問一下',ex:{tl:'Kumusta po?',cn:'您好嗎？'}},
+{id:2,tl:'Mabuti',zh:'很好',en:'Fine / Good',reading:'媽不提',cat:'greet',hint:'媽不提壞事=很好',ex:{tl:'Mabuti naman po.',cn:'我很好。'}},
+{id:3,tl:'Salamat',zh:'謝謝',en:'Thank you',reading:'撒拉媽',cat:'greet',hint:'撒拉媽=謝謝媽媽',ex:{tl:'Maraming salamat!',cn:'非常謝謝！'}},
+{id:4,tl:'Maraming salamat',zh:'非常謝謝',en:'Thank you very much',reading:'媽拉明撒拉媽',cat:'greet',hint:'Maraming=很多',ex:{tl:'Maraming salamat po!',cn:'非常感謝您！'}},
+{id:5,tl:'Walang anuman',zh:'不客氣',en:"You're welcome",reading:'哇拉安啊努曼',cat:'greet',hint:'沒有任何事',ex:{tl:'Walang anuman.',cn:'不客氣。'}},
+{id:6,tl:'Oo',zh:'是的',en:'Yes',reading:'喔喔',cat:'greet',hint:'喔喔點頭',ex:{tl:'Oo, alam ko.',cn:'是的，我知道。'}},
+{id:7,tl:'Hindi',zh:'不/否',en:'No',reading:'辛低',cat:'greet',hint:'辛低=否定',ex:{tl:'Hindi ko alam.',cn:'我不知道。'}},
+{id:8,tl:'Po',zh:'（禮貌助詞）',en:'Polite particle',reading:'破',cat:'greet',hint:'加po=更有禮貌',ex:{tl:'Oo po.',cn:'是的（禮貌版）。'}},
+{id:9,tl:'Anong pangalan mo?',zh:'你叫什麼名字？',en:"What's your name?",reading:'啊農潘阿藍摩',cat:'greet',hint:'Pangalan=名字',ex:{tl:'Anong pangalan mo?',cn:'你叫什麼名字？'}},
+{id:10,tl:'Magandang umaga',zh:'早安',en:'Good morning',reading:'媽干丹烏媽嘎',cat:'greet',hint:'Maganda=漂亮，Umaga=早上',ex:{tl:'Magandang umaga po!',cn:'早安！'}},
+{id:11,tl:'Magandang hapon',zh:'午安',en:'Good afternoon',reading:'媽干丹哈噴',cat:'greet',hint:'Hapon=下午',ex:{tl:'Magandang hapon!',cn:'午安！'}},
+{id:12,tl:'Magandang gabi',zh:'晚安',en:'Good evening',reading:'媽干丹嘎比',cat:'greet',hint:'Gabi=晚上',ex:{tl:'Magandang gabi po.',cn:'晚上好。'}},
+{id:13,tl:'Paalam',zh:'再見',en:'Goodbye',reading:'啪阿藍',cat:'greet',hint:'啪一聲離開',ex:{tl:'Paalam na!',cn:'再見了！'}},
+{id:14,tl:'Sige',zh:'好的/行',en:'Okay',reading:'細格',cat:'greet',hint:'OK啦',ex:{tl:'Okay sige.',cn:'好，行。'}},
+// ── 數字 ──
+{id:20,tl:'Isa',zh:'1',en:'One',reading:'一撒',cat:'number',hint:'一撒=一',ex:{tl:'Isa lang.',cn:'只有一個。'}},
+{id:21,tl:'Dalawa',zh:'2',en:'Two',reading:'大拉哇',cat:'number',hint:'大拉哇=二',ex:{tl:'Dalawang aklat.',cn:'兩本書。'}},
+{id:22,tl:'Tatlo',zh:'3',en:'Three',reading:'他特囉',cat:'number',hint:'他特囉=三',ex:{tl:'Tatlong tao.',cn:'三個人。'}},
+{id:23,tl:'Apat',zh:'4',en:'Four',reading:'啊趴',cat:'number',hint:'啊趴=四',ex:{tl:'Apat na linggo.',cn:'四週。'}},
+{id:24,tl:'Lima',zh:'5',en:'Five',reading:'利馬',cat:'number',hint:'利馬=五',ex:{tl:'Lima.',cn:'五。'}},
+{id:25,tl:'Anim',zh:'6',en:'Six',reading:'啊您',cat:'number',hint:'啊您=六',ex:{tl:'Anim na tao.',cn:'六個人。'}},
+{id:26,tl:'Pito',zh:'7',en:'Seven',reading:'批多',cat:'number',hint:'批多=七',ex:{tl:'Pito.',cn:'七。'}},
+{id:27,tl:'Walo',zh:'8',en:'Eight',reading:'哇囉',cat:'number',hint:'哇囉=八',ex:{tl:'Walo.',cn:'八。'}},
+{id:28,tl:'Siyam',zh:'9',en:'Nine',reading:'細嚴',cat:'number',hint:'細嚴=九',ex:{tl:'Siyam.',cn:'九。'}},
+{id:29,tl:'Sampu',zh:'10',en:'Ten',reading:'山普',cat:'number',hint:'山普=十',ex:{tl:'Sampu.',cn:'十。'}},
+{id:30,tl:'Dalawampu',zh:'20',en:'Twenty',reading:'大拉瓦普',cat:'number',hint:'dalawa+pu',ex:{tl:"Dalawampu't isa.",cn:'21。'}},
+// ── 星期 ──
+{id:40,tl:'Linggo',zh:'星期日',en:'Sunday',reading:'令狗',cat:'weekday',hint:'令狗=星期日',ex:{tl:'Tuwing Linggo.',cn:'每週日。'}},
+{id:41,tl:'Lunes',zh:'星期一',en:'Monday',reading:'路內斯',cat:'weekday',hint:'Luna月亮',ex:{tl:'Sa Lunes.',cn:'在星期一。'}},
+{id:42,tl:'Martes',zh:'星期二',en:'Tuesday',reading:'馬特斯',cat:'weekday',hint:'Mars火星',ex:{tl:'Sa Martes.',cn:'在星期二。'}},
+{id:43,tl:'Miyerkules',zh:'星期三',en:'Wednesday',reading:'咪耶庫勒斯',cat:'weekday',hint:'Mercury',ex:{tl:'Sa Miyerkules.',cn:'在星期三。'}},
+{id:44,tl:'Huwebes',zh:'星期四',en:'Thursday',reading:'胡偉貝斯',cat:'weekday',hint:'Jueves',ex:{tl:'Sa Huwebes.',cn:'在星期四。'}},
+{id:45,tl:'Biyernes',zh:'星期五',en:'Friday',reading:'比耶內斯',cat:'weekday',hint:'Viernes',ex:{tl:'Sa Biyernes.',cn:'在星期五。'}},
+{id:46,tl:'Sabado',zh:'星期六',en:'Saturday',reading:'撒巴多',cat:'weekday',hint:'Sabbath安息日',ex:{tl:'Sa Sabado.',cn:'在星期六。'}},
+// ── 月份 ──
+{id:50,tl:'Enero',zh:'一月',en:'January',reading:'唉內囉',cat:'month',hint:'January→Enero',ex:{tl:'Sa Enero.',cn:'在一月。'}},
+{id:51,tl:'Pebrero',zh:'二月',en:'February',reading:'杯不熱囉',cat:'month',hint:'February→Pebrero',ex:{tl:'Sa Pebrero.',cn:'在二月。'}},
+{id:52,tl:'Marso',zh:'三月',en:'March',reading:'馬而所',cat:'month',hint:'March→Marso',ex:{tl:'Sa Marso.',cn:'在三月。'}},
+{id:53,tl:'Abril',zh:'四月',en:'April',reading:'啊不力兒',cat:'month',hint:'April→Abril',ex:{tl:'Sa Abril.',cn:'在四月。'}},
+{id:54,tl:'Mayo',zh:'五月',en:'May',reading:'馬優',cat:'month',hint:'May→Mayo',ex:{tl:'Sa Mayo.',cn:'在五月。'}},
+{id:55,tl:'Hunyo',zh:'六月',en:'June',reading:'胡尼優',cat:'month',hint:'June→Hunyo',ex:{tl:'Sa Hunyo.',cn:'在六月。'}},
+{id:56,tl:'Hulyo',zh:'七月',en:'July',reading:'胡里優',cat:'month',hint:'July→Hulyo',ex:{tl:'Sa Hulyo.',cn:'在七月。'}},
+{id:57,tl:'Agosto',zh:'八月',en:'August',reading:'啊狗斯多',cat:'month',hint:'August→Agosto',ex:{tl:'Sa Agosto.',cn:'在八月。'}},
+{id:58,tl:'Setyembre',zh:'九月',en:'September',reading:'色特燕不蕾',cat:'month',hint:'Sept→Setyembre',ex:{tl:'Sa Setyembre.',cn:'在九月。'}},
+{id:59,tl:'Oktubre',zh:'十月',en:'October',reading:'噢都不蕾',cat:'month',hint:'Oct→Oktubre',ex:{tl:'Sa Oktubre.',cn:'在十月。'}},
+{id:60,tl:'Nobyembre',zh:'十一月',en:'November',reading:'諾燕不蕾',cat:'month',hint:'Nov→Nobyembre',ex:{tl:'Sa Nobyembre.',cn:'在十一月。'}},
+{id:61,tl:'Disyembre',zh:'十二月',en:'December',reading:'低先不蕾',cat:'month',hint:'Dec→Disyembre',ex:{tl:'Sa Disyembre.',cn:'在十二月。'}},
+// ── 時間詞 ──
+{id:70,tl:'Ngayon',zh:'現在/今天',en:'Now / Today',reading:'昂優',cat:'time',hint:'Ngayon=now',ex:{tl:'Ngayon na!',cn:'現在！'}},
+{id:71,tl:'Bukas',zh:'明天',en:'Tomorrow',reading:'布卡斯',cat:'time',hint:'bukas=明天',ex:{tl:'Bukas na lang.',cn:'明天再說。'}},
+{id:72,tl:'Kahapon',zh:'昨天',en:'Yesterday',reading:'卡哈噴',cat:'time',hint:'kahapon=昨天',ex:{tl:'Kahapon.',cn:'昨天。'}},
+{id:73,tl:'Mamaya',zh:'等一下',en:'Later',reading:'媽媽亞',cat:'time',hint:'mamaya=later',ex:{tl:'Mamaya na.',cn:'等一下。'}},
+{id:74,tl:'Araw-araw',zh:'每天',en:'Every day',reading:'啊拉啊拉',cat:'time',hint:'araw=天',ex:{tl:'Araw-araw.',cn:'每天。'}},
+// ── 代名詞 ──
+{id:80,tl:'Ako',zh:'我（主格）',en:'I',reading:'啊口',cat:'pronoun',hint:'啊口=指自己',ex:{tl:'Ako ay estudyante.',cn:'我是學生。'}},
+{id:81,tl:'Ikaw / Ka',zh:'你（主格）',en:'You',reading:'一靠/卡',cat:'pronoun',hint:'Ikaw句首，Ka動詞後',ex:{tl:'Ikaw ba iyon?',cn:'是你嗎？'}},
+{id:82,tl:'Siya',zh:'他/她（主格）',en:'He/She',reading:'細亞',cat:'pronoun',hint:'不分性別！',ex:{tl:'Siya ay mabait.',cn:'他/她很善良。'}},
+{id:83,tl:'Tayo',zh:'我們含你（主格）',en:'We (inclusive)',reading:'他優',cat:'pronoun',hint:'他優=大家一起',ex:{tl:'Tayo na!',cn:'我們走吧！'}},
+{id:84,tl:'Kami',zh:'我們不含你（主格）',en:'We (exclusive)',reading:'卡咪',cat:'pronoun',hint:'去卡拉OK沒叫你',ex:{tl:'Kami ay dumalo.',cn:'我們出席了。'}},
+{id:85,tl:'Kayo',zh:'你們（主格）',en:'You (plural)',reading:'卡優',cat:'pronoun',hint:'卡優=你們',ex:{tl:'Kayo ba?',cn:'你們嗎？'}},
+{id:86,tl:'Sila',zh:'他們（主格）',en:'They',reading:'細拉',cat:'pronoun',hint:'細拉一群人',ex:{tl:'Sila ay masaya.',cn:'他們很開心。'}},
+// ── 形容詞 ──
+{id:100,tl:'Maganda',zh:'漂亮/好',en:'Beautiful',reading:'媽干達',cat:'adj',hint:'Maganda=漂亮',ex:{tl:'Maganda ang bahay.',cn:'房子很漂亮。'}},
+{id:101,tl:'Masaya',zh:'快樂',en:'Happy',reading:'媽撒亞',cat:'adj',hint:'masaya=happy',ex:{tl:'Masaya ako.',cn:'我很快樂。'}},
+{id:102,tl:'Mabait',zh:'善良/乖',en:'Kind / Good',reading:'媽拜',cat:'adj',hint:'mabait=kind',ex:{tl:'Mabait ang bata.',cn:'孩子很乖。'}},
+{id:103,tl:'Malaki',zh:'大',en:'Big',reading:'媽拉基',cat:'adj',hint:'malaki=大',ex:{tl:'Malaki ang bahay.',cn:'房子很大。'}},
+{id:104,tl:'Maliit',zh:'小',en:'Small',reading:'媽利',cat:'adj',hint:'maliit=小',ex:{tl:'Maliit ang bata.',cn:'孩子很小。'}},
+{id:105,tl:'Mahirap',zh:'困難/窮',en:'Difficult / Poor',reading:'媽黑拉',cat:'adj',hint:'mahirap=困難',ex:{tl:'Mahirap ang buhay.',cn:'生活很困難。'}},
+{id:106,tl:'Matangkad',zh:'高（身高）',en:'Tall',reading:'媽湯卡',cat:'adj',hint:'matangkad=tall',ex:{tl:'Matangkad ang lalaki.',cn:'那個男人很高。'}},
+{id:107,tl:'Matulungin',zh:'樂於幫助',en:'Helpful',reading:'媽圖隆因',cat:'adj',hint:'tulong=幫助',ex:{tl:'Matulungin siya.',cn:'他/她很有幫助。'}},
+// ── 動詞 ──
+{id:120,tl:'Kumain',zh:'吃了（um過去）',en:'Ate',reading:'庫媽因',cat:'verb',hint:'um類過去：kumain',ex:{tl:'Kumain na ako.',cn:'我已經吃了。'}},
+{id:121,tl:'Nagbasa',zh:'讀了（nag過去）',en:'Read (past)',reading:'那哥巴薩',cat:'verb',hint:'nag類過去',ex:{tl:'Nagbasa ako ng Bibliya.',cn:'我讀了聖經。'}},
+{id:122,tl:'Pumunta',zh:'去了（um過去）',en:'Went',reading:'普曼他',cat:'verb',hint:'um+punta=pumunta',ex:{tl:'Pumunta ako sa Kingdom Hall.',cn:'我去了王國聚會所。'}},
+{id:123,tl:'Dumalo',zh:'參加了（um過去）',en:'Attended',reading:'杜媽囉',cat:'verb',hint:'dumalo=出席了',ex:{tl:'Dumalo ka ba?',cn:'你出席了嗎？'}},
+{id:124,tl:'Nag-aral',zh:'學習了',en:'Studied',reading:'那嘎拉',cat:'verb',hint:'nag+aral',ex:{tl:'Nag-aral ako ng Tagalog.',cn:'我學了他加祿語。'}},
+{id:125,tl:'Mangaral',zh:'傳道',en:'To preach',reading:'曼嘎拉',cat:'verb',hint:'mang類=傳道',ex:{tl:'Nangangaral kami.',cn:'我們在傳道。'}},
+{id:126,tl:'Uminom',zh:'喝了',en:'Drank',reading:'烏咪農',cat:'verb',hint:'um+inom',ex:{tl:'Uminom ako ng tubig.',cn:'我喝了水。'}},
+{id:127,tl:'Magluto',zh:'煮飯',en:'To cook',reading:'媽路多',cat:'verb',hint:'mag+luto',ex:{tl:'Nagluto ako.',cn:'我煮了飯。'}},
+// ── 標記/助詞 ──
+{id:140,tl:'Ang',zh:'主語標記',en:'(subject marker)',reading:'昂',cat:'marker',hint:'Ang=主語聚光燈',ex:{tl:'Ang bahay.',cn:'（那個）房子。'}},
+{id:141,tl:'Ang mga',zh:'複數主語標記',en:'(plural marker)',reading:'昂媽嘎',cat:'marker',hint:'mga=複數',ex:{tl:'Ang mga bata.',cn:'那些孩子們。'}},
+{id:142,tl:'Si',zh:'人名主語標記',en:'(name marker)',reading:'細',cat:'marker',hint:'人名前加Si',ex:{tl:'Si Jehova.',cn:'耶和華。'}},
+{id:143,tl:'Ng',zh:'所有格/受詞',en:'of / (object)',reading:'囊',cat:'marker',hint:'ng=的/受詞',ex:{tl:'ng Bibliya.',cn:'聖經的。'}},
+{id:144,tl:'Sa',zh:'地點/介詞',en:'at / to',reading:'撒',cat:'marker',hint:'sa=在/去',ex:{tl:'Sa Kingdom Hall.',cn:'在王國聚會所。'}},
+{id:145,tl:'Na',zh:'已經/的（連接詞）',en:'Already / Linker',reading:'那',cat:'marker',hint:'na=已經；也是連接詞',ex:{tl:'Kumain na siya.',cn:'他已經吃了。'}},
+{id:146,tl:'Pa',zh:'還/還沒',en:'Still / Yet',reading:'啪',cat:'marker',hint:'Hindi pa=還沒',ex:{tl:'Hindi pa siya kumain.',cn:'他還沒吃。'}},
+{id:147,tl:'Ba',zh:'疑問助詞',en:'(question particle)',reading:'巴',cat:'marker',hint:'ba讓陳述變疑問',ex:{tl:'Dumalo ka ba?',cn:'你出席了嗎？'}},
+// ── 聖經/宗教 ──
+{id:160,tl:'Diyos',zh:'上帝',en:'God',reading:'低優斯',cat:'bible',hint:'Dios→Diyos',ex:{tl:'Ang Diyos ay pag-ibig.',cn:'上帝就是愛。'}},
+{id:161,tl:'Jehova',zh:'耶和華',en:'Jehovah',reading:'黑後瓦',cat:'bible',hint:'J讀H音',ex:{tl:'Si Jehova.',cn:'耶和華。'}},
+{id:162,tl:'Bibliya',zh:'聖經',en:'Bible',reading:'比不力亞',cat:'bible',hint:'Bible→Bibliya',ex:{tl:'Basahin ang Bibliya.',cn:'讀聖經。'}},
+{id:163,tl:'Kaharian ng Diyos',zh:'上帝的王國',en:'Kingdom of God',reading:'卡哈力安',cat:'bible',hint:'Kaharian=王國',ex:{tl:'Dumating na ang Kaharian ng Diyos.',cn:'上帝的王國來了。'}},
+{id:164,tl:'Pulong',zh:'聚會',en:'Meeting',reading:'普隆',cat:'bible',hint:'pulong=meeting',ex:{tl:'Kailan ang pulong?',cn:'聚會什麼時候？'}},
+{id:165,tl:'Kongregasyon',zh:'會眾',en:'Congregation',reading:'空格拉生',cat:'bible',hint:'congregation',ex:{tl:'Ang aming kongregasyon.',cn:'我們的會眾。'}},
+{id:166,tl:'Manalangin',zh:'禱告',en:'To pray',reading:'媽那朗因',cat:'bible',hint:'manalangin=pray',ex:{tl:'Manalangin tayo.',cn:'我們一起禱告。'}},
+{id:167,tl:'Pag-ibig',zh:'愛',en:'Love',reading:'啪根衣比',cat:'bible',hint:'耶和華的首要特質',ex:{tl:'Ang pag-ibig ng Diyos.',cn:'上帝的愛。'}},
+// ── 傳道 ──
+{id:180,tl:'Imbitasyon',zh:'邀請函',en:'Invitation',reading:'印比他雄',cat:'ministry',hint:'Invitation',ex:{tl:'Heto ang imbitasyon mo.',cn:'這是你的邀請函。'}},
+{id:181,tl:'Pangangaral',zh:'傳道（名詞）',en:'Preaching',reading:'潘嘎嘎拉',cat:'ministry',hint:'名詞化',ex:{tl:'Ang gawaing pangangaral.',cn:'傳道工作。'}},
+{id:182,tl:'Mabuting balita',zh:'好消息',en:'Good news',reading:'媽不停巴力他',cat:'ministry',hint:'Mabuti+balita',ex:{tl:'Ipangaral ang mabuting balita.',cn:'傳講好消息。'}},
+{id:183,tl:'Pananampalataya',zh:'信心',en:'Faith',reading:'啪那南啪拉他亞',cat:'ministry',hint:'最長的詞！',ex:{tl:'Ang pananampalataya natin.',cn:'我們的信心。'}},
+{id:184,tl:'Kristiyano',zh:'基督徒',en:'Christian',reading:'克里斯提亞諾',cat:'ministry',hint:'Christian',ex:{tl:'Kristiyano ako.',cn:'我是基督徒。'}},
+{id:185,tl:'Katangian',zh:'特質',en:'Quality / Trait',reading:'卡湯阿安',cat:'ministry',hint:'特質/屬性',ex:{tl:'Anu-ano ang mga katangian ni Jehova?',cn:'耶和華有哪些特質？'}},
+{id:186,tl:'Katarungan',zh:'正義',en:'Justice',reading:'卡他龍安',cat:'ministry',hint:'公正的龍',ex:{tl:'Ang katarungan ni Jehova.',cn:'耶和華的正義。'}},
+{id:187,tl:'Karunungan',zh:'智慧',en:'Wisdom',reading:'卡路農安',cat:'ministry',hint:'智慧的農夫',ex:{tl:'Ang karunungan ni Jehova.',cn:'耶和華的智慧。'}},
+{id:188,tl:'Kapangyarihan',zh:'能力',en:'Power',reading:'卡潘亞利漢',cat:'ministry',hint:'有能力的',ex:{tl:'Ang kapangyarihan ni Jehova.',cn:'耶和華的能力。'}},
+// ── 生活/場所 ──
+{id:260,tl:'Bahay',zh:'房子',en:'House',reading:'巴嗨',cat:'body',hint:'巴嗨=房子',ex:{tl:'Ang bahay ko.',cn:'我的房子。'}},
+{id:261,tl:'Trabaho',zh:'工作',en:'Work / Job',reading:'拖拉巴後',cat:'body',hint:'工作拖拖拉拉',ex:{tl:'Anong trabaho mo?',cn:'你的工作是什麼？'}},
+{id:262,tl:'Bakasyon',zh:'假期',en:'Vacation',reading:'巴卡頌',cat:'body',hint:'Vacation',ex:{tl:'Magbabakasyon ako.',cn:'我要去度假。'}},
+{id:263,tl:'Damit',zh:'衣服',en:'Clothes',reading:'大咪',cat:'body',hint:'大衣咪咪',ex:{tl:'Isuot ang damit.',cn:'穿上衣服。'}},
+{id:264,tl:'Paaralan',zh:'學校',en:'School',reading:'啪啊拉蘭',cat:'body',hint:'學習的地方',ex:{tl:'Sa paaralan.',cn:'在學校。'}},
+{id:265,tl:'Tubig',zh:'水',en:'Water',reading:'圖比',cat:'body',hint:'水圖比',ex:{tl:'Gusto kong uminom ng tubig.',cn:'我想喝水。'}},
+{id:266,tl:'Gatas',zh:'牛奶',en:'Milk',reading:'嘎他斯',cat:'body',hint:'牛奶嘎嘎叫',ex:{tl:'Gusto kong uminom ng gatas.',cn:'我想喝牛奶。'}},
+{id:267,tl:'Aklat',zh:'書',en:'Book',reading:'啊可拉',cat:'body',hint:'Aklat=書',ex:{tl:'Ang aklat na ito.',cn:'這本書。'}},
+{id:268,tl:'Lupa',zh:'土地/地球',en:'Earth',reading:'路啪',cat:'body',hint:'地球路啪',ex:{tl:'Ang lupa ay maganda.',cn:'地球很美。'}},
+{id:269,tl:'Lugar',zh:'地方',en:'Place',reading:'路嘎',cat:'body',hint:'路嘎=地點',ex:{tl:'Saan ang lugar?',cn:'地方在哪？'}},
+// ── 人物 ──
+{id:290,tl:'Tatay',zh:'爸爸',en:'Father',reading:'他他依',cat:'family',hint:'爸爸叫他他依',ex:{tl:'Mabait ang tatay ko.',cn:'我爸爸很善良。'}},
+{id:291,tl:'Nanay',zh:'媽媽',en:'Mother',reading:'那那依',cat:'family',hint:'媽媽那那依',ex:{tl:'Mabait ang nanay ko.',cn:'我媽媽很善良。'}},
+{id:292,tl:'Bata',zh:'孩子',en:'Child',reading:'巴他',cat:'family',hint:'Bata=孩子',ex:{tl:'Ang mga bata.',cn:'那些孩子們。'}},
+{id:293,tl:'Lalaki',zh:'男人',en:'Man',reading:'拉拉基',cat:'family',hint:'Lalaki=男人',ex:{tl:'Ang lalaki.',cn:'那個男人。'}},
+{id:294,tl:'Babae',zh:'女人',en:'Woman',reading:'巴巴耶',cat:'family',hint:'Babae=女人',ex:{tl:'Ang babae.',cn:'那個女人。'}},
+{id:295,tl:'Tao',zh:'人',en:'Person',reading:'它哦',cat:'family',hint:'Tao=人',ex:{tl:'Maraming tao.',cn:'很多人。'}},
+{id:296,tl:'Guro',zh:'老師',en:'Teacher',reading:'古囉',cat:'family',hint:'guru=師父',ex:{tl:'Guro ako.',cn:'我是老師。'}},
+{id:297,tl:'Estudyante',zh:'學生',en:'Student',reading:'唉斯土扭',cat:'family',hint:'Student',ex:{tl:'Estudyante ako.',cn:'我是學生。'}},
+{id:298,tl:'Empleyado',zh:'員工',en:'Employee',reading:'嗯普蕾亞多',cat:'family',hint:'Employee',ex:{tl:'Empleyado ako.',cn:'我是員工。'}},
+{id:299,tl:'Doktor',zh:'醫生',en:'Doctor',reading:'都可特',cat:'family',hint:'Doctor',ex:{tl:'Doktor ako.',cn:'我是醫生。'}},
+// ── 文法關鍵詞 ──
+{id:300,tl:'Dapat',zh:'應該',en:'Should',reading:'大趴',cat:'grammar',hint:'道義上的應該',ex:{tl:'Dapat akong bumasa.',cn:'我應該讀。'}},
+{id:301,tl:'Alam',zh:'知道',en:'Know',reading:'阿蘭',cat:'grammar',hint:'Alam+所有格',ex:{tl:'Alam mo ba?',cn:'你知道嗎？'}},
+{id:302,tl:'Kailangan',zh:'需要',en:'Need',reading:'凱拉安',cat:'grammar',hint:'實際需要',ex:{tl:'Kailangan ko ng kape.',cn:'我需要咖啡。'}},
+{id:303,tl:'Gusto',zh:'想要',en:'Want',reading:'歸斯托',cat:'grammar',hint:'具體當下想要',ex:{tl:'Gusto kong mag-aral.',cn:'我想學習。'}},
+{id:304,tl:'Ayaw / Ayoko',zh:'不想要',en:"Don't want",reading:'啊亞/啊優口',cat:'grammar',hint:'Ayoko=口語',ex:{tl:'Ayokong pumunta.',cn:'我不想去。'}},
+{id:305,tl:'Mahilig',zh:'喜好（長期）',en:'Fond of',reading:'媽黑力',cat:'grammar',hint:'長期興趣',ex:{tl:'Mahilig ako sa Tagalog.',cn:'我很喜歡他加祿語。'}},
+{id:306,tl:'May / Wala',zh:'有 / 沒有',en:'Have / None',reading:'梅/哇拉',cat:'grammar',hint:'May=有，Wala=沒有',ex:{tl:'May anghel sa langit.',cn:'天上有天使。'}},
+{id:307,tl:'Sino',zh:'誰？',en:'Who?',reading:'細諾',cat:'grammar',hint:'Sino=誰',ex:{tl:'Sino si Jehova?',cn:'耶和華是誰？'}},
+{id:308,tl:'Ano',zh:'什麼？',en:'What?',reading:'啊諾',cat:'grammar',hint:'問單一',ex:{tl:'Ano ang pangalan mo?',cn:'你叫什麼名字？'}},
+{id:309,tl:'Saan',zh:'哪裡？',en:'Where?',reading:'撒安',cat:'grammar',hint:'Saan=哪裡',ex:{tl:'Saan ang Kingdom Hall?',cn:'王國聚會所在哪？'}},
+{id:310,tl:'Kailan',zh:'何時？',en:'When?',reading:'凱藍',cat:'grammar',hint:'Kailan=何時',ex:{tl:'Kailan ang pulong?',cn:'聚會什麼時候？'}},
+{id:311,tl:'Bakit',zh:'為什麼？',en:'Why?',reading:'巴基',cat:'grammar',hint:'Bakit=為什麼',ex:{tl:'Bakit?',cn:'為什麼？'}},
+{id:312,tl:'Paano',zh:'怎麼做？',en:'How?',reading:'啪啊諾',cat:'grammar',hint:'Paano=怎麼',ex:{tl:'Paano?',cn:'怎麼？'}},
+{id:313,tl:'Pinaka-',zh:'最...（最高級）',en:'Most',reading:'批那卡',cat:'grammar',hint:'Pinaka+形容詞=最',ex:{tl:'Pinakamaganda.',cn:'最漂亮。'}},
+{id:314,tl:'Napaka-',zh:'非常...（強調）',en:'Very / Extremely',reading:'那啪卡',cat:'grammar',hint:'Napaka+形容詞=非常',ex:{tl:'Napakamakapangyarihan.',cn:'非常有能力。'}},
+{id:315,tl:'Talaga',zh:'真的',en:'Really',reading:'他拉嘎',cat:'grammar',hint:'Talaga!=真的！',ex:{tl:'Talaga?',cn:'真的嗎？'}},
+{id:316,tl:'Pero',zh:'但是',en:'But',reading:'杯囉',cat:'grammar',hint:'Pero=但是',ex:{tl:'Mahirap pero masaya.',cn:'困難但快樂。'}},
+{id:317,tl:'Dahil',zh:'因為',en:'Because',reading:'大辛',cat:'grammar',hint:'Dahil=因為',ex:{tl:'Dahil maibigin si Jehova.',cn:'因為耶和華是慈愛的。'}},
+{id:318,tl:'Tungkol sa',zh:'關於',en:'About',reading:'頭龍口撒',cat:'grammar',hint:'Tungkol sa=關於',ex:{tl:'Tungkol sa Kaharian.',cn:'關於王國。'}},
+{id:319,tl:'Ayon sa',zh:'根據',en:'According to',reading:'啊優撒',cat:'grammar',hint:'Ayon sa=根據',ex:{tl:'Ayon sa Bibliya.',cn:'根據聖經。'}},
+// ── W11-15 新詞彙 ──
+{id:400,tl:'Kailangan kita',zh:'我需要你',en:'I need you',reading:'凱拉安 基他',cat:'w11_15',hint:'W11: kailangan+kita=我需要你',ex:{tl:'Kailangan kita.',cn:'我需要你。'}},
+{id:401,tl:'Upang',zh:'為了/以便',en:'In order to',reading:'烏邦',cat:'w11_15',hint:'W11: upang=目的連詞',ex:{tl:'Kailangan kong mag-aral upang sumulong.',cn:'我需要學習以便進步。'}},
+{id:402,tl:'Sumulong',zh:'進步',en:'To progress',reading:'蘇木隆',cat:'w11_15',hint:'W11: sumulong=前進',ex:{tl:'Sumulong sa espirituwal.',cn:'在屬靈上進步。'}},
+{id:403,tl:'Matatag',zh:'堅強',en:'Strong / Firm',reading:'媽他他',cat:'w11_15',hint:'W11: matatag=堅強',ex:{tl:'Upang maging matatag.',cn:'為了變得堅強。'}},
+{id:404,tl:'Banal na espiritu',zh:'聖靈',en:'Holy spirit',reading:'巴那 那 唉斯批力圖',cat:'w11_15',hint:'W11: banal=聖潔',ex:{tl:'Kailangan natin ng banal na espiritu.',cn:'我們需要聖靈。'}},
+{id:405,tl:'Tulong',zh:'幫助',en:'Help',reading:'圖隆',cat:'w11_15',hint:'tulong=幫助',ex:{tl:'Kailangan nila ng tulong ni Jehova.',cn:'他們需要耶和華的幫助。'}},
+{id:406,tl:'Pagkain',zh:'食物',en:'Food',reading:'帕嘎因',cat:'w11_15',hint:'kain=吃→pagkain=食物',ex:{tl:'Kailangan ni Mark ng pagkain.',cn:'Mark需要食物。'}},
+{id:407,tl:'Kanino',zh:'誰的？/給誰？',en:'Whose? / To whom?',reading:'卡你諾',cat:'w11_15',hint:'W12: kanino=誰的',ex:{tl:'Kanino ito?',cn:'這是誰的？'}},
+{id:408,tl:'Kaninong',zh:'誰的+名詞',en:'Whose (+ noun)',reading:'卡你農',cat:'w11_15',hint:'W12: kanino+ng連接名詞',ex:{tl:'Kaninong libro ito?',cn:'這是誰的書？'}},
+{id:409,tl:'Kailanman',zh:'永遠/從不',en:'Forever / Never',reading:'凱藍曼',cat:'w11_15',hint:'W12: 看語境',ex:{tl:'Magpakailanman.',cn:'永永遠遠。'}},
+{id:410,tl:'Asambleya',zh:'大會',en:'Assembly',reading:'阿撒不蕾亞',cat:'w11_15',hint:'W12: assembly',ex:{tl:'Kailan ang asambleya?',cn:'大會什麼時候？'}},
+{id:411,tl:'Ituro',zh:'教（i-verb原形）',en:'Teach (i-verb)',reading:'以圖囉',cat:'w11_15',hint:'W13: i-verb=受詞焦點',ex:{tl:'Ituro mo sa akin.',cn:'教我。'}},
+{id:412,tl:'Ibigay',zh:'給（i-verb原形）',en:'Give (i-verb)',reading:'以比蓋',cat:'w11_15',hint:'W13: 移出/給出',ex:{tl:'Ibigay mo ang libro.',cn:'把書給出去。'}},
+{id:413,tl:'Itinuturo',zh:'正在教（i-verb現在）',en:'Teaching (present)',reading:'以踢奴圖囉',cat:'w11_15',hint:'W13: i-in-重複-turo',ex:{tl:'Itinuturo namin ang Tagalog.',cn:'我們正在教他加祿語。'}},
+{id:414,tl:'Kaligayahan',zh:'幸福',en:'Happiness',reading:'卡力蓋亞漢',cat:'w11_15',hint:'W13: susi ng kaligayahan',ex:{tl:'Ang susi ng kaligayahan.',cn:'幸福的秘訣。'}},
+{id:415,tl:'Hamon',zh:'挑戰',en:'Challenge',reading:'哈夢',cat:'w11_15',hint:'W13: mga hamon=挑戰們',ex:{tl:'Ang mga hamon sa buhay.',cn:'生活中的挑戰。'}},
+{id:416,tl:'Makinig',zh:'聽（ma-verb原形）',en:'Listen',reading:'媽基你',cat:'w11_15',hint:'W14: ma-verb=感受類',ex:{tl:'Makinig kayo sa Diyos.',cn:'聽從上帝。'}},
+{id:417,tl:'Matulog',zh:'睡覺（ma-verb原形）',en:'Sleep',reading:'媽圖囉',cat:'w11_15',hint:'W14: ma→na=過去',ex:{tl:'Natulog na ako.',cn:'我睡了。'}},
+{id:418,tl:'Maupo',zh:'坐下（ma-verb原形）',en:'Sit down',reading:'媽烏坡',cat:'w11_15',hint:'W14: 身體狀態類',ex:{tl:'Maupo kayo.',cn:'請坐。'}},
+{id:419,tl:'Bigyan',zh:'給（-an verb原形）',en:'Give to',reading:'比掩',cat:'w11_15',hint:'W15: -an verb焦點在受者',ex:{tl:'Bigyan ninyo ako ng aklat.',cn:'給我一本書。'}},
+{id:420,tl:'Tulungan',zh:'幫助（-an verb原形）',en:'Help (someone)',reading:'圖隆安',cat:'w11_15',hint:'W15: tulong→tulungan',ex:{tl:'Tulungan mo ako.',cn:'幫幫我。'}},
+{id:421,tl:'Hugasan',zh:'洗（-an verb原形）',en:'Wash',reading:'胡嘎散',cat:'w11_15',hint:'W15: hugas→hugasan',ex:{tl:'Hugasan mo ang mga plato.',cn:'洗碗盤。'}},
+{id:422,tl:'Tract',zh:'小冊子',en:'Tract',reading:'追可',cat:'w11_15',hint:'W15: 傳道用小冊子',ex:{tl:'Bibigyan ka namin ng tract.',cn:'我們會給你一份小冊子。'}},
+{id:423,tl:'Dormitory',zh:'宿舍',en:'Dormitory',reading:'多咪多力',cat:'w11_15',hint:'W15: 外勞常住',ex:{tl:'Pag-uwi ko sa dormitory.',cn:'我回宿舍時。'}},
+{id:424,tl:'Dalawin',zh:'拜訪（-in verb）',en:'Visit',reading:'大拉溫',cat:'w11_15',hint:'W15: 拜訪',ex:{tl:'Maari ba kita dalawin?',cn:'我可以拜訪你嗎？'}},
+{id:425,tl:'Nagmamadali',zh:'趕時間',en:'In a hurry',reading:'那嘛媽大力',cat:'w11_15',hint:'W13: madali=快→nagmamadali=正在趕',ex:{tl:'Nagmamadali ako pauwi.',cn:'我急著回家。'}},
+{id:426,tl:'Libreng pag-aaral',zh:'免費學習',en:'Free study',reading:'力不蕾 帕啊拉',cat:'w11_15',hint:'W13: libre=免費',ex:{tl:'Nag-aalok kami ng libreng pag-aaral sa Bibliya.',cn:'我們提供免費的聖經學習。'}},
+{id:427,tl:'Susi ng kaligayahan',zh:'幸福的秘訣',en:'Key to happiness',reading:'蘇西 囊 卡力蓋',cat:'w11_15',hint:'W13: susi=鑰匙/秘訣',ex:{tl:'Ang susi ng kaligayahan sa buhay.',cn:'人生幸福的秘訣。'}},
+{id:428,tl:'Pampatibay-loob',zh:'鼓勵',en:'Encouragement',reading:'帕趴提拜囉',cat:'w11_15',hint:'W15: 給予鼓勵',ex:{tl:'Binigyan niya kami ng pampatibay-loob.',cn:'他給了我們鼓勵。'}},
+{id:429,tl:'Proteksyon',zh:'保護',en:'Protection',reading:'破特性雄',cat:'w11_15',hint:'W15: protection',ex:{tl:'Binibigyan tayo ni Jehova ng proteksyon.',cn:'耶和華保護我們。'}},
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let starred=new Set(JSON.parse(localStorage.getItem('tg2_stars')||'[]'));
+let learned=new Set(JSON.parse(localStorage.getItem('tg2_learned')||'[]'));
+let currentCat='all',currentMode='list',searchQuery='';
+let fcIndex=0,fcPool=[],fcSession={yes:0,no:0,skip:0};
+let qzIndex=0,qzPool=[],qzScore=0;
+
+function saveState(){
+  localStorage.setItem('tg2_stars',JSON.stringify([...starred]));
+  localStorage.setItem('tg2_learned',JSON.stringify([...learned]));
+  updateStats();
+}
+function updateStats(){
+  document.getElementById('totalStat').textContent='📦 '+VOCAB.length+' 個單字';
+  document.getElementById('starStat').textContent='⭐ '+starred.size+' 已收藏';
+  document.getElementById('learnStat').textContent='✅ '+learned.size+' 已學';
+}
+
+// ═══════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  const tabs=['vocab','memory','grammar','dialogue','exercise','quiz','bible'];
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(id)].classList.add('active');
+  if(id==='exercise') switchEx('pro');
+}
+
+// ═══════════════════════════════════════════════
+// VOCAB: CATEGORIES
+// ═══════════════════════════════════════════════
+function buildCatTabs(){
+  const el=document.getElementById('catTabs');
+  const order=['all','star','greet','number','weekday','month','time','pronoun','adj','verb','marker','bible','ministry','body','family','grammar','w11_15'];
+  const defs={all:{label:'🌟 全部',color:'#FF6B6B'},star:{label:'⭐ 收藏',color:'#FFB020'},...CATS};
+  el.innerHTML=order.map(c=>{
+    const d=defs[c]||{label:c,color:'#999'};
+    const cnt=c==='all'?VOCAB.length:c==='star'?starred.size:VOCAB.filter(v=>v.cat===c).length;
+    return `<button class="cat-btn${c===currentCat?' active':''}" style="${c===currentCat?'background:'+d.color+';border-color:'+d.color+';color:white':''}" onclick="selectCat('${c}')">${d.label} <span class="cnt">${cnt}</span></button>`;
+  }).join('');
+}
+function selectCat(c){currentCat=c;buildCatTabs();renderMode();}
+function getFiltered(){
+  let items=VOCAB;
+  if(currentCat==='star') items=items.filter(v=>starred.has(v.id));
+  else if(currentCat!=='all') items=items.filter(v=>v.cat===currentCat);
+  if(searchQuery){const q=searchQuery.toLowerCase();items=items.filter(v=>v.tl.toLowerCase().includes(q)||v.zh.includes(q)||(v.en||'').toLowerCase().includes(q)||(v.reading||'').includes(q)||(v.hint||'').includes(q));}
+  return items;
+}
+function doSearch(q){searchQuery=q.trim();renderMode();}
+
+// ═══════════════════════════════════════════════
+// VOCAB: MODES
+// ═══════════════════════════════════════════════
+function setMode(m){
+  currentMode=m;
+  document.querySelectorAll('.mode-btn').forEach((b,i)=>b.classList.toggle('active',['list','flash','quiz'][i]===m));
+  renderMode();
+}
+function renderMode(){
+  document.getElementById('listArea').style.display=currentMode==='list'?'block':'none';
+  document.getElementById('flashArea').style.display=currentMode==='flash'?'block':'none';
+  document.getElementById('quizArea').style.display=currentMode==='quiz'?'block':'none';
+  if(currentMode==='list') renderList();
+  if(currentMode==='flash') startFlash();
+  if(currentMode==='quiz') startVocabQuiz();
+}
+
+// LIST
+const collapsedGroups=new Set();
+function renderList(){
+  const items=getFiltered(),area=document.getElementById('listArea');
+  if(!items.length){area.innerHTML='<div class="empty">🔍 找不到符合的單字</div>';return;}
+  let html='';
+  if(currentCat==='all'&&!searchQuery){
+    Object.keys(CATS).forEach(cat=>{
+      const g=items.filter(v=>v.cat===cat);if(!g.length) return;
+      const isCollapsed=collapsedGroups.has(cat);
+      html+=`<div class="group-header${isCollapsed?' collapsed':''}" onclick="toggleGroup('${cat}')"><span style="width:8px;height:8px;background:${CATS[cat].color};border-radius:50%;display:inline-block"></span>${CATS[cat].label} (${g.length}) <span class="collapse-icon">▼</span></div>`;
+      html+=`<div class="group-items${isCollapsed?' collapsed':''}" id="grp-${cat}">${g.map(v=>renderVC(v)).join('')}</div>`;
+    });
+  } else html=items.map(v=>renderVC(v)).join('');
+  area.innerHTML=html;
+}
+function toggleGroup(cat){
+  if(collapsedGroups.has(cat)) collapsedGroups.delete(cat); else collapsedGroups.add(cat);
+  renderList();
+}
+function renderVC(v){
+  const d=CATS[v.cat]||{color:'#999',bg:'#F5F5F5'};
+  const isStar=starred.has(v.id),isLearn=learned.has(v.id);
+  const starCls=isStar?' starred':'';
+  return `<div class="vcard${starCls}" onclick="toggleDetail(${v.id})">
+    <div class="vcard-main">
+      <div class="vcard-left"><div class="cat-dot" style="background:${d.color}"></div><div><div class="v-tl">${v.tl}</div>${v.reading?`<div class="v-reading">${v.reading}</div>`:''}</div></div>
+      <div class="vcard-mid"><div class="v-zh">${v.zh}</div>${v.en?`<div class="v-en">${v.en}</div>`:''}</div>
+      <div class="vcard-right"><button class="star-btn" onclick="event.stopPropagation();toggleStar(${v.id})">${isStar?'⭐':'☆'}</button><span class="cat-tag" style="background:${d.bg};color:${d.color}">${d.label.split(' ')[0]}</span></div>
+    </div>
+    <div class="vcard-detail" id="vd-${v.id}">
+      ${v.hint?`<div class="detail-row"><span class="detail-label">💡 記憶法：</span>${v.hint}</div>`:''}
+      ${v.ex?`<div class="detail-row"><span class="detail-label">📖 例句：</span><div class="detail-ex"><div class="tl">${v.ex.tl}</div><div class="cn">${v.ex.cn}</div></div></div>`:''}
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <button onclick="event.stopPropagation();toggleStar(${v.id})" style="flex:1;padding:7px;border-radius:9px;border:1.5px solid #EDE4D4;background:#F8F4EE;font-size:.8em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif">${isStar?'★ 取消收藏':'☆ 加入收藏'}</button>
+        <button onclick="event.stopPropagation();toggleLearn(${v.id})" style="flex:1;padding:7px;border-radius:9px;border:1.5px solid ${isLearn?'#6BCB77':'#EDE4D4'};background:${isLearn?'#E8FFF0':'#F8F4EE'};color:${isLearn?'#1a7a3a':'#888'};font-size:.8em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif">${isLearn?'✅ 已學會':'○ 標記已學'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+function toggleDetail(id){document.getElementById('vd-'+id).classList.toggle('open');}
+function toggleStar(id){if(starred.has(id))starred.delete(id);else starred.add(id);saveState();renderList();buildCatTabs();}
+function toggleLearn(id){if(learned.has(id))learned.delete(id);else learned.add(id);saveState();renderList();}
+
+// FLASH (unfamiliar words appear more)
+function startFlash(){
+  const items=getFiltered();
+  // Words not yet learned get 3x weight
+  const weighted=[];
+  items.forEach(v=>{
+    const count=learned.has(v.id)?1:3;
+    for(let i=0;i<count;i++) weighted.push(v);
+  });
+  fcPool=[...new Set(weighted.sort(()=>Math.random()-.5))];
+  fcIndex=0;fcSession={yes:0,no:0,skip:0};renderFC();
+}
+function renderFC(){
+  const area=document.getElementById('flashArea');
+  if(!fcPool.length){area.innerHTML='<div class="empty">這個分類沒有單字！</div>';return;}
+  if(fcIndex>=fcPool.length){area.innerHTML=`<div class="result-box"><div style="font-size:2.5em">🎉</div><div class="result-big">${fcPool.length}</div><div style="color:var(--muted);margin-bottom:12px">張全部刷完！</div><div style="font-size:.85em;color:#666;margin-bottom:16px">✅ ${fcSession.yes} 張 ❌ ${fcSession.no} 張 ➡️ ${fcSession.skip} 張</div><button class="r-btn" onclick="startFlash()">🔄 再來一輪</button></div>`;return;}
+  const v=fcPool[fcIndex],d=CATS[v.cat]||{color:'#999',label:v.cat};
+  const pct=Math.round(fcIndex/fcPool.length*100);
+  area.innerHTML=`<div class="fc-counter">${fcIndex+1} / ${fcPool.length}</div>
+    <div class="fc-prog"><div class="fc-prog-fill" style="width:${pct}%"></div></div>
+    <div class="fc-session"><div><span style="color:var(--c4)">${fcSession.yes}</span><br>會了</div><div><span style="color:var(--c1)">${fcSession.no}</span><br>不會</div><div><span style="color:var(--muted)">${fcSession.skip}</span><br>跳過</div></div>
+    <div class="fc-wrap" onclick="this.classList.toggle('flip')"><div class="fc-inner">
+      <div class="fc-front"><div class="fc-cat" style="background:${d.color}22;color:${d.color}">${d.label}</div><div class="fc-tl">${v.tl}</div>${v.reading?`<div class="fc-rd">${v.reading}</div>`:''}<div class="fc-flip-hint">點我翻面</div></div>
+      <div class="fc-back"><div class="fc-zh">${v.zh}</div>${v.en?`<div style="font-size:.8em;color:var(--muted);margin-bottom:8px">${v.en}</div>`:''} ${v.hint?`<div class="fc-hint">💡 ${v.hint}</div>`:''}</div>
+    </div></div>
+    <div class="fc-btns"><button class="fc-btn btn-no" onclick="fcAns('no')">❌ 不會</button><button class="fc-btn btn-skip" onclick="fcAns('skip')">➡️ 跳過</button><button class="fc-btn btn-yes" onclick="fcAns('yes')">✅ 會了</button></div>`;
+}
+function fcAns(r){fcSession[r]++;if(r==='yes')learned.add(fcPool[fcIndex].id);fcIndex++;saveState();renderFC();}
+
+// VOCAB QUIZ
+function startVocabQuiz(){
+  const items=getFiltered();
+  if(items.length<4){document.getElementById('quizArea').innerHTML='<div class="empty">至少需要4個單字才能測驗！</div>';return;}
+  qzPool=[...items].sort(()=>Math.random()-.5).slice(0,Math.min(20,items.length));qzIndex=0;qzScore=0;renderQZ();
+}
+function renderQZ(){
+  const area=document.getElementById('quizArea');
+  if(qzIndex>=qzPool.length){const pct=Math.round(qzScore/qzPool.length*100);area.innerHTML=`<div class="result-box"><div style="font-size:2.5em">${pct>=90?'🏆':pct>=70?'⭐':'💪'}</div><div class="result-big">${pct}%</div><div style="color:var(--muted);margin-bottom:16px">答對 ${qzScore} / ${qzPool.length}</div><button class="r-btn" onclick="startVocabQuiz()">🔄 再測一次</button></div>`;return;}
+  const v=qzPool[qzIndex],pct=Math.round(qzIndex/qzPool.length*100),all=getFiltered();
+  const qType=Math.random()<.5?'tl2zh':'zh2tl';
+  const wrongs=all.filter(x=>x.id!==v.id).sort(()=>Math.random()-.5).slice(0,3);
+  const opts=[v,...wrongs].sort(()=>Math.random()-.5);
+  area.innerHTML=`<div class="qz-card">
+    <div class="qz-meta"><span>${(CATS[v.cat]||{label:v.cat}).label}</span><span>${qzIndex+1}/${qzPool.length} ✅${qzScore}</span></div>
+    <div class="qz-prog"><div class="qz-prog-fill" style="width:${pct}%"></div></div>
+    <div class="qz-q">${qType==='tl2zh'?v.tl:v.zh}</div><div class="qz-hint">${qType==='tl2zh'?'中文意思是？':'對應的 Tagalog 是？'}</div>
+    <div class="qz-opts" id="qzO">${opts.map(o=>`<button class="qz-opt" onclick="ansQZ(${o.id},${v.id},this,'${qType}')">${qType==='tl2zh'?o.zh:o.tl}</button>`).join('')}</div>
+    <div class="qz-fb" id="qzFB"></div><button class="next-btn" id="qzNx" onclick="qzIndex++;renderQZ()">下一題 →</button>
+  </div>`;
+}
+function ansQZ(cid,vid,btn,qt){
+  if(document.getElementById('qzNx').style.display==='block') return;
+  document.querySelectorAll('.qz-opt').forEach(b=>b.disabled=true);
+  const cor=VOCAB.find(v=>v.id===vid),fb=document.getElementById('qzFB');
+  if(cid===vid){btn.classList.add('ok');fb.className='qz-fb ok';fb.innerHTML='✅ 正確！ 💡 '+(cor.hint||cor.zh);qzScore++;learned.add(vid);saveState();}
+  else{btn.classList.add('ng');document.querySelectorAll('.qz-opt').forEach(b=>{const t=qt==='tl2zh'?cor.zh:cor.tl;if(b.textContent.trim()===t)b.classList.add('show');});fb.className='qz-fb ng';fb.innerHTML='❌ 正確：<b>'+(qt==='tl2zh'?cor.zh:cor.tl)+'</b>';}
+  fb.style.display='block';document.getElementById('qzNx').style.display='block';
+}
+
+// ═══════════════════════════════════════════════
+// DIALOGUE FILTER + PRACTICE MODE
+// ═══════════════════════════════════════════════
+let dlgMode='read';
+function setDlgMode(m){
+  dlgMode=m;
+  document.querySelectorAll('.dlg-mode-btn').forEach((b,i)=>b.classList.toggle('active',['read','practice'][i]===m));
+  const allCn=document.querySelectorAll('#panel-dialogue .speech .cn');
+  if(m==='practice'){
+    allCn.forEach(el=>{el.classList.add('hidden-cn');el.classList.remove('revealed');el.onclick=function(){this.classList.remove('hidden-cn');this.classList.add('revealed');};});
+  } else {
+    allCn.forEach(el=>{el.classList.remove('hidden-cn','revealed');el.onclick=null;});
+  }
+}
+function filterDialogue(w){
+  document.querySelectorAll('#panel-dialogue .dlg-group').forEach(g=>{
+    g.style.display=(w==='all'||g.dataset.week===w)?'block':'none';
+  });
+  document.querySelectorAll('#dialogueWeekFilter .wk-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  if(dlgMode==='practice') setDlgMode('practice');
+}
+
+// ═══════════════════════════════════════════════
+// EXERCISE
+// ═══════════════════════════════════════════════
+const exData={
+  pro:[
+    {s:'___ ay nagbabasa ngayon.',b:'Siya',h:'他/她主格句首',zh:'他正在讀書。',c:['Niya','Siya','Kaniya','Ko']},
+    {s:'Binasa ___ ang Bibliya kagabi.',b:'ko',h:'我做的（所有格）',zh:'我昨晚讀了聖經。',c:['ako','ko','akin','mo']},
+    {s:'Pumunta ___ sa Kingdom Hall kahapon.',b:'kami',h:'我們不含你',zh:'我們昨天去了王國聚會所。',c:['tayo','kami','sila','kayo']},
+    {s:'Magiliw ___ sa lahat.',b:'tayo',h:'我們含你主格',zh:'我們對大家都很和藹。',c:['kami','tayo','kayo','sila']},
+    {s:'Babasahin ___ ang Bantayan mamaya.',b:'namin',h:'不含你所有格',zh:'我們等一下要讀守望台。',c:['natin','namin','nila','ninyo']},
+    {s:'Para ___ si Jehova ang pagsamba natin.',b:'kay',h:'para kay=為了人',zh:'我們的崇拜是為了耶和華。',c:['sa','kay','kina','ni']},
+  ],
+  verb:[
+    {s:'「nagbabasa」是什麼時態？',b:'現在式',h:'重複音節ba-ba=現在',zh:'有重複=現在',c:['過去式','現在式','未來式','被動式']},
+    {s:'「kakain」是什麼時態？',b:'未來式',h:'um類未來：只重複首音節',zh:'kakain=將要吃',c:['過去式','現在式','未來式','命令式']},
+    {s:'「naghahanda」→ 未來式？',b:'maghahanda',h:'nag→mag',zh:'將要準備',c:['naghanda','naghahanda','maghahanda','hahandain']},
+    {s:'「Binasa ko ang Bibliya.」時態？',b:'過去式（被動-in）',h:'-in-插入=被動過去',zh:'聖經被我讀了',c:['過去式（主動）','現在式','過去式（被動-in）','未來式']},
+    {s:'「傳道」動詞 Tagalog？',b:'Mangaral',h:'mang類',zh:'Pangangaral=名詞',c:['Bumasa','Mangaral','Mag-aral','Manalangin']},
+  ],
+  gusto:[
+    {s:'「我想學聖經」Tagalog？',b:'Gusto kong mag-aral ng Bibliya.',h:'Gusto+ko+ng=kong',zh:'W10核心',c:['Gusto ako mag-aral ng Bibliya.','Gusto kong mag-aral ng Bibliya.','Gusto nating mag-aral ng Bibliya.','Ayaw kong mag-aral ng Bibliya.']},
+    {s:'「我不想聽」口語？',b:'Ayokong makinig.',h:'Ayaw ko→Ayoko',zh:'Ayoko=口語',c:['Ayaw ko makinig.','Ayokong makinig.','Hindi ko gusto makinig.','Gusto kong makinig.']},
+    {s:'「你想參加嗎？」',b:'Gusto mo bang dumalo?',h:'Gusto+mo+bang',zh:'疑問句型',c:['Gusto ka bang dumalo?','Gusto mo bang dumalo?','Gusto ba mo dumalo?','Ayaw mo bang dumalo?']},
+    {s:'Gusto vs Mahilig 差別？',b:'Gusto=當下想要；Mahilig=長期喜好',h:'Gusto我現在想；Mahilig我一直喜歡',zh:'W10重要',c:['完全一樣','Gusto=當下想要；Mahilig=長期喜好','Gusto更正式','Mahilig更口語']},
+  ],
+  dapat:[
+    {s:'「你知道上帝名字嗎？」',b:'Alam mo ba ang pangalan ng Diyos?',h:'Alam+mo+ba',zh:'Alam疑問句',c:['Alam ako ba ang pangalan ng Diyos?','Alam mo ba ang pangalan ng Diyos?','Alam ka ba ang pangalan ng Diyos?','Alam niya ang pangalan ng Diyos?']},
+    {s:'「我不知道」怎麼說？',b:'Hindi ko alam.',h:'Hindi+ko+alam',zh:'否定',c:['Hindi ako alam.','Hindi niya alam.','Hindi ko alam.','Alam hindi ko.']},
+    {s:'「我應該讀聖經」主動版？',b:'Dapat akong bumasa ng Bibliya.',h:'Dapat+akong+um動詞',zh:'主動',c:['Dapat ako bumasa.','Dapat akong bumasa ng Bibliya.','Dapat kong basahin ang Bibliya.','Dapat kaming bumasa.']},
+    {s:'「我應該讀聖經」被動版？',b:'Dapat kong basahin ang Bibliya.',h:'Dapat+kong+-in動詞+ang',zh:'被動',c:['Dapat akong bumasa ng Bibliya.','Dapat kong basahin ang Bibliya.','Dapat nating basahin.','Dapat mong basahin.']},
+  ],
+  kailangan:[
+    {s:'「我需要咖啡」Tagalog？',b:'Kailangan ko ng kape.',h:'Kailangan+所有格+ng+東西',zh:'W11：需要東西',c:['Kailangan ako ng kape.','Kailangan ko ng kape.','Kailangan kong kape.','Gusto ko ng kape.']},
+    {s:'「我需要吃」Tagalog？',b:'Kailangan kong kumain.',h:'Kailangan+kong+動詞',zh:'W11：需要做事',c:['Kailangan ko kumain.','Kailangan kong kumain.','Kailangan akong kumain.','Dapat kong kumain.']},
+    {s:'「我們需要學習」（含你版）',b:'Kailangan nating mag-aral.',h:'natin+ng=nating',zh:'W11含你',c:['Kailangan naming mag-aral.','Kailangan nating mag-aral.','Kailangan tayong mag-aral.','Dapat nating mag-aral.']},
+    {s:'「工作上需要我」Tagalog？',b:'Kailangan ako sa trabaho.',h:'被需要用主格',zh:'W11：被需要',c:['Kailangan ko sa trabaho.','Kailangan ako sa trabaho.','Kailangan kong magtrabaho.','Dapat akong magtrabaho.']},
+    {s:'Kailangan vs Dapat 差別？',b:'Kailangan=實際需要；Dapat=道義應該',h:'need vs should',zh:'W11重點',c:['完全一樣','Kailangan=實際需要；Dapat=道義應該','Kailangan更口語','Dapat更正式']},
+    {s:'「我們需要信心、時間、耶和華的幫助和聚會」',b:'Kailangan natin ng pananampalataya, panahon, tulong ni Jehova, at mga pulong.',h:'Anu-ano回答',zh:'W11綜合',c:['Kailangan natin ng pananampalataya.','Kailangan natin ng pananampalataya, panahon, tulong ni Jehova, at mga pulong.','Gusto nating mag-aral.','Dapat nating dumalo.']},
+  ],
+  iverb:[
+    {s:'「把書給出去！」Tagalog？',b:'Ibigay mo ang libro.',h:'i-verb: ibigay=給出',zh:'W13 i-verb原形',c:['Bigyan mo ako ng libro.','Ibigay mo ang libro.','Binigay mo ang libro.','Nagbigay mo ng libro.']},
+    {s:'「itinuro」是什麼時態？',b:'過去式',h:'i-+in-+turo=過去',zh:'W13 i-verb過去',c:['原形','過去式','現在式','未來式']},
+    {s:'「itinuturo」是什麼時態？',b:'現在式',h:'i-+in-+重複tu+turo',zh:'W13 i-verb現在',c:['原形','過去式','現在式','未來式']},
+    {s:'「ituturo」是什麼時態？',b:'未來式',h:'i-+重複tu+turo',zh:'W13 i-verb未來',c:['原形','過去式','現在式','未來式']},
+    {s:'I-verb焦點在哪裡？',b:'被給予/被移動的東西（受詞）',h:'i-verb=受詞焦點',zh:'W13文法',c:['做動作的人','被給予/被移動的東西（受詞）','地點','時間']},
+  ],
+  anverb:[
+    {s:'「洗碗盤！」Tagalog？',b:'Hugasan mo ang mga plato.',h:'-an verb: hugasan',zh:'W15 -an verb',c:['Hugasan mo ang mga plato.','Hinugasan mo ang mga plato.','Naghugasan mo ng plato.','Maghugas mo ng plato.']},
+    {s:'「給我一本書」Tagalog？',b:'Bigyan ninyo ako ng isang aklat.',h:'-an verb: bigyan',zh:'W15 bigyan',c:['Ibigay ninyo ako ng aklat.','Bigyan ninyo ako ng isang aklat.','Binigyan ninyo ako ng aklat.','Nagbigay kayo ng aklat.']},
+    {s:'「binigyan」是什麼時態？',b:'過去式',h:'in-+bigay+-an',zh:'W15 -an過去',c:['原形','過去式','現在式','未來式']},
+    {s:'「tinutulungan」是什麼時態？',b:'現在式',h:'in-+重複tu+tulong+-an',zh:'W15 -an現在',c:['原形','過去式','現在式','未來式']},
+    {s:'-an verb焦點在哪裡？',b:'接受動作的人/地方（受者/地點）',h:'-an=地點/受者焦點',zh:'W15文法',c:['做動作的人','被移動的東西','接受動作的人/地方（受者/地點）','時間']},
+  ],
+};
+
+let exCur='pro',exIdx=0,exScore=0;
+function switchEx(tab){
+  exCur=tab;exIdx=0;exScore=0;
+  document.querySelectorAll('#exTabs .ex-tab-btn').forEach(b=>b.classList.remove('active'));
+  const tabs=['pro','verb','gusto','dapat','kailangan','iverb','anverb'];
+  const idx=tabs.indexOf(tab);
+  if(idx>=0) document.querySelectorAll('#exTabs .ex-tab-btn')[idx].classList.add('active');
+  renderEx();
+}
+function renderEx(){
+  const set=exData[exCur],area=document.getElementById('ex-area');
+  if(!set){area.innerHTML='<div class="empty">選擇主題開始</div>';return;}
+  if(exIdx>=set.length){
+    const pct=Math.round(exScore/set.length*100);
+    area.innerHTML=`<div class="card" style="text-align:center;padding:28px"><div style="font-size:2.5em">${pct>=90?'🏆':pct>=70?'⭐':'💪'}</div><div style="font-size:2.8em;font-weight:bold;color:var(--c1);margin:8px 0">${pct}%</div><div style="color:#888">答對 ${exScore} / ${set.length}</div><button onclick="exIdx=0;exScore=0;renderEx()" style="margin-top:14px;background:var(--c1);color:white;border:none;padding:11px 26px;border-radius:11px;font-size:.95em;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800">🔄 再來一次</button></div>`;return;
+  }
+  const q=set[exIdx],sh=[...q.c].sort(()=>Math.random()-.5);
+  const disp=q.s.includes('___')?q.s.replace('___','<span style="display:inline-block;min-width:80px;border-bottom:3px solid #e94560;margin:0 4px;color:#e94560;font-weight:bold" id="bl">＿＿</span>'):`<div style="background:#f5f5f5;border-radius:10px;padding:10px;margin-bottom:10px;font-size:1.05em">${q.s}</div>`;
+  area.innerHTML=`<div class="card" style="padding:18px">
+    <div style="font-size:.78em;color:#aaa;margin-bottom:8px">第 ${exIdx+1}/${set.length} 題 ✅${exScore}</div>
+    <div style="font-size:.84em;color:#888;margin-bottom:6px">${q.zh}</div>
+    <div style="font-size:1.08em;font-weight:bold;line-height:2;margin-bottom:14px">${disp}</div>
+    <div style="font-size:.78em;color:#aaa;margin-bottom:10px">💡 ${q.h}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="cg">${sh.map(c=>`<button class="choice-btn" onclick="checkEx(this,'${c.replace(/'/g,"\\'")}','${q.b.replace(/'/g,"\\'")}')">${c}</button>`).join('')}</div>
+    <div id="efb" style="display:none;margin-top:12px;padding:11px;border-radius:10px;font-size:.88em"></div>
+    <button id="enb" onclick="exIdx++;renderEx()" style="display:none;background:var(--c1);color:white;border:none;padding:11px;border-radius:11px;font-size:.93em;cursor:pointer;margin-top:11px;width:100%;font-family:'Nunito',sans-serif;font-weight:800">下一題 →</button>
+  </div>`;
+}
+function checkEx(btn,chosen,correct){
+  if(document.getElementById('enb').style.display==='block') return;
+  document.querySelectorAll('#cg .choice-btn').forEach(b=>b.disabled=true);
+  const bl=document.getElementById('bl');if(bl) bl.textContent=correct;
+  const fb=document.getElementById('efb');
+  if(chosen===correct){btn.style.background='#4ade80';btn.style.color='#111';btn.style.borderColor='#4ade80';fb.style.background='#e8f5e9';fb.style.color='#2e7d32';fb.innerHTML='✅ 答對了！';exScore++;}
+  else{btn.style.background='#ffcdd2';btn.style.color='#c62828';btn.style.borderColor='#f44336';document.querySelectorAll('#cg .choice-btn').forEach(b=>{if(b.textContent===correct){b.style.background='#4ade80';b.style.color='#111';b.style.borderColor='#4ade80';}});fb.style.background='#ffebee';fb.style.color='#c62828';fb.innerHTML='❌ 正確答案：<b>'+correct+'</b>';}
+  fb.style.display='block';document.getElementById('enb').style.display='block';
+}
+
+// ═══════════════════════════════════════════════
+// QUIZ PANEL (structured quiz bank)
+// ═══════════════════════════════════════════════
+const qBank={
+  pronoun:[
+    {q:'「我們（含你）」怎麼說？',opts:['Kami','Tayo','Sila','Kayo'],ans:1,hint:'Tayo=他優含你'},
+    {q:'「我們（不含你）」怎麼說？',opts:['Tayo','Natin','Kami','Kayo'],ans:2,hint:'Kami=卡咪沒叫你'},
+    {q:'Siya 可以指誰？',opts:['只有男性','只有女性','他或她都可以','他們'],ans:2,hint:'不分性別'},
+    {q:'「我的（所有格）」',opts:['Ako','Akin','Ko','Mo'],ans:2,hint:'Ko=所有格'},
+    {q:'「他/她的（所有格）」',opts:['Siya','Kaniya','Niya','Nina'],ans:2,hint:'Niya=他的'},
+    {q:'「你們」主格？',opts:['Ikaw','Ka','Kayo','Sila'],ans:2,hint:'Kayo=你們'},
+    {q:'動詞後的「你」用？',opts:['Ikaw','Ka','Mo','Iyo'],ans:1,hint:'Ka動詞後'},
+    {q:'「我們（不含你）所有格」',opts:['natin','namin','ninyo','nila'],ans:1,hint:'Kami→Namin'},
+    {q:'「他們的（所有格）」',opts:['Sila','Kanila','Nila','Nina'],ans:2,hint:'Nila=他們的'},
+    {q:'人名前加什麼標記？',opts:['ang','si','sina','ni'],ans:1,hint:'Si=人名單數主語'},
+    {q:'「ang mga」用途？',opts:['人名複數','一般名詞複數主語','人名所有格','地點標記'],ans:1,hint:'mga=複數'},
+  ],
+  verb:[
+    {q:'「nagbabasa」是什麼時態？',opts:['過去式','現在式','未來式','命令式'],ans:1,hint:'重複ba→現在'},
+    {q:'「kakain」是什麼時態？',opts:['過去式','現在式','未來式','被動式'],ans:2,hint:'um類未來'},
+    {q:'nag/mag差異？',opts:['nag未來，mag過去','nag過去/現在，mag未來','完全一樣','nag被動，mag主動'],ans:1,hint:'nag→mag=過去→未來'},
+    {q:'「pumunta」是什麼時態？',opts:['過去式','現在式','未來式','命令式'],ans:0,hint:'p+um+unta=過去'},
+    {q:'「babasahin」是什麼時態？',opts:['過去式','現在式','未來式','命令式'],ans:2,hint:'重複+字根+hin=被動未來'},
+    {q:'被動-in：母音結尾字根加什麼？',opts:['-in','-hin','-nin','不加'],ans:1,hint:'basa→basahin'},
+    {q:'「itinuro」是什麼時態？(i-verb)',opts:['原形','過去式','現在式','未來式'],ans:1,hint:'i-+in-=過去'},
+    {q:'Ma-verb過去式怎麼變？',opts:['ma→mag','ma→na','加-in','加-an'],ans:1,hint:'matulog→natulog'},
+    {q:'「binigyan」是什麼時態？(-an verb)',opts:['原形','過去式','現在式','未來式'],ans:1,hint:'in-+bigay+-an=過去'},
+    {q:'五大動詞類型不包括？',opts:['mag-/nag-','-um-','i-','-ar'],ans:3,hint:'沒有-ar類'},
+  ],
+  gusto:[
+    {q:'「我想學聖經」正確Tagalog？',opts:['Gusto ako mag-aral ng Bibliya.','Gusto kong mag-aral ng Bibliya.','Gusto nating mag-aral ng Bibliya.','Ayaw kong mag-aral ng Bibliya.'],ans:1,hint:'Gusto+kong+mag'},
+    {q:'「我不想聽」口語？',opts:['Ayaw ko makinig.','Ayokong makinig.','Hindi ko gusto.','Gusto kong makinig.'],ans:1,hint:'Ayoko=口語縮短'},
+    {q:'「你想參加嗎？」',opts:['Gusto ka bang dumalo?','Gusto mo bang dumalo?','Gusto ba mo dumalo?','Ayaw mo?'],ans:1,hint:'Gusto+mo+bang'},
+    {q:'Actor Focus vs Object Focus？',opts:['完全隨意','AF用ng（不特定），OF用ang（特定）','AF用ang','只有過去有分'],ans:1,hint:'ng=不特定；ang=特定'},
+    {q:'Gusto vs Mahilig？',opts:['完全一樣','Gusto=當下想要，Mahilig=長期喜好','Gusto更正式','Mahilig更口語'],ans:1,hint:'Gusto=now；Mahilig=always'},
+  ],
+  dapat:[
+    {q:'「你知道上帝名字嗎？」',opts:['Alam ako ba...','Alam mo ba ang pangalan ng Diyos?','Alam ka ba...','Alam niya...'],ans:1,hint:'Alam+mo+ba'},
+    {q:'「我不知道」',opts:['Hindi ako alam.','Hindi niya alam.','Hindi ko alam.','Alam hindi ko.'],ans:2,hint:'Hindi+ko+alam'},
+    {q:'「我應該讀（主動）」',opts:['Dapat ako bumasa.','Dapat akong bumasa.','Dapat kong basahin.','Dapat kaming bumasa.'],ans:1,hint:'Dapat+akong+um動詞'},
+    {q:'「我應該讀（被動）」',opts:['Dapat akong bumasa.','Dapat kong basahin ang Bibliya.','Dapat nating basahin.','Dapat mong basahin.'],ans:1,hint:'Dapat+kong+-in動詞'},
+    {q:'Dapat vs Kailangan？',opts:['完全一樣','Dapat=需要，Kailangan=應該','Dapat=應該（道義），Kailangan=需要（實際）','Dapat只用未來'],ans:2,hint:'Dapat道義，Kailangan實際'},
+  ],
+  kailangan:[
+    {q:'「我需要咖啡」',opts:['Kailangan ako ng kape.','Kailangan ko ng kape.','Kailangan kong kape.','Gusto ko ng kape.'],ans:1,hint:'Kailangan+所有格ko+ng+名詞'},
+    {q:'「我需要吃」',opts:['Kailangan ko kumain.','Kailangan kong kumain.','Kailangan akong kumain.','Dapat kong kumain.'],ans:1,hint:'kong=ko+ng連接動詞'},
+    {q:'「我們（含你）需要學習」',opts:['Kailangan naming mag-aral.','Kailangan nating mag-aral.','Kailangan tayong mag-aral.','Dapat nating mag-aral.'],ans:1,hint:'natin+ng=nating'},
+    {q:'「工作上需要我」',opts:['Kailangan ko sa trabaho.','Kailangan ako sa trabaho.','Kailangan kong trabaho.','Dapat akong magtrabaho.'],ans:1,hint:'被需要用主格ako'},
+    {q:'「我需要你」',opts:['Kailangan ko ikaw.','Kailangan kita.','Kailangan mo ako.','Gusto kita.'],ans:1,hint:'kita=我對你的特殊代詞'},
+    {q:'「他們需要耶和華的幫助」',opts:['Kailangan nila ang tulong.','Kailangan nila ang tulong ni Jehova.','Kailangan sila ng tulong.','Gusto nilang tulong.'],ans:1,hint:'nila+ang+tulong ni Jehova'},
+    {q:'Kailangan後面接所有格還是主格？',opts:['永遠主格','永遠所有格','需要東西/做事=所有格，被需要=主格','看心情'],ans:2,hint:'需要→所有格；被需要→主格'},
+    {q:'「要在靈性進步需要什麼？」',opts:['Ano ang kailangan mong gawin upang sumulong?','Gusto mong sumulong?','Dapat kang sumulong.','Kailangan ka sumulong.'],ans:0,hint:'Ano+kailangan+mong+gawin+upang'},
+  ],
+  w12:[
+    {q:'「這是誰的？」Tagalog？',opts:['Sino ito?','Kanino ito?','Ano ito?','Saan ito?'],ans:1,hint:'Kanino=誰的'},
+    {q:'「這是誰的書？」',opts:['Kanino libro ito?','Kaninong libro ito?','Sino ang libro?','Ano ang libro?'],ans:1,hint:'Kanino+ng=Kaninong+名詞'},
+    {q:'「這是我的」回答格式？',opts:['Ako ito.','Akin ito.','Sa akin.','Ko ito.'],ans:2,hint:'Sa格回答'},
+    {q:'「這是給誰的？」',opts:['Kanino ito?','Para kanino ito?','Sino ito?','Saan ito?'],ans:1,hint:'Para kanino=for whom'},
+    {q:'「你什麼時候離開？」',opts:['Saan ka aalis?','Kailan ka aalis?','Sino ka?','Ano ka?'],ans:1,hint:'Kailan=when'},
+    {q:'「大會什麼時候？」',opts:['Ano ang asambleya?','Saan ang asambleya?','Kailan ang asambleya?','Sino ang asambleya?'],ans:2,hint:'Kailan+ang+活動'},
+    {q:'Kailanman的意思？',opts:['只有永遠','只有從不','永遠或從不（看語境）','什麼時候'],ans:2,hint:'要看肯定或否定語境'},
+    {q:'問幾點用什麼？',opts:['Kailan','Anong oras','Kanino','Saan'],ans:1,hint:'具體時間用Anong oras'},
+  ],
+  w13_15:[
+    {q:'I-verb焦點在哪？',opts:['做動作的人','被移動/給出的東西','地點','時間'],ans:1,hint:'i-verb=受詞焦點'},
+    {q:'「itinuro」時態？',opts:['原形','過去','現在','未來'],ans:1,hint:'i-+in-=過去'},
+    {q:'「itinuturo」時態？',opts:['原形','過去','現在','未來'],ans:2,hint:'i-+in-+重複=現在'},
+    {q:'Ma-verb描述什麼？',opts:['命令','感受/狀態/自然發生','比較','所有權'],ans:1,hint:'ma-verb=感受類'},
+    {q:'Ma-verb過去式：ma-變？',opts:['mag-','na-','in-','i-'],ans:1,hint:'matulog→natulog'},
+    {q:'「natutulog」是什麼時態？',opts:['原形','過去','現在','未來'],ans:2,hint:'na-+重複=現在'},
+    {q:'-an verb焦點在哪？',opts:['做動作的人','被移動的東西','接受動作的人/地方','時間'],ans:2,hint:'-an=受者/地點'},
+    {q:'「binibigyan」時態？',opts:['原形','過去','現在','未來'],ans:2,hint:'in-+重複+bigay+-an=現在'},
+    {q:'「Hugasan mo ang mga plato.」意思？',opts:['你洗了碗。','洗碗盤！','你正在洗碗。','你會洗碗。'],ans:1,hint:'原形=命令'},
+    {q:'母音結尾字根加-an還是-han？',opts:['-an','-han','都可以','看語境'],ans:1,hint:'母音結尾用-han'},
+  ],
+  vocab:[
+    {q:'「好消息」Tagalog？',opts:['Mabuting balita','Espesyal na pahayag','Mabuting gawa','Balita'],ans:0,hint:'Mabuti+balita'},
+    {q:'「傳道（名詞）」？',opts:['Mangaral','Nangangaral','Pangangaral','Paglilingkod'],ans:2,hint:'名詞化'},
+    {q:'「信心」Tagalog？',opts:['Kapayapaan','Kabaitan','Pananampalataya','Kagalakan'],ans:2,hint:'最長的詞'},
+    {q:'「工作/職業」？',opts:['Bakasyon','Trabaho','Damit','Paaralan'],ans:1,hint:'拖拉巴後'},
+    {q:'「幸福的秘訣」？',opts:['Susi ng buhay','Susi ng kaligayahan','Mabuting balita','Katarungan'],ans:1,hint:'W13：susi=鑰匙'},
+    {q:'「聖靈」Tagalog？',opts:['Banal na espiritu','Pananampalataya','Kapangyarihan','Kaharian'],ans:0,hint:'W11：banal=聖潔'},
+    {q:'「幫助」Tagalog？',opts:['Tulong','Tulungan','Tinulungan','Tinutulungan'],ans:0,hint:'名詞：tulong'},
+    {q:'「堅強」Tagalog？',opts:['Masaya','Matatag','Mahirap','Mabait'],ans:1,hint:'W11：matatag'},
+    {q:'「為了/以便」？',opts:['Tungkol sa','Upang','Dahil','Ayon sa'],ans:1,hint:'W11：upang=目的'},
+    {q:'「宿舍」Tagalog？',opts:['Bahay','Dormitory','Paaralan','Kingdom Hall'],ans:1,hint:'W15：工人宿舍'},
+    {q:'「小冊子」Tagalog？',opts:['Aklat','Liham','Tract','Bibliya'],ans:2,hint:'W15：傳道用'},
+    {q:'「拜訪」Tagalog？',opts:['Dalawin','Pumunta','Tulungan','Makinig'],ans:0,hint:'W15：dalawin'},
+    {q:'「鼓勵」Tagalog？',opts:['Pampatibay-loob','Tulong','Proteksyon','Kaligayahan'],ans:0,hint:'W15：鼓勵'},
+    {q:'「大會」Tagalog？',opts:['Pulong','Asambleya','Kongregasyon','Memoryal'],ans:1,hint:'W12：assembly'},
+    {q:'「趕時間」Tagalog？',opts:['Nagmamadali','Naglalakad','Nagtatrabaho','Naglilibot'],ans:0,hint:'W13：madali=快'},
+  ],
+};
+
+let bigPool=[],bigIdx=0,bigScore=0,bigMode='';
+function startBigQuiz(mode){
+  bigMode=mode;
+  if(mode==='all'){bigPool=[];Object.values(qBank).forEach(a=>bigPool.push(...a));bigPool.sort(()=>Math.random()-.5).splice(50);}
+  else bigPool=[...(qBank[mode]||[])].sort(()=>Math.random()-.5);
+  bigIdx=0;bigScore=0;
+  document.getElementById('quiz-mode').style.display='none';
+  document.getElementById('quiz-container').style.display='block';
+  renderBQ();
+}
+function renderBQ(){
+  const c=document.getElementById('quiz-container');
+  if(bigIdx>=bigPool.length){
+    const pct=Math.round(bigScore/bigPool.length*100);
+    c.innerHTML=`<div style="text-align:center;background:white;border-radius:18px;padding:28px;box-shadow:0 3px 14px rgba(0,0,0,.08)">
+      <div style="font-size:2.5em">${pct>=90?'🏆':pct>=70?'⭐':'💪'}</div>
+      <div style="font-size:3em;font-weight:bold;color:var(--c1);margin:8px 0">${pct}%</div>
+      <div style="color:#888">答對 ${bigScore} / ${bigPool.length}</div>
+      <div style="margin:14px 0">${pct>=90?'太強了！':pct>=70?'很不錯！再加油！':'多練幾輪！'}</div>
+      <button onclick="startBigQuiz('${bigMode}')" style="background:var(--c1);color:white;border:none;padding:11px 22px;border-radius:11px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;margin:4px">🔄 再來一次</button>
+      <button onclick="document.getElementById('quiz-mode').style.display='block';document.getElementById('quiz-container').style.display='none'" style="background:#eee;color:#555;border:none;padding:11px 22px;border-radius:11px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;margin:4px">📋 換題目</button>
+    </div>`;return;
+  }
+  const q=bigPool[bigIdx],pct=Math.round(bigIdx/bigPool.length*100);
+  const sh=q.opts.map((t,i)=>({t,i})).sort(()=>Math.random()-.5);
+  c.innerHTML=`<div style="background:white;border-radius:18px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.08)">
+    <div style="display:flex;justify-content:space-between;margin-bottom:10px"><div style="font-size:.78em;color:var(--c1);font-weight:bold">${bigIdx+1}/${bigPool.length}</div><div style="font-size:.78em;color:#aaa">✅${bigScore}</div></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div style="font-size:1.05em;font-weight:bold;line-height:1.7;margin-bottom:16px">${q.q}</div>
+    <div style="display:flex;flex-direction:column;gap:8px" id="bqo">${sh.map(o=>`<button class="choice-btn" onclick="ansBQ(${o.i},${q.ans},this)">${o.t}</button>`).join('')}</div>
+    <div id="bqfb" style="display:none;margin-top:12px;padding:11px;border-radius:10px;font-size:.87em"></div>
+    <button id="bqnx" onclick="bigIdx++;renderBQ()" style="display:none;background:var(--c1);color:white;border:none;padding:11px;border-radius:11px;font-size:.93em;cursor:pointer;margin-top:11px;width:100%;font-family:'Nunito',sans-serif;font-weight:800">下一題 →</button>
+  </div>`;
+}
+function ansBQ(chosen,correct,btn){
+  if(document.getElementById('bqnx').style.display==='block') return;
+  document.querySelectorAll('#bqo .choice-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('bqfb'),hint=bigPool[bigIdx].hint,cAns=bigPool[bigIdx].opts[correct];
+  if(chosen===correct){btn.style.background='#4ade80';btn.style.color='#111';btn.style.borderColor='#4ade80';fb.style.background='#e8f5e9';fb.style.color='#2e7d32';fb.innerHTML='✅ 答對！<br>💡 '+hint;bigScore++;}
+  else{btn.style.background='#ffcdd2';btn.style.color='#c62828';btn.style.borderColor='#f44336';document.querySelectorAll('#bqo .choice-btn').forEach(b=>{if(b.textContent.trim()===cAns){b.style.background='#4ade80';b.style.color='#111';b.style.borderColor='#4ade80';}});fb.style.background='#ffebee';fb.style.color='#c62828';fb.innerHTML='❌ 正確：<b>'+cAns+'</b><br>💡 '+hint;}
+  fb.style.display='block';document.getElementById('bqnx').style.display='block';
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+buildCatTabs();
+updateStats();
+renderList();
+</script>
+</body>
+</html>

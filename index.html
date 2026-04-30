@@ -2,7 +2,14 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Tagalog">
+<meta name="theme-color" content="#FF6B6B">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>Tagalog 互動學習工具 W1-15</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
@@ -197,9 +204,86 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:var(--bg);color:var(-
   .nav-tab{padding:9px 10px;font-size:.7em}
   .fc-tl{font-size:1.5em}
 }
+
+/* ── FIREBASE AUTH BANNER ── */
+.auth-banner{background:#fff3cd;border-bottom:2px solid #ffd700;padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:.85em}
+.auth-banner.hidden{display:none}
+.auth-banner-btn{background:var(--c1);color:white;border:none;padding:7px 16px;border-radius:20px;font-size:.82em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;flex-shrink:0}
+.auth-user{font-size:.8em;color:#666;display:none;align-items:center;gap:6px;padding:6px 16px;border-bottom:1px solid #f0e8d8}
+.auth-user.visible{display:flex}
+
+/* ── QUICK RECORD ── */
+.qr-wrap{padding:14px;max-width:540px;margin:0 auto}
+.qr-section-title{font-size:.72em;text-transform:uppercase;letter-spacing:2px;color:#bbb;margin:16px 0 8px;padding-left:2px;font-weight:900}
+.qr-input{width:100%;padding:12px 14px;border:2.5px solid var(--border);border-radius:12px;font-size:.95em;font-family:'Nunito',sans-serif;background:white;outline:none;transition:.2s;margin-bottom:8px}
+.qr-input:focus{border-color:var(--c1)}
+.qr-input::placeholder{color:#ccc}
+.rec-row{display:flex;gap:8px;margin-bottom:12px;align-items:center}
+.rec-btn{padding:10px 18px;border:2.5px solid var(--border);background:white;border-radius:20px;font-size:.85em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;color:#555;transition:.15s;display:flex;align-items:center;gap:6px}
+.rec-btn.recording{background:#ffebee;border-color:#f44336;color:#c62828;animation:recPulse 1.2s infinite}
+.rec-btn.has-rec{background:#e8f5e9;border-color:#4caf50;color:#2e7d32}
+@keyframes recPulse{0%,100%{opacity:1}50%{opacity:.6}}
+.rec-duration{font-size:.78em;color:#888;font-weight:700}
+.tag-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.tag-chip{padding:6px 13px;border:2px solid var(--border);background:white;border-radius:18px;font-size:.78em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;color:#666;transition:.15s}
+.tag-chip.on{border-color:var(--c1);background:#fff0f0;color:var(--c1)}
+.mastery-row{display:flex;gap:5px;margin-bottom:14px}
+.mastery-star{font-size:1.6em;cursor:pointer;opacity:.3;transition:.15s}
+.mastery-star.on{opacity:1}
+.qr-save-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.qr-save-btn{padding:12px;border:none;border-radius:12px;font-size:.9em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:.1s}
+.qr-save-btn:active{transform:scale(.97)}
+.qr-save-inbox{background:var(--c3);color:#555}
+.qr-save-done{background:var(--c4);color:white}
+.inbox-item{background:white;border-radius:12px;padding:12px 14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:10px;cursor:pointer;border:2px solid transparent;transition:.15s}
+.inbox-item:hover{border-color:var(--c2)}
+.inbox-tl{font-size:.95em;font-weight:800;flex:1}
+.inbox-zh{font-size:.82em;color:#888}
+.inbox-tag{background:#f5efe8;color:#888;border-radius:8px;padding:2px 8px;font-size:.72em;font-weight:800}
+.inbox-play{background:none;border:2px solid #ddd;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85em;flex-shrink:0}
+.qr-person-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.qr-person-row label{font-size:.8em;font-weight:800;color:#888;white-space:nowrap}
+.offline-badge{display:inline-block;background:#fff3cd;color:#856404;border-radius:8px;padding:2px 8px;font-size:.72em;font-weight:800;margin-left:6px}
+
+/* ── MY VOCAB ── */
+.mv-wrap{padding:14px;max-width:540px;margin:0 auto}
+.mv-filter-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.mv-filter-btn{padding:6px 13px;border:2px solid var(--border);background:white;border-radius:18px;font-size:.76em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;color:#666;white-space:nowrap;transition:.15s}
+.mv-filter-btn.on{background:var(--c1);border-color:var(--c1);color:white}
+.mv-card{background:white;border-radius:14px;padding:13px 14px;margin-bottom:9px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:2px solid transparent;transition:.15s}
+.mv-card.battle-tested{border-color:var(--c4)}
+.mv-card-top{display:flex;align-items:flex-start;gap:10px}
+.mv-tl{font-size:1.05em;font-weight:800;flex:1}
+.mv-zh{font-size:.88em;color:#555;font-weight:700;margin-top:2px}
+.mv-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.mv-tag{padding:2px 9px;border-radius:10px;font-size:.72em;font-weight:800}
+.mv-tag.person{background:#e8f4ff;color:#1565c0}
+.mv-tag.topic{background:#f5ffe8;color:#2e7d32}
+.mv-tag.mastery1,.mv-tag.mastery2{background:#fff3e0;color:#e65100}
+.mv-tag.mastery3{background:#fff9c4;color:#f57f17}
+.mv-tag.mastery4,.mv-tag.mastery5{background:#e8f5e9;color:#2e7d32}
+.mv-tag.source-curr{background:#f3e5f5;color:#6a1b9a}
+.mv-card-actions{display:flex;gap:6px;margin-top:8px}
+.mv-action-btn{padding:5px 11px;border:2px solid var(--border);background:white;border-radius:10px;font-size:.75em;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;color:#888;transition:.15s}
+.mv-action-btn.tested{border-color:var(--c4);color:#2e7d32;background:#e8f5e9}
+.mv-empty{text-align:center;padding:40px 20px;color:#ccc;font-size:.9em}
+.mv-search-wrap{position:relative;margin-bottom:10px}
+.mv-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.9em;pointer-events:none}
+.mv-search{width:100%;padding:11px 14px 11px 36px;border:2.5px solid var(--border);border-radius:12px;font-size:.92em;font-family:'Nunito',sans-serif;background:white;outline:none;transition:.2s}
+.mv-search:focus{border-color:var(--c1)}
 </style>
 </head>
 <body>
+
+<!-- Firebase auth banner -->
+<div class="auth-banner" id="authBanner">
+  <span>🔒 登入後，快速記錄和詞庫可雲端同步</span>
+  <button class="auth-banner-btn" onclick="signIn()">Google 登入</button>
+</div>
+<div class="auth-user" id="authUser">
+  <span>👤 <span id="authName"></span></span>
+  <button onclick="signOut()" style="background:none;border:2px solid #ddd;color:#888;border-radius:10px;padding:3px 10px;font-size:.75em;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;margin-left:auto">登出</button>
+</div>
 
 <div class="hd">
   <h1>Tagalog 互動學習工具</h1>
@@ -220,6 +304,8 @@ body{font-family:'Nunito','Segoe UI',sans-serif;background:var(--bg);color:var(-
   <button class="nav-tab" onclick="showPanel('exercise')">✏️ 填空練習</button>
   <button class="nav-tab" onclick="showPanel('quiz')">🎯 測驗</button>
   <button class="nav-tab" onclick="showPanel('bible')">📖 聖經書卷</button>
+  <button class="nav-tab" onclick="showPanel('quick')" style="color:var(--c1)">⚡ 快速記錄</button>
+  <button class="nav-tab" onclick="showPanel('myvocab')" style="color:var(--c5)">🗃️ 我的詞庫</button>
 </div>
 
 <!-- ============================================= -->
@@ -1564,6 +1650,530 @@ function ansBQ(chosen,correct,btn){
 buildCatTabs();
 updateStats();
 renderList();
+</script>
+
+<!-- ============================================= -->
+<!-- PANEL 8: QUICK RECORD                         -->
+<!-- ============================================= -->
+<div id="panel-quick" class="panel">
+<div class="qr-wrap">
+  <div class="qr-section-title">⚡ 快速記錄</div>
+
+  <input class="qr-input" id="qrTL" placeholder="他加祿語 / 音（不確定拼法就寫讀音）" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <input class="qr-input" id="qrZH" placeholder="中文意思">
+
+  <div class="qr-section-title">🎙️ 錄音（可選）</div>
+  <div class="rec-row">
+    <button class="rec-btn" id="recBtn" onclick="toggleRec()">🎙️ 開始錄音</button>
+    <button class="rec-btn" id="playBtn" style="display:none" onclick="playRec()">▶️ 播放</button>
+    <button class="rec-btn" id="delRecBtn" style="display:none" onclick="deleteRec()">🗑️</button>
+    <span class="rec-duration" id="recDuration"></span>
+  </div>
+
+  <div class="qr-section-title">👤 誰教的</div>
+  <div class="qr-person-row">
+    <label>朋友名：</label>
+    <input class="qr-input" id="qrPerson" placeholder="例：Maria、Jun..." style="margin-bottom:0;flex:1">
+  </div>
+
+  <div class="qr-section-title">🏷️ 主題標籤</div>
+  <div class="tag-row" id="topicTags">
+    <span class="tag-chip" data-t="傳道">傳道</span>
+    <span class="tag-chip" data-t="食物">食物</span>
+    <span class="tag-chip" data-t="工作">工作</span>
+    <span class="tag-chip" data-t="家庭">家庭</span>
+    <span class="tag-chip" data-t="聚會">聚會</span>
+    <span class="tag-chip" data-t="日常">日常</span>
+    <span class="tag-chip" data-t="情緒">情緒</span>
+    <span class="tag-chip" data-t="台灣生活">台灣生活</span>
+  </div>
+
+  <div class="qr-section-title">📊 學會程度</div>
+  <div class="mastery-row" id="masteryRow">
+    <span class="mastery-star" data-m="1" onclick="setMastery(1)">⭐</span>
+    <span class="mastery-star" data-m="2" onclick="setMastery(2)">⭐</span>
+    <span class="mastery-star" data-m="3" onclick="setMastery(3)">⭐</span>
+    <span class="mastery-star" data-m="4" onclick="setMastery(4)">⭐</span>
+    <span class="mastery-star" data-m="5" onclick="setMastery(5)">⭐</span>
+  </div>
+  <div style="font-size:.75em;color:#aaa;margin-top:-6px;margin-bottom:12px">1=剛聽到 / 3=大概知道 / 5=會用了</div>
+
+  <div class="qr-save-row">
+    <button class="qr-save-btn qr-save-inbox" onclick="saveQuick(true)">📥 先丟收件匣<br><span style="font-size:.75em;font-weight:400">等下再分類</span></button>
+    <button class="qr-save-btn qr-save-done" onclick="saveQuick(false)">📂 直接儲存<br><span style="font-size:.75em;font-weight:400">分類完成</span></button>
+  </div>
+
+  <div class="qr-section-title">📥 收件匣 <span id="inboxCount" style="background:#f44336;color:white;border-radius:10px;padding:1px 7px;font-size:.8em;font-weight:900"></span></div>
+  <div id="inboxList"><div class="mv-empty">收件匣是空的 ✅</div></div>
+</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PANEL 9: MY VOCAB                             -->
+<!-- ============================================= -->
+<div id="panel-myvocab" class="panel">
+<div class="mv-wrap">
+  <div class="qr-section-title">🗃️ 我的詞庫</div>
+
+  <div class="mv-search-wrap">
+    <span class="mv-search-icon">🔍</span>
+    <input class="mv-search" id="mvSearch" placeholder="搜尋他加祿語 / 中文 / 朋友名..." oninput="filterMV()">
+  </div>
+
+  <div class="mv-filter-row" id="mvPersonFilter"></div>
+  <div class="mv-filter-row" id="mvTopicFilter">
+    <button class="mv-filter-btn on" data-filter="topic" data-v="all" onclick="toggleMVFilter('topic','all',this)">全部主題</button>
+    <button class="mv-filter-btn" data-filter="topic" data-v="傳道" onclick="toggleMVFilter('topic','傳道',this)">傳道</button>
+    <button class="mv-filter-btn" data-filter="topic" data-v="食物" onclick="toggleMVFilter('topic','食物',this)">食物</button>
+    <button class="mv-filter-btn" data-filter="topic" data-v="工作" onclick="toggleMVFilter('topic','工作',this)">工作</button>
+    <button class="mv-filter-btn" data-filter="topic" data-v="家庭" onclick="toggleMVFilter('topic','家庭',this)">家庭</button>
+    <button class="mv-filter-btn" data-filter="topic" data-v="日常" onclick="toggleMVFilter('topic','日常',this)">日常</button>
+    <button class="mv-filter-btn" data-filter="topic" data-v="教材" onclick="toggleMVFilter('topic','教材',this)">📚 教材</button>
+  </div>
+  <div class="mv-filter-row">
+    <button class="mv-filter-btn on" data-filter="mastery" data-v="all" onclick="toggleMVFilter('mastery','all',this)">全部程度</button>
+    <button class="mv-filter-btn" data-filter="mastery" data-v="1" onclick="toggleMVFilter('mastery','1',this)">⭐ 剛學</button>
+    <button class="mv-filter-btn" data-filter="mastery" data-v="3" onclick="toggleMVFilter('mastery','3',this)">⭐⭐⭐ 大概</button>
+    <button class="mv-filter-btn" data-filter="mastery" data-v="5" onclick="toggleMVFilter('mastery','5',this)">⭐⭐⭐⭐⭐ 會用</button>
+    <button class="mv-filter-btn" data-filter="battle" data-v="true" onclick="toggleMVFilter('battle','true',this)">✅ 實戰過</button>
+  </div>
+
+  <div style="font-size:.78em;color:#aaa;margin-bottom:12px;text-align:right"><span id="mvCount">0</span> 個詞</div>
+
+  <div id="mvList"><div class="mv-empty">詞庫是空的，先去「⚡ 快速記錄」記錄新詞！</div></div>
+</div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-storage-compat.js"></script>
+
+<script>
+// ════════════════════════════════════════════════════
+// FIREBASE CONFIG
+// ════════════════════════════════════════════════════
+// ⚠️ 小豆：請到 https://console.firebase.google.com 建立專案後，
+//    把下面這段換成你的設定（Project Settings → Your apps → Firebase SDK snippet）
+const FIREBASE_CONFIG = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+let fbApp = null, db = null, storage = null, authInst = null, currentUser = null;
+let fbReady = false;
+
+function initFirebase() {
+  try {
+    if (FIREBASE_CONFIG.apiKey === 'YOUR_API_KEY') {
+      console.warn('Firebase not configured — offline mode');
+      return;
+    }
+    fbApp = firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    storage = firebase.storage();
+    authInst = firebase.auth();
+    authInst.onAuthStateChanged(user => {
+      currentUser = user;
+      fbReady = true;
+      updateAuthUI();
+      if (user) {
+        loadMyVocab();
+        loadInbox();
+      }
+    });
+  } catch(e) { console.error('Firebase init failed', e); }
+}
+
+function updateAuthUI() {
+  const banner = document.getElementById('authBanner');
+  const userEl = document.getElementById('authUser');
+  const nameEl = document.getElementById('authName');
+  if (currentUser) {
+    banner.classList.add('hidden');
+    userEl.classList.add('visible');
+    nameEl.textContent = currentUser.displayName || currentUser.email || '已登入';
+  } else {
+    banner.classList.remove('hidden');
+    userEl.classList.remove('visible');
+  }
+}
+
+function signIn() {
+  if (!authInst) { alert('Firebase 尚未設定'); return; }
+  const provider = new firebase.auth.GoogleAuthProvider();
+  authInst.signInWithRedirect(provider);
+}
+
+function signOut() {
+  if (authInst) authInst.signOut();
+}
+
+// ════════════════════════════════════════════════════
+// OFFLINE QUEUE (localStorage fallback)
+// ════════════════════════════════════════════════════
+function getOfflineQueue() {
+  try { return JSON.parse(localStorage.getItem('tl_offline_queue') || '[]'); } catch { return []; }
+}
+function saveOfflineQueue(q) {
+  localStorage.setItem('tl_offline_queue', JSON.stringify(q));
+}
+function addToOfflineQueue(word) {
+  const q = getOfflineQueue();
+  q.push({...word, _offline: true, _id: Date.now().toString()});
+  saveOfflineQueue(q);
+}
+async function flushOfflineQueue() {
+  if (!db || !currentUser) return;
+  const q = getOfflineQueue();
+  if (!q.length) return;
+  const ref = db.collection('users').doc(currentUser.uid).collection('words');
+  for (const word of q) {
+    const {_offline, _id, ...data} = word;
+    await ref.add({...data, syncedAt: firebase.firestore.FieldValue.serverTimestamp()});
+  }
+  saveOfflineQueue([]);
+  loadInbox();
+  loadMyVocab();
+}
+
+// ════════════════════════════════════════════════════
+// RECORDING
+// ════════════════════════════════════════════════════
+let mediaRec = null, recChunks = [], recBlob = null, recInterval = null, recSec = 0;
+
+async function toggleRec() {
+  if (mediaRec && mediaRec.state === 'recording') {
+    mediaRec.stop();
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+    recChunks = [];
+    mediaRec = new MediaRecorder(stream);
+    mediaRec.ondataavailable = e => { if (e.data.size > 0) recChunks.push(e.data); };
+    mediaRec.onstop = () => {
+      recBlob = new Blob(recChunks, {type: 'audio/webm'});
+      stream.getTracks().forEach(t => t.stop());
+      clearInterval(recInterval);
+      const btn = document.getElementById('recBtn');
+      btn.className = 'rec-btn has-rec';
+      btn.innerHTML = '🎙️ 重新錄音';
+      document.getElementById('playBtn').style.display = '';
+      document.getElementById('delRecBtn').style.display = '';
+      document.getElementById('recDuration').textContent = recSec + 's';
+    };
+    mediaRec.start();
+    recSec = 0;
+    recInterval = setInterval(() => {
+      recSec++;
+      document.getElementById('recDuration').textContent = recSec + 's';
+    }, 1000);
+    const btn = document.getElementById('recBtn');
+    btn.className = 'rec-btn recording';
+    btn.innerHTML = '⏹️ 停止錄音';
+    document.getElementById('recDuration').textContent = '0s';
+  } catch(e) {
+    alert('無法存取麥克風：' + e.message);
+  }
+}
+
+function playRec() {
+  if (!recBlob) return;
+  const url = URL.createObjectURL(recBlob);
+  const audio = new Audio(url);
+  audio.play();
+}
+
+function deleteRec() {
+  recBlob = null;
+  recChunks = [];
+  const btn = document.getElementById('recBtn');
+  btn.className = 'rec-btn';
+  btn.innerHTML = '🎙️ 開始錄音';
+  document.getElementById('playBtn').style.display = 'none';
+  document.getElementById('delRecBtn').style.display = 'none';
+  document.getElementById('recDuration').textContent = '';
+}
+
+// ════════════════════════════════════════════════════
+// QUICK RECORD UI
+// ════════════════════════════════════════════════════
+let selectedTopics = [], currentMastery = 1;
+
+document.querySelectorAll('#topicTags .tag-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    this.classList.toggle('on');
+    const t = this.dataset.t;
+    const idx = selectedTopics.indexOf(t);
+    if (idx > -1) selectedTopics.splice(idx, 1);
+    else selectedTopics.push(t);
+  });
+});
+
+function setMastery(n) {
+  currentMastery = n;
+  document.querySelectorAll('#masteryRow .mastery-star').forEach((s, i) => {
+    s.classList.toggle('on', i < n);
+  });
+}
+setMastery(1);
+
+async function saveQuick(isInbox) {
+  const tl = document.getElementById('qrTL').value.trim();
+  const zh = document.getElementById('qrZH').value.trim();
+  if (!tl) { document.getElementById('qrTL').focus(); document.getElementById('qrTL').style.borderColor='#f44336'; return; }
+  document.getElementById('qrTL').style.borderColor = '';
+
+  const person = document.getElementById('qrPerson').value.trim();
+  const word = {
+    tl, zh,
+    person: person || '',
+    topics: [...selectedTopics],
+    mastery: currentMastery,
+    isInbox,
+    battleTested: false,
+    source: 'quick',
+    createdAt: new Date().toISOString(),
+    recordingUrl: ''
+  };
+
+  // Upload recording if exists
+  if (recBlob && storage && currentUser) {
+    try {
+      const path = `users/${currentUser.uid}/recordings/${Date.now()}.webm`;
+      const ref = storage.ref(path);
+      await ref.put(recBlob);
+      word.recordingUrl = await ref.getDownloadURL();
+    } catch(e) { console.warn('Recording upload failed', e); }
+  }
+
+  // Save to Firestore or offline queue
+  if (db && currentUser) {
+    try {
+      await db.collection('users').doc(currentUser.uid).collection('words').add({
+        ...word,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch(e) {
+      console.warn('Firestore save failed, using offline queue', e);
+      addToOfflineQueue(word);
+    }
+  } else {
+    addToOfflineQueue(word);
+  }
+
+  // Reset form
+  document.getElementById('qrTL').value = '';
+  document.getElementById('qrZH').value = '';
+  document.getElementById('qrPerson').value = '';
+  selectedTopics = [];
+  document.querySelectorAll('#topicTags .tag-chip').forEach(c => c.classList.remove('on'));
+  setMastery(1);
+  deleteRec();
+
+  // Show feedback
+  const btn = document.querySelector(isInbox ? '.qr-save-inbox' : '.qr-save-done');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '✅ 已儲存！';
+  setTimeout(() => btn.innerHTML = orig, 1500);
+
+  loadInbox();
+  loadMyVocab();
+}
+
+function loadInbox() {
+  const listEl = document.getElementById('inboxList');
+  const countEl = document.getElementById('inboxCount');
+  const items = [];
+
+  // Offline queue inbox items
+  const offlineItems = getOfflineQueue().filter(w => w.isInbox);
+  items.push(...offlineItems.map(w => ({...w, _fromOffline: true})));
+
+  if (!db || !currentUser) {
+    renderInboxItems(items, listEl, countEl);
+    return;
+  }
+
+  db.collection('users').doc(currentUser.uid).collection('words')
+    .where('isInbox', '==', true)
+    .orderBy('createdAt', 'desc')
+    .limit(30)
+    .get().then(snap => {
+      snap.forEach(doc => items.push({...doc.data(), _docId: doc.id}));
+      renderInboxItems(items, listEl, countEl);
+    }).catch(() => renderInboxItems(items, listEl, countEl));
+}
+
+function renderInboxItems(items, listEl, countEl) {
+  countEl.textContent = items.length || '';
+  if (!items.length) { listEl.innerHTML = '<div class="mv-empty">收件匣是空的 ✅</div>'; return; }
+  listEl.innerHTML = items.map((w, i) => `
+    <div class="inbox-item" onclick="editInboxItem(${i})">
+      <div style="flex:1">
+        <div class="inbox-tl">${w.tl} ${w._fromOffline ? '<span class="offline-badge">離線</span>' : ''}</div>
+        <div class="inbox-zh">${w.zh || '未填中文'}</div>
+      </div>
+      ${w.person ? `<span class="inbox-tag">${w.person}</span>` : ''}
+      ${w.recordingUrl ? `<button class="inbox-play" onclick="event.stopPropagation();playUrl('${w.recordingUrl}')">▶️</button>` : ''}
+    </div>
+  `).join('');
+  window._inboxItems = items;
+}
+
+function playUrl(url) {
+  const a = new Audio(url); a.play();
+}
+
+function editInboxItem(i) {
+  const w = window._inboxItems[i];
+  if (!w) return;
+  document.getElementById('qrTL').value = w.tl || '';
+  document.getElementById('qrZH').value = w.zh || '';
+  document.getElementById('qrPerson').value = w.person || '';
+  selectedTopics = [...(w.topics || [])];
+  document.querySelectorAll('#topicTags .tag-chip').forEach(c => {
+    c.classList.toggle('on', selectedTopics.includes(c.dataset.t));
+  });
+  setMastery(w.mastery || 1);
+  document.getElementById('qrTL').scrollIntoView({behavior:'smooth'});
+  document.getElementById('qrTL').focus();
+}
+
+// ════════════════════════════════════════════════════
+// MY VOCAB
+// ════════════════════════════════════════════════════
+let allMyWords = [], mvFilters = {topic: 'all', mastery: 'all', battle: 'false', person: 'all'};
+
+function loadMyVocab() {
+  const items = [];
+  const offlineItems = getOfflineQueue().filter(w => !w.isInbox);
+  items.push(...offlineItems);
+
+  if (!db || !currentUser) {
+    allMyWords = items;
+    renderMV();
+    return;
+  }
+
+  db.collection('users').doc(currentUser.uid).collection('words')
+    .where('isInbox', '==', false)
+    .orderBy('createdAt', 'desc')
+    .get().then(snap => {
+      snap.forEach(doc => items.push({...doc.data(), _docId: doc.id}));
+      allMyWords = items;
+      renderMV();
+      buildPersonFilter();
+    }).catch(() => { allMyWords = items; renderMV(); });
+}
+
+function buildPersonFilter() {
+  const persons = [...new Set(allMyWords.map(w => w.person).filter(Boolean))];
+  const el = document.getElementById('mvPersonFilter');
+  el.innerHTML = `<button class="mv-filter-btn on" data-filter="person" data-v="all" onclick="toggleMVFilter('person','all',this)">全部朋友</button>` +
+    persons.map(p => `<button class="mv-filter-btn" data-filter="person" data-v="${p}" onclick="toggleMVFilter('person','${p}',this)">${p}</button>`).join('');
+}
+
+function toggleMVFilter(type, val, btn) {
+  mvFilters[type] = val;
+  document.querySelectorAll(`[data-filter="${type}"]`).forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderMV();
+}
+
+function filterMV() { renderMV(); }
+
+function renderMV() {
+  const search = (document.getElementById('mvSearch')?.value || '').toLowerCase();
+  let words = allMyWords.filter(w => {
+    if (search && !w.tl?.toLowerCase().includes(search) && !w.zh?.toLowerCase().includes(search) && !w.person?.toLowerCase().includes(search)) return false;
+    if (mvFilters.topic !== 'all' && mvFilters.topic !== '教材') {
+      if (!w.topics?.includes(mvFilters.topic)) return false;
+    }
+    if (mvFilters.topic === '教材' && w.source !== 'curriculum') return false;
+    if (mvFilters.person !== 'all' && w.person !== mvFilters.person) return false;
+    if (mvFilters.mastery !== 'all') {
+      const m = parseInt(mvFilters.mastery);
+      if (mvFilters.mastery === '1' && w.mastery > 2) return false;
+      if (mvFilters.mastery === '3' && (w.mastery < 3 || w.mastery > 4)) return false;
+      if (mvFilters.mastery === '5' && w.mastery < 5) return false;
+    }
+    if (mvFilters.battle === 'true' && !w.battleTested) return false;
+    return true;
+  });
+
+  document.getElementById('mvCount').textContent = words.length;
+  const listEl = document.getElementById('mvList');
+  if (!words.length) {
+    listEl.innerHTML = '<div class="mv-empty">沒有符合的詞，換個篩選看看 🔍</div>';
+    return;
+  }
+  listEl.innerHTML = words.map(w => `
+    <div class="mv-card${w.battleTested ? ' battle-tested' : ''}">
+      <div class="mv-card-top">
+        <div>
+          <div class="mv-tl">${w.tl}</div>
+          <div class="mv-zh">${w.zh || ''}</div>
+        </div>
+        ${w.recordingUrl ? `<button style="background:none;border:2px solid #ddd;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85em;flex-shrink:0" onclick="playUrl('${w.recordingUrl}')">▶️</button>` : ''}
+      </div>
+      <div class="mv-meta">
+        ${w.person ? `<span class="mv-tag person">👤 ${w.person}</span>` : ''}
+        ${(w.topics||[]).map(t => `<span class="mv-tag topic">🏷️ ${t}</span>`).join('')}
+        <span class="mv-tag mastery${w.mastery||1}">${'⭐'.repeat(w.mastery||1)} 程度${w.mastery||1}</span>
+        ${w.source === 'curriculum' ? '<span class="mv-tag source-curr">📚 教材</span>' : ''}
+        ${w.battleTested ? '<span class="mv-tag" style="background:#e8f5e9;color:#2e7d32">✅ 實戰確認</span>' : ''}
+      </div>
+      <div class="mv-card-actions">
+        ${w._docId ? `<button class="mv-action-btn${w.battleTested ? ' tested' : ''}" onclick="toggleBattle('${w._docId}',${!w.battleTested})">${w.battleTested ? '✅ 已實戰' : '🏆 標記實戰'}</button>` : ''}
+        ${w._docId ? `<button class="mv-action-btn" onclick="deleteWord('${w._docId}')">🗑️ 刪除</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+async function toggleBattle(docId, val) {
+  if (!db || !currentUser) return;
+  await db.collection('users').doc(currentUser.uid).collection('words').doc(docId).update({battleTested: val});
+  loadMyVocab();
+}
+
+async function deleteWord(docId) {
+  if (!confirm('確定刪除這個詞？')) return;
+  if (!db || !currentUser) return;
+  await db.collection('users').doc(currentUser.uid).collection('words').doc(docId).delete();
+  loadMyVocab();
+}
+
+// ════════════════════════════════════════════════════
+// PWA SERVICE WORKER
+// ════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(e => console.warn('SW reg failed', e));
+  });
+}
+
+// ════════════════════════════════════════════════════
+// START
+// ════════════════════════════════════════════════════
+initFirebase();
+
+// Load offline items on tab open
+document.querySelector('[onclick="showPanel(\'quick\')"]')?.addEventListener('click', () => {
+  loadInbox();
+  flushOfflineQueue();
+});
+document.querySelector('[onclick="showPanel(\'myvocab\')"]')?.addEventListener('click', () => {
+  loadMyVocab();
+  flushOfflineQueue();
+});
 </script>
 </body>
 </html>

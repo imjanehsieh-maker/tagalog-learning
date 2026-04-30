@@ -1,8 +1,10 @@
-const CACHE = 'tagalog-v2';
+const CACHE = 'tagalog-v3';
 const ASSETS = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './data/index.json',
+  './data/w11-15.json'
 ];
 
 self.addEventListener('install', e => {

@@ -1,0 +1,1221 @@
+{
+  "vocab": [
+    {
+      "id": 500,
+      "wk": 11,
+      "tl": "Kailangan",
+      "zh": "需要／必須",
+      "en": "Need / Must",
+      "reading": "凱拉安",
+      "cat": "w11_15",
+      "hint": "凱拉安≈你需要安慰",
+      "ex": { "tl": "Kailangan ko ng tulong.", "cn": "我需要幫忙。" }
+    },
+    {
+      "id": 501,
+      "wk": 11,
+      "tl": "Dapat",
+      "zh": "應該／應當",
+      "en": "Should / Ought to",
+      "reading": "大帕特",
+      "cat": "w11_15",
+      "hint": "大帕特≈大概應該這樣做",
+      "ex": { "tl": "Dapat kang matulog.", "cn": "你應該睡覺。" }
+    },
+    {
+      "id": 502,
+      "wk": 11,
+      "tl": "Gusto",
+      "zh": "想要",
+      "en": "Want",
+      "reading": "古斯托",
+      "cat": "w11_15",
+      "hint": "古斯托≈古早味想嚐",
+      "ex": { "tl": "Gusto ko ng kape.", "cn": "我想要咖啡。" }
+    },
+    {
+      "id": 503,
+      "wk": 11,
+      "tl": "Tulong",
+      "zh": "幫忙",
+      "en": "Help",
+      "reading": "土隆",
+      "cat": "w11_15",
+      "hint": "土隆≈土堆隆起需要幫忙",
+      "ex": { "tl": "Kailangan ko ng tulong.", "cn": "我需要幫忙。" }
+    },
+    {
+      "id": 504,
+      "wk": 11,
+      "tl": "Pagkain",
+      "zh": "食物",
+      "en": "Food",
+      "reading": "帕卡因",
+      "cat": "w11_15",
+      "hint": "帕卡因≈把食物卡進嘴裡",
+      "ex": { "tl": "Kailangan namin ng pagkain.", "cn": "我們需要食物。" }
+    },
+    {
+      "id": 505,
+      "wk": 11,
+      "tl": "Kape",
+      "zh": "咖啡",
+      "en": "Coffee",
+      "reading": "卡配",
+      "cat": "w11_15",
+      "hint": "卡配≈咖啡剛好卡一配",
+      "ex": { "tl": "Kailangan ko ng kape.", "cn": "我需要咖啡。" }
+    },
+    {
+      "id": 506,
+      "wk": 11,
+      "tl": "Gamot",
+      "zh": "藥",
+      "en": "Medicine",
+      "reading": "嘎摩特",
+      "cat": "w11_15",
+      "hint": "嘎摩特≈嘎摩一下吃藥",
+      "ex": { "tl": "Kailangan ko ng gamot.", "cn": "我需要藥。" }
+    },
+    {
+      "id": 507,
+      "wk": 11,
+      "tl": "Kailangan kita",
+      "zh": "我需要你",
+      "en": "I need you",
+      "reading": "凱拉安基塔",
+      "cat": "w11_15",
+      "hint": "凱拉安基塔≈基塔彼此都需要",
+      "ex": { "tl": "Kailangan kita.", "cn": "我需要你。" }
+    },
+    {
+      "id": 508,
+      "wk": 11,
+      "tl": "Sumulong",
+      "zh": "前進／進步",
+      "en": "Move forward / Progress",
+      "reading": "蘇木隆",
+      "cat": "w11_15",
+      "hint": "蘇木隆≈蘇木龍向前衝",
+      "ex": { "tl": "Kailangan nating sumulong.", "cn": "我們需要前進。" }
+    },
+    {
+      "id": 509,
+      "wk": 11,
+      "tl": "Matatag",
+      "zh": "堅定",
+      "en": "Firm / Steadfast",
+      "reading": "馬塔塔克",
+      "cat": "w11_15",
+      "hint": "馬塔塔克≈馬塔（張大眼）要堅定",
+      "ex": { "tl": "Kailangan tayong maging matatag.", "cn": "我們需要堅定。" }
+    },
+    {
+      "id": 510,
+      "wk": 11,
+      "tl": "Upang",
+      "zh": "以便／為了",
+      "en": "So that / In order to",
+      "reading": "烏龐",
+      "cat": "w11_15",
+      "hint": "烏龐≈為了讓烏鴉能飛龐大",
+      "ex": { "tl": "Kailangan nating mag-aral upang sumulong.", "cn": "我們需要學習以便進步。" }
+    },
+    {
+      "id": 511,
+      "wk": 11,
+      "tl": "Banal na espiritu",
+      "zh": "聖靈",
+      "en": "Holy Spirit",
+      "reading": "巴那拉艾絲比力圖",
+      "cat": "w11_15",
+      "hint": "espiritu≈spirit，神聖的靈力",
+      "ex": { "tl": "Kailangan natin ang banal na espiritu.", "cn": "我們需要聖靈。" }
+    },
+    {
+      "id": 512,
+      "wk": 11,
+      "tl": "Pananampalataya",
+      "zh": "信心",
+      "en": "Faith",
+      "reading": "帕那那帕拉塔亞",
+      "cat": "w11_15",
+      "hint": "帕那那帕拉塔亞≈信心一路向前走",
+      "ex": { "tl": "Kailangan natin ang pananampalataya.", "cn": "我們需要信心。" }
+    },
+    {
+      "id": 560,
+      "wk": 12,
+      "tl": "Kanino",
+      "zh": "誰的／給誰",
+      "en": "Whose / To whom",
+      "reading": "卡尼諾",
+      "cat": "w11_15",
+      "hint": "卡尼諾≈問誰卡在那裡",
+      "ex": { "tl": "Kanino ang aklat?", "cn": "書是誰的？" }
+    },
+    {
+      "id": 561,
+      "wk": 12,
+      "tl": "Kaninong",
+      "zh": "誰的（接名詞）",
+      "en": "Whose (before noun)",
+      "reading": "卡尼農",
+      "cat": "w11_15",
+      "hint": "卡尼農≈農地是誰的",
+      "ex": { "tl": "Kaninong libro ito?", "cn": "這是誰的書？" }
+    },
+    {
+      "id": 562,
+      "wk": 12,
+      "tl": "Na kanino",
+      "zh": "在誰那裡",
+      "en": "With whom",
+      "reading": "那卡尼諾",
+      "cat": "w11_15",
+      "hint": "那卡尼諾≈那東西跑到誰那裡",
+      "ex": { "tl": "Na kanino ang susi?", "cn": "鑰匙在誰那裡？" }
+    },
+    {
+      "id": 563,
+      "wk": 12,
+      "tl": "Para kanino",
+      "zh": "為了誰",
+      "en": "For whom",
+      "reading": "帕拉卡尼諾",
+      "cat": "w11_15",
+      "hint": "para=為了，為了尼諾（誰）",
+      "ex": { "tl": "Para kanino ito?", "cn": "這是為了誰的？" }
+    },
+    {
+      "id": 564,
+      "wk": 12,
+      "tl": "Kani-kanino",
+      "zh": "各自是誰的（複數）",
+      "en": "Each person's (plural whose)",
+      "reading": "卡尼卡尼諾",
+      "cat": "w11_15",
+      "hint": "重複 kani-=各個都問是誰的",
+      "ex": { "tl": "Kani-kanino ang mga damit?", "cn": "這些衣服各是誰的？" }
+    },
+    {
+      "id": 565,
+      "wk": 12,
+      "tl": "Kailan",
+      "zh": "何時",
+      "en": "When",
+      "reading": "凱蘭",
+      "cat": "w11_15",
+      "hint": "凱蘭≈凱旋何時歸",
+      "ex": { "tl": "Kailan ang asambleya?", "cn": "大會是何時？" }
+    },
+    {
+      "id": 566,
+      "wk": 12,
+      "tl": "Kung kailan",
+      "zh": "正當...時",
+      "en": "When (in time clauses)",
+      "reading": "孔凱蘭",
+      "cat": "w11_15",
+      "hint": "孔凱蘭≈正當孔子說話之時",
+      "ex": { "tl": "Kung kailan ka libre, tawagan mo ako.", "cn": "當你有空的時候，打電話給我。" }
+    },
+    {
+      "id": 567,
+      "wk": 12,
+      "tl": "Kahit kailan",
+      "zh": "無論何時／永遠",
+      "en": "Whenever / Always",
+      "reading": "卡黑特凱蘭",
+      "cat": "w11_15",
+      "hint": "kahit=不管；kahit kailan=不管何時",
+      "ex": { "tl": "Kahit kailan, nandito ako.", "cn": "無論何時，我都在這裡。" }
+    },
+    {
+      "id": 568,
+      "wk": 12,
+      "tl": "Kailanman",
+      "zh": "永遠／從不（搭配否定）",
+      "en": "Ever / Never",
+      "reading": "凱蘭曼",
+      "cat": "w11_15",
+      "hint": "凱蘭曼≈凱蘭永曼（長）不忘",
+      "ex": { "tl": "Hindi kailanman mababago ang katotohanan.", "cn": "真理永遠不會改變。" }
+    },
+    {
+      "id": 569,
+      "wk": 12,
+      "tl": "Anong oras",
+      "zh": "幾點",
+      "en": "What time",
+      "reading": "阿農歐拉斯",
+      "cat": "w11_15",
+      "hint": "oras=時間，阿農歐拉斯問幾點",
+      "ex": { "tl": "Anong oras ang pagtitipon?", "cn": "聚會幾點？" }
+    },
+    {
+      "id": 570,
+      "wk": 12,
+      "tl": "Asambleya",
+      "zh": "大會（區域大會）",
+      "en": "Assembly",
+      "reading": "阿桑布雷亞",
+      "cat": "w11_15",
+      "hint": "阿桑布雷亞≈assembly大會",
+      "ex": { "tl": "Kailan ang asambleya?", "cn": "大會是何時？" }
+    },
+    {
+      "id": 571,
+      "wk": 12,
+      "tl": "Kombensiyon",
+      "zh": "大會（國際大會）",
+      "en": "Convention",
+      "reading": "康本希永",
+      "cat": "w11_15",
+      "hint": "康本希永≈convention國際大會",
+      "ex": { "tl": "Nasaan ang kombensiyon?", "cn": "國際大會在哪裡？" }
+    },
+    {
+      "id": 572,
+      "wk": 12,
+      "tl": "Regalo",
+      "zh": "禮物",
+      "en": "Gift",
+      "reading": "瑞嘎洛",
+      "cat": "w11_15",
+      "hint": "瑞嘎洛≈瑞士嘎嘎送禮物",
+      "ex": { "tl": "Para kanino ang regalo?", "cn": "禮物是為了誰的？" }
+    },
+    {
+      "id": 620,
+      "wk": 13,
+      "tl": "Ituro",
+      "zh": "教導（受詞焦點）",
+      "en": "To teach (object-focus)",
+      "reading": "伊土羅",
+      "cat": "w11_15",
+      "hint": "伊土羅≈伊（一）定要教土羅",
+      "ex": { "tl": "Gusto kong ituro sa iyo ang Biblia.", "cn": "我想教你聖經。" }
+    },
+    {
+      "id": 621,
+      "wk": 13,
+      "tl": "Ibigay",
+      "zh": "給予（受詞焦點）",
+      "en": "To give (object-focus)",
+      "reading": "伊比蓋",
+      "cat": "w11_15",
+      "hint": "伊比蓋≈比較蓋章給你",
+      "ex": { "tl": "Ibigay mo sa kanya ang libro.", "cn": "把書給他。" }
+    },
+    {
+      "id": 622,
+      "wk": 13,
+      "tl": "Iuwi",
+      "zh": "帶回家（受詞焦點）",
+      "en": "To bring home (object-focus)",
+      "reading": "伊烏威",
+      "cat": "w11_15",
+      "hint": "伊烏威≈烏威帶你回家",
+      "ex": { "tl": "Iuwi mo ang bata.", "cn": "把孩子帶回家。" }
+    },
+    {
+      "id": 623,
+      "wk": 13,
+      "tl": "Ilagay",
+      "zh": "放置（受詞焦點）",
+      "en": "To place / put (object-focus)",
+      "reading": "伊拉蓋",
+      "cat": "w11_15",
+      "hint": "伊拉蓋≈拉起來蓋住放好",
+      "ex": { "tl": "Ilagay mo ang libro sa mesa.", "cn": "把書放在桌上。" }
+    },
+    {
+      "id": 624,
+      "wk": 13,
+      "tl": "Itinuro",
+      "zh": "已教導（過去式）",
+      "en": "Taught (past)",
+      "reading": "伊替努羅",
+      "cat": "w11_15",
+      "hint": "i-in-插入=itinuro，替努力教過了",
+      "ex": { "tl": "Itinuro niya ang katotohanan.", "cn": "他已教導了真理。" }
+    },
+    {
+      "id": 625,
+      "wk": 13,
+      "tl": "Itinuturo",
+      "zh": "正在教導（現在式）",
+      "en": "Teaching now (present)",
+      "reading": "伊替努土羅",
+      "cat": "w11_15",
+      "hint": "i-in-+重複=itinuturo，正在教",
+      "ex": { "tl": "Itinuturo niya ang Biblia.", "cn": "他正在教聖經。" }
+    },
+    {
+      "id": 626,
+      "wk": 13,
+      "tl": "Ituturo",
+      "zh": "將要教導（未來式）",
+      "en": "Will teach (future)",
+      "reading": "伊土土羅",
+      "cat": "w11_15",
+      "hint": "i-+重複tu=ituturo，土土重複=將要",
+      "ex": { "tl": "Ituturo namin ang katotohanan.", "cn": "我們將要教導真理。" }
+    },
+    {
+      "id": 627,
+      "wk": 13,
+      "tl": "Kaligayahan",
+      "zh": "幸福／快樂",
+      "en": "Happiness / Joy",
+      "reading": "卡利嘎亞漢",
+      "cat": "w11_15",
+      "hint": "卡利嘎亞漢≈快樂嘎嘎叫出來",
+      "ex": { "tl": "Ibigay niya sa amin ang kaligayahan.", "cn": "他帶給我們幸福。" }
+    },
+    {
+      "id": 628,
+      "wk": 13,
+      "tl": "Hamon",
+      "zh": "挑戰",
+      "en": "Challenge",
+      "reading": "哈蒙",
+      "cat": "w11_15",
+      "hint": "哈蒙≈哈一口迎接挑戰",
+      "ex": { "tl": "Hamon sa buhay.", "cn": "生命中的挑戰。" }
+    },
+    {
+      "id": 629,
+      "wk": 13,
+      "tl": "Nagmamadali",
+      "zh": "很匆忙",
+      "en": "In a hurry",
+      "reading": "那馬馬大利",
+      "cat": "w11_15",
+      "hint": "那馬馬大利≈大利跑得很急",
+      "ex": { "tl": "Nagmamadali ako ngayon.", "cn": "我現在很匆忙。" }
+    },
+    {
+      "id": 630,
+      "wk": 13,
+      "tl": "Libreng pag-aaral",
+      "zh": "免費學習",
+      "en": "Free study / Free Bible study",
+      "reading": "利布連帕阿拉",
+      "cat": "w11_15",
+      "hint": "libre=免費，pag-aaral=學習",
+      "ex": { "tl": "Mayroon kaming libreng pag-aaral ng Biblia.", "cn": "我們有免費的聖經學習。" }
+    },
+    {
+      "id": 631,
+      "wk": 13,
+      "tl": "Katotohanan",
+      "zh": "真理",
+      "en": "Truth",
+      "reading": "卡托托哈南",
+      "cat": "w11_15",
+      "hint": "katotohanan≈totoo（真實）的名詞",
+      "ex": { "tl": "Ituturo namin ang katotohanan.", "cn": "我們將教導真理。" }
+    },
+    {
+      "id": 632,
+      "wk": 13,
+      "tl": "Paksa",
+      "zh": "主語／主題",
+      "en": "Subject / Topic",
+      "reading": "帕克薩",
+      "cat": "w11_15",
+      "hint": "帕克薩≈帕克薩薩（紮）的主題",
+      "ex": { "tl": "Ano ang paksa ngayon?", "cn": "今天的主題是什麼？" }
+    },
+    {
+      "id": 680,
+      "wk": 14,
+      "tl": "Makinig",
+      "zh": "聆聽",
+      "en": "To listen",
+      "reading": "馬基尼克",
+      "cat": "w11_15",
+      "hint": "馬基尼克≈馬基尼克耳朵動",
+      "ex": { "tl": "Kailangan kang makinig.", "cn": "你需要聆聽。" }
+    },
+    {
+      "id": 681,
+      "wk": 14,
+      "tl": "Matulog",
+      "zh": "睡覺",
+      "en": "To sleep",
+      "reading": "馬土洛克",
+      "cat": "w11_15",
+      "hint": "馬土洛克≈累了馬上土洛克（倒頭睡）",
+      "ex": { "tl": "Kailangan kang matulog.", "cn": "你需要睡覺。" }
+    },
+    {
+      "id": 682,
+      "wk": 14,
+      "tl": "Maupo",
+      "zh": "坐",
+      "en": "To sit",
+      "reading": "馬烏波",
+      "cat": "w11_15",
+      "hint": "馬烏波≈馬烏波（叫你坐下）",
+      "ex": { "tl": "Pwede kang maupo.", "cn": "你可以坐下。" }
+    },
+    {
+      "id": 683,
+      "wk": 14,
+      "tl": "Matakot",
+      "zh": "害怕",
+      "en": "To be afraid",
+      "reading": "馬塔高特",
+      "cat": "w11_15",
+      "hint": "馬塔高特≈塔高高的地方很害怕",
+      "ex": { "tl": "Huwag kang matakot.", "cn": "不要害怕。" }
+    },
+    {
+      "id": 684,
+      "wk": 14,
+      "tl": "Mahiya",
+      "zh": "害羞",
+      "en": "To be shy",
+      "reading": "馬黑亞",
+      "cat": "w11_15",
+      "hint": "馬黑亞≈黑亞黑亞臉紅了",
+      "ex": { "tl": "Huwag kang mahiya.", "cn": "不要害羞。" }
+    },
+    {
+      "id": 685,
+      "wk": 14,
+      "tl": "Mawala",
+      "zh": "遺失／消失",
+      "en": "To get lost / disappear",
+      "reading": "馬瓦拉",
+      "cat": "w11_15",
+      "hint": "馬瓦拉≈瓦拉拉不見了",
+      "ex": { "tl": "Huwag mawala ang iyong pananampalataya.", "cn": "不要讓你的信心消失。" }
+    },
+    {
+      "id": 686,
+      "wk": 14,
+      "tl": "Nakinig",
+      "zh": "聆聽了（過去式）",
+      "en": "Listened (past)",
+      "reading": "那基尼克",
+      "cat": "w11_15",
+      "hint": "ma→na 換第一個字母=過去式",
+      "ex": { "tl": "Nakinig siya ng mabuti.", "cn": "他聽得很好。" }
+    },
+    {
+      "id": 687,
+      "wk": 14,
+      "tl": "Nakikinig",
+      "zh": "正在聆聽（現在式）",
+      "en": "Listening (present)",
+      "reading": "那基基尼克",
+      "cat": "w11_15",
+      "hint": "na-+重複ki=nakikinig，正在進行",
+      "ex": { "tl": "Nakikinig siya ngayon.", "cn": "他現在正在聆聽。" }
+    },
+    {
+      "id": 688,
+      "wk": 14,
+      "tl": "Makikinig",
+      "zh": "將要聆聽（未來式）",
+      "en": "Will listen (future)",
+      "reading": "馬基基尼克",
+      "cat": "w11_15",
+      "hint": "ma-+重複ki=makikinig，將要",
+      "ex": { "tl": "Makikinig ka ba bukas?", "cn": "你明天會聆聽嗎？" }
+    },
+    {
+      "id": 689,
+      "wk": 14,
+      "tl": "Kasulatan",
+      "zh": "聖經經文",
+      "en": "Scripture / Bible passage",
+      "reading": "卡蘇拉坦",
+      "cat": "w11_15",
+      "hint": "kasulatan≈sulat（書寫），神聖的書",
+      "ex": { "tl": "Makinig sa kasulatan.", "cn": "聆聽聖經。" }
+    },
+    {
+      "id": 690,
+      "wk": 14,
+      "tl": "Radyo",
+      "zh": "廣播",
+      "en": "Radio",
+      "reading": "拉久歐",
+      "cat": "w11_15",
+      "hint": "拉久歐≈radio廣播拉久歐",
+      "ex": { "tl": "Nakinig siya sa radyo.", "cn": "他在聽廣播。" }
+    },
+    {
+      "id": 740,
+      "wk": 15,
+      "tl": "Bigyan",
+      "zh": "給（某人）",
+      "en": "To give (to someone)",
+      "reading": "比揚",
+      "cat": "w11_15",
+      "hint": "bigay+an=bigyan，給那個人",
+      "ex": { "tl": "Bigyan kita ng tract.", "cn": "給你傳道冊子。" }
+    },
+    {
+      "id": 741,
+      "wk": 15,
+      "tl": "Tulungan",
+      "zh": "幫助（某人）",
+      "en": "To help (someone)",
+      "reading": "土龍安",
+      "cat": "w11_15",
+      "hint": "tulong+an=tulungan，幫助那個人",
+      "ex": { "tl": "Tulungan kita.", "cn": "我來幫助你。" }
+    },
+    {
+      "id": 742,
+      "wk": 15,
+      "tl": "Hugasan",
+      "zh": "清洗（某處）",
+      "en": "To wash (something)",
+      "reading": "胡嘎桑",
+      "cat": "w11_15",
+      "hint": "hugas+an=hugasan，洗那個地方",
+      "ex": { "tl": "Hugasan mo ang mga pinggan.", "cn": "去洗碗。" }
+    },
+    {
+      "id": 743,
+      "wk": 15,
+      "tl": "Utusan",
+      "zh": "命令（某人）",
+      "en": "To order (someone)",
+      "reading": "烏土桑",
+      "cat": "w11_15",
+      "hint": "utos+an=utusan，命令那個人",
+      "ex": { "tl": "Huwag mong utusan ang iyong mga kaibigan.", "cn": "不要命令你的朋友。" }
+    },
+    {
+      "id": 744,
+      "wk": 15,
+      "tl": "Dalawin",
+      "zh": "探訪",
+      "en": "To visit",
+      "reading": "大拉溫",
+      "cat": "w11_15",
+      "hint": "大拉溫≈大拉溫去探訪",
+      "ex": { "tl": "Gusto ko siyang dalawin.", "cn": "我想去探訪他。" }
+    },
+    {
+      "id": 745,
+      "wk": 15,
+      "tl": "Basahan",
+      "zh": "讀給（某人）聽",
+      "en": "To read to (someone)",
+      "reading": "巴薩漢",
+      "cat": "w11_15",
+      "hint": "basa+han=basahan，讀給那個人聽",
+      "ex": { "tl": "Basahan kita ng Biblia.", "cn": "我讀聖經給你聽。" }
+    },
+    {
+      "id": 746,
+      "wk": 15,
+      "tl": "Binigyan",
+      "zh": "已給予（過去式）",
+      "en": "Was given (past)",
+      "reading": "比尼揚",
+      "cat": "w11_15",
+      "hint": "in-+bigyan=binigyan，已比揚過了",
+      "ex": { "tl": "Binigyan ko siya ng libro.", "cn": "我已給了他書。" }
+    },
+    {
+      "id": 747,
+      "wk": 15,
+      "tl": "Tinulungan",
+      "zh": "已幫助（過去式）",
+      "en": "Was helped (past)",
+      "reading": "替努龍安",
+      "cat": "w11_15",
+      "hint": "in-+tulungan=tinulungan，已替你幫了",
+      "ex": { "tl": "Tinulungan ko siya.", "cn": "我已幫助了他。" }
+    },
+    {
+      "id": 748,
+      "wk": 15,
+      "tl": "Tract",
+      "zh": "傳道小冊子",
+      "en": "Tract",
+      "reading": "特拉特",
+      "cat": "w11_15",
+      "hint": "特拉特≈tract傳道特別冊",
+      "ex": { "tl": "Bigyan kita ng tract.", "cn": "給你傳道冊子。" }
+    },
+    {
+      "id": 749,
+      "wk": 15,
+      "tl": "Dormitory",
+      "zh": "宿舍",
+      "en": "Dormitory",
+      "reading": "多米托利",
+      "cat": "w11_15",
+      "hint": "多米托利≈dormitory宿舍睡覺",
+      "ex": { "tl": "Nakatira siya sa dormitory.", "cn": "他住在宿舍。" }
+    },
+    {
+      "id": 750,
+      "wk": 15,
+      "tl": "Pampatibay-loob",
+      "zh": "鼓勵",
+      "en": "Encouragement",
+      "reading": "龐帕替拜洛歐",
+      "cat": "w11_15",
+      "hint": "loob=內心；tibay=堅固，加強內心力量",
+      "ex": { "tl": "Bigyan kita ng pampatibay-loob.", "cn": "我給你鼓勵。" }
+    },
+    {
+      "id": 751,
+      "wk": 15,
+      "tl": "Payo",
+      "zh": "建議／忠告",
+      "en": "Advice",
+      "reading": "帕優",
+      "cat": "w11_15",
+      "hint": "帕優≈帕優好建議優等",
+      "ex": { "tl": "Ibigay mo sa kanya ang iyong payo.", "cn": "把你的建議給他。" }
+    }
+  ],
+  "dialogues": [
+    {
+      "wk": 11,
+      "week_key": "w11",
+      "title": "W11 傳道對話 — 你需要什麼？",
+      "context": "傳道時遇到菲律賓朋友，練習用 Kailangan 表達需要，以及三詞比較（Kailangan/Gusto/Dapat）",
+      "lines": [
+        { "speaker": "A", "tl": "Hello! Kamusta ka?", "cn": "你好！你好嗎？" },
+        { "speaker": "B", "tl": "Mabuti naman, salamat. Ikaw?", "cn": "還好，謝謝。你呢？" },
+        { "speaker": "A", "tl": "Mabuti din. Ano ang kailangan mo ngayon?", "cn": "我也很好。你現在需要什麼？" },
+        { "speaker": "B", "tl": "Kailangan ko ng tulong sa buhay.", "cn": "我需要生活上的幫助。" },
+        { "speaker": "A", "tl": "Mayroon kaming libreng pag-aaral ng Biblia. Kailangan mo ba?", "cn": "我們有免費的聖經學習。你需要嗎？" },
+        { "speaker": "B", "tl": "Oo, kailangan ko nga. Salamat!", "cn": "是的，我確實需要。謝謝！" }
+      ]
+    },
+    {
+      "wk": 12,
+      "week_key": "w12",
+      "title": "W12 傳道對話 — 誰的書？幾點？",
+      "context": "傳道時練習用 Kanino 詢問所有，用 Kailan 和 Anong oras 詢問時間",
+      "lines": [
+        { "speaker": "A", "tl": "Hello! Mayroon kaming libreng pag-aaral ng Biblia.", "cn": "你好！我們有免費的聖經學習班。" },
+        { "speaker": "B", "tl": "Talaga? Para kanino ito?", "cn": "真的嗎？這是為了誰的？" },
+        { "speaker": "A", "tl": "Para sa lahat. Kailan ka available?", "cn": "為了所有人。你什麼時候有空？" },
+        { "speaker": "B", "tl": "Kailan ba ang klase?", "cn": "課是什麼時候？" },
+        { "speaker": "A", "tl": "Sa Sabado. Anong oras ka libre?", "cn": "在星期六。你幾點有空？" },
+        { "speaker": "B", "tl": "Sa umaga ako libre. Kanino ang magtuturo?", "cn": "早上我有空。誰來教？" },
+        { "speaker": "A", "tl": "Ako ang magtuturo. Puwede ka bang pumunta?", "cn": "我來教。你能來嗎？" },
+        { "speaker": "B", "tl": "Oo, puwede. Salamat!", "cn": "可以，我能來。謝謝！" }
+      ]
+    },
+    {
+      "wk": 13,
+      "week_key": "w13",
+      "title": "W13 傳道對話 — 免費聖經學習",
+      "context": "Michael 向 Willy 介紹免費聖經學習，練習 I-verb 用法（ituro/ibigay/ituturo）",
+      "lines": [
+        { "speaker": "B", "tl": "Excuse me, sino ka?", "cn": "不好意思，你是誰？" },
+        { "speaker": "A", "tl": "Ako si Michael. Nag-aalok kami ng libreng pag-aaral ng Biblia.", "cn": "我是 Michael。我們提供免費的聖經學習。" },
+        { "speaker": "B", "tl": "Libreng pag-aaral? Ano ang ituturo ninyo?", "cn": "免費學習？你們要教什麼？" },
+        { "speaker": "A", "tl": "Ituturo namin ang katotohanan mula sa Biblia. Ibigay ko sa iyo itong tract.", "cn": "我們將從聖經教導真理。我把這本傳道冊子給你。" },
+        { "speaker": "B", "tl": "Salamat. Kailan ang klase?", "cn": "謝謝。課是什麼時候？" },
+        { "speaker": "A", "tl": "Sa Sabado. Hindi kailanman mahirap matuto mula sa Biblia.", "cn": "在星期六。從聖經學習從不困難。" },
+        { "speaker": "B", "tl": "Okay, puwede ako. Ituturo mo rin ba sa akin ang Tagalog?", "cn": "好，我可以去。你也要教我他加祿語嗎？" },
+        { "speaker": "A", "tl": "Oo! Ituturo ko rin ang Tagalog sa iyo. Kaligayahan para sa atin.", "cn": "是！我也將教你他加祿語。這對我們都是喜樂。" }
+      ]
+    },
+    {
+      "wk": 15,
+      "week_key": "w15",
+      "title": "W14-15 傳道對話 — 給你冊子，一起讀",
+      "context": "Joel 遇見 Michael，給傳道冊子並讀經文，邀請聖經學習，練習 An-verb（bigyan/basahan/tulungan/dalawin）",
+      "lines": [
+        { "speaker": "A", "tl": "Hello! Kumusta ka, kaibigan?", "cn": "你好！朋友，你好嗎？" },
+        { "speaker": "B", "tl": "Mabuti naman. Ikaw?", "cn": "還好啊。你呢？" },
+        { "speaker": "A", "tl": "Mabuti din. Bigyan kita ng tract tungkol sa Biblia.", "cn": "我也很好。給你一本關於聖經的冊子。" },
+        { "speaker": "B", "tl": "Ano ito?", "cn": "這是什麼？" },
+        { "speaker": "A", "tl": "Ito ay tungkol sa katotohanan. Basahan kita ng isang talata.", "cn": "這是關於真理的。我讀一段經文給你聽。" },
+        { "speaker": "B", "tl": "Okay, makinig ako.", "cn": "好的，我來聽。" },
+        { "speaker": "A", "tl": "Tulungan kita na maunawaan. Gusto mo bang matuto ng higit pa?", "cn": "我幫助你理解。你想學更多嗎？" },
+        { "speaker": "B", "tl": "Oo! Dalawin mo ako sa Sabado.", "cn": "好！星期六來探訪我。" }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "wk": 11,
+      "keyword": "Kailangan",
+      "reading": "凱拉安",
+      "meaning": "需要 / 必須",
+      "mnemonic": "凱拉安≈你需要安慰，凱旋的拉安",
+      "formulas": [
+        "需要東西：Kailangan + 所有格 + ng + 東西",
+        "需要做事：Kailangan + 所有格 + ng + 動詞（口語常縮略：ko+ng=kong）",
+        "被需要：Kailangan + 主格代詞（Kailangan ako.）"
+      ],
+      "examples": [
+        { "tl": "Kailangan ko ng kape.", "cn": "我需要咖啡。" },
+        { "tl": "Kailangan kong kumain.", "cn": "我需要吃東西。" },
+        { "tl": "Kailangan kita.", "cn": "我需要你。" },
+        { "tl": "Kailangan namin ng tulong.", "cn": "我們需要幫助。" }
+      ],
+      "tip": "Kailangan=實際需要；Dapat=道義應該；Gusto=想要偏好。三個不一樣！",
+      "table": {
+        "headers": ["代詞", "Tagalog", "中文"],
+        "rows": [
+          ["我", "Kailangan ko", "我需要"],
+          ["你", "Kailangan mo", "你需要"],
+          ["他/她", "Kailangan niya", "他/她需要"],
+          ["我們（含你）", "Kailangan natin", "我們需要"],
+          ["我們（不含你）", "Kailangan namin", "我們需要"],
+          ["你們", "Kailangan ninyo", "你們需要"],
+          ["他們", "Kailangan nila", "他們需要"]
+        ]
+      }
+    },
+    {
+      "wk": 12,
+      "keyword": "Kanino",
+      "reading": "卡尼諾",
+      "meaning": "誰的 / 給誰 / 為誰",
+      "mnemonic": "卡尼諾≈問那個卡在尼諾（誰）手上",
+      "formulas": [
+        "問所有：Kanino + ang + 東西？（Kanino ang aklat?）",
+        "接名詞：Kaninong + 名詞？（Kaninong libro ito?）",
+        "在誰那裡：Na kanino + ang + 東西？",
+        "為了誰：Para kanino + ang + 東西？",
+        "各自誰的：Kani-kanino（複數形）"
+      ],
+      "examples": [
+        { "tl": "Kanino ang aklat?", "cn": "書是誰的？" },
+        { "tl": "Kaninong bag ito?", "cn": "這是誰的包包？" },
+        { "tl": "Para kanino ang regalo?", "cn": "禮物是為了誰的？" },
+        { "tl": "Na kanino ang susi?", "cn": "鑰匙在誰那裡？" }
+      ],
+      "tip": "Kanino=誰的（所有）；Sino=誰（問人身份）；Ano=什麼（問物品）"
+    },
+    {
+      "wk": 12,
+      "keyword": "Kailan",
+      "reading": "凱蘭",
+      "meaning": "何時",
+      "mnemonic": "凱蘭≈凱旋何時歸",
+      "formulas": [
+        "直接問時間：Kailan + ang + 事件？",
+        "問幾點：Anong oras + ang + 事件？",
+        "正當...時：Kung kailan + 子句",
+        "無論何時：Kahit kailan",
+        "永遠/從不：Kailanman（搭配否定 hindi）"
+      ],
+      "examples": [
+        { "tl": "Kailan ang asambleya?", "cn": "大會是何時？" },
+        { "tl": "Anong oras ang pagtitipon?", "cn": "聚會幾點？" },
+        { "tl": "Kahit kailan, nandito ako.", "cn": "無論何時，我都在這裡。" },
+        { "tl": "Hindi kailanman mababago ang katotohanan.", "cn": "真理永遠不會改變。" }
+      ],
+      "tip": "Anong oras 問幾點；Kailan 問哪天/哪週/哪月。別搞混！"
+    },
+    {
+      "wk": 13,
+      "keyword": "I-verb",
+      "reading": "伊動詞",
+      "meaning": "受詞焦點動詞，被移動的東西成為句子主角",
+      "mnemonic": "i- 開頭＝「伊」要把東西交出去的動詞",
+      "formulas": [
+        "不定式：i- + 詞根（ituro, ibigay, iuwi, ilagay）",
+        "過去式：i-in- 插入詞根前（itinuro, ibinigay）",
+        "現在式：i-in- + 重複首音節（itinuturo, ibinibigay）",
+        "未來式：i- + 重複首音節（ituturo, ibibigay）",
+        "注意：l/r/w/y 開頭詞根用 ini- 前綴（inilagay, inirehal）"
+      ],
+      "examples": [
+        { "tl": "Ituturo namin ang katotohanan.", "cn": "我們將教導真理。" },
+        { "tl": "Ibigay mo sa kanya ang libro.", "cn": "把書給他。" },
+        { "tl": "Itinuro niya ang Biblia.", "cn": "他已教導了聖經。" },
+        { "tl": "Itinuturo niya ang Tagalog.", "cn": "他正在教他加祿語。" }
+      ],
+      "tip": "I-verb 強調被移動的東西（直接受詞）；An-verb 強調接受者（人）"
+    },
+    {
+      "wk": 14,
+      "keyword": "Ma-verb",
+      "reading": "馬動詞",
+      "meaning": "感受狀態動詞，表達感受、身體狀態、自發動作",
+      "mnemonic": "ma- 開頭＝「馬上」感受到的狀態",
+      "formulas": [
+        "不定式：ma- + 詞根（makinig, matulog, maupo）",
+        "過去式：na- + 詞根（nakinig, natulog）—— ma 換成 na",
+        "現在式：na- + 重複首音節 + 詞根（nakikinig, natutulog）",
+        "未來式：ma- + 重複首音節 + 詞根（makikinig, matutulog）"
+      ],
+      "examples": [
+        { "tl": "Kailangan kang makinig.", "cn": "你需要聆聽。" },
+        { "tl": "Nakinig siya ng mabuti.", "cn": "他聽得很好。" },
+        { "tl": "Nakikinig kami ngayon.", "cn": "我們現在正在聽。" },
+        { "tl": "Makikinig ka ba bukas?", "cn": "你明天會聽嗎？" }
+      ],
+      "tip": "ma-→na- 是記憶關鍵！過去式就把 m 換成 n：makinig→nakinig",
+      "table": {
+        "headers": ["時態", "Makinig（聆聽）", "說明"],
+        "rows": [
+          ["不定式", "Makinig", "ma- + 詞根"],
+          ["過去式", "Nakinig", "na- + 詞根（m換n）"],
+          ["現在式", "Nakikinig", "na- + 重複 + 詞根"],
+          ["未來式", "Makikinig", "ma- + 重複 + 詞根"]
+        ]
+      }
+    },
+    {
+      "wk": 15,
+      "keyword": "An-verb",
+      "reading": "安動詞",
+      "meaning": "位置/受者焦點動詞，接受者或地點成為句子主角",
+      "mnemonic": "-an 結尾＝強調「安置在誰／在哪」",
+      "formulas": [
+        "不定式：詞根 + -an（bigyan, tulungan, hugasan）",
+        "元音結尾詞根加 -han（dalawin→dalawhan）",
+        "過去式：in- + 詞根 + -an（binigyan, tinulungan）",
+        "現在式：in- + 重複首音節 + -an（binibigyan, tinunutulungan）",
+        "未來式：重複首音節 + 詞根 + -an（bibigyan, tutulungan）"
+      ],
+      "examples": [
+        { "tl": "Bigyan kita ng tract.", "cn": "給你傳道冊子。" },
+        { "tl": "Tulungan kita.", "cn": "我來幫助你。" },
+        { "tl": "Binigyan ko siya ng libro.", "cn": "我給了他書。" },
+        { "tl": "Dalawin mo ako.", "cn": "來探訪我。" }
+      ],
+      "tip": "An-verb vs I-verb：An-verb 強調接受者（人成為主語），I-verb 強調被給的東西（物成為主語）"
+    }
+  ],
+  "exercises": [
+    {
+      "wk": 11,
+      "key": "w11_kailangan",
+      "label": "W11 Kailangan",
+      "items": [
+        {
+          "s": "「我需要咖啡」Tagalog？",
+          "b": "Kailangan ko ng kape.",
+          "h": "Kailangan + 所有格(ko) + ng + 東西",
+          "zh": "W11：需要東西",
+          "c": [
+            "Kailangan ako ng kape.",
+            "Kailangan ko ng kape.",
+            "Gusto ko ng kape.",
+            "Dapat ko ng kape."
+          ]
+        },
+        {
+          "s": "「我需要你」Tagalog？",
+          "b": "Kailangan kita.",
+          "h": "kita = ko + ikaw，不需要 ng",
+          "zh": "W11：需要某人（kita特殊形）",
+          "c": [
+            "Kailangan kita.",
+            "Kailangan ko ikaw.",
+            "Gusto kita.",
+            "Kailangan mo ako."
+          ]
+        },
+        {
+          "s": "「我需要吃」Tagalog？",
+          "b": "Kailangan kong kumain.",
+          "h": "ko + ng 縮略成 kong，後接動詞",
+          "zh": "W11：需要做動作",
+          "c": [
+            "Kailangan ko kumain.",
+            "Kailangan kong kumain.",
+            "Gusto kong kumain.",
+            "Dapat kumain ako."
+          ]
+        },
+        {
+          "s": "Kailangan、Dapat、Gusto 哪個表示「想要」？",
+          "b": "Gusto",
+          "h": "Gusto=想要偏好；Kailangan=必須；Dapat=應該",
+          "zh": "W11：三詞比較",
+          "c": [
+            "Kailangan",
+            "Dapat",
+            "Gusto",
+            "Upang"
+          ]
+        },
+        {
+          "s": "「我們需要聖靈」Tagalog？",
+          "b": "Kailangan natin ang banal na espiritu.",
+          "h": "natin=含對方的我們；banal na espiritu=聖靈",
+          "zh": "W11：Kailangan 複數（含聽者）",
+          "c": [
+            "Kailangan namin ang banal na espiritu.",
+            "Kailangan natin ang banal na espiritu.",
+            "Gusto natin ang banal na espiritu.",
+            "Dapat natin ang banal na espiritu."
+          ]
+        }
+      ]
+    },
+    {
+      "wk": 12,
+      "key": "w12_kanino_kailan",
+      "label": "W12 Kanino / Kailan",
+      "items": [
+        {
+          "s": "「書是誰的？」Tagalog？",
+          "b": "Kanino ang aklat?",
+          "h": "Kanino = 誰的（問所有）",
+          "zh": "W12：Kanino 問所有",
+          "c": [
+            "Sino ang aklat?",
+            "Kanino ang aklat?",
+            "Ano ang aklat?",
+            "Saan ang aklat?"
+          ]
+        },
+        {
+          "s": "「這是誰的包包？」Tagalog？",
+          "b": "Kaninong bag ito?",
+          "h": "Kaninong = Kanino + ng，後面直接接名詞",
+          "zh": "W12：Kaninong 接名詞",
+          "c": [
+            "Kanino ang bag ito?",
+            "Kaninong bag ito?",
+            "Para kanino ang bag ito?",
+            "Sino ang bag ito?"
+          ]
+        },
+        {
+          "s": "「大會是何時？」Tagalog？",
+          "b": "Kailan ang asambleya?",
+          "h": "Kailan = 何時（問日期/星期）",
+          "zh": "W12：Kailan 問時間",
+          "c": [
+            "Anong oras ang asambleya?",
+            "Kailan ang asambleya?",
+            "Saan ang asambleya?",
+            "Sino ang asambleya?"
+          ]
+        },
+        {
+          "s": "「聚會幾點？」用哪個詞開頭？",
+          "b": "Anong oras",
+          "h": "問幾點用 Anong oras；問哪天用 Kailan",
+          "zh": "W12：Anong oras vs Kailan 分辨",
+          "c": [
+            "Kailan",
+            "Anong oras",
+            "Kung kailan",
+            "Kailanman"
+          ]
+        },
+        {
+          "s": "「禮物是為了誰的？」Tagalog？",
+          "b": "Para kanino ang regalo?",
+          "h": "Para kanino = 為了誰",
+          "zh": "W12：Para kanino 為了誰",
+          "c": [
+            "Kanino ang regalo?",
+            "Para kanino ang regalo?",
+            "Na kanino ang regalo?",
+            "Kaninong regalo ito?"
+          ]
+        }
+      ]
+    },
+    {
+      "wk": 13,
+      "key": "w13_i_verb",
+      "label": "W13 I-Verb",
+      "items": [
+        {
+          "s": "「我將教你聖經」Tagalog？",
+          "b": "Ituturo ko sa iyo ang Biblia.",
+          "h": "未來式：i- + 重複首音節 = itu-turo",
+          "zh": "W13：I-verb 未來式",
+          "c": [
+            "Turuin ko ang Biblia sa iyo.",
+            "Ituturo ko sa iyo ang Biblia.",
+            "Itinuturo ko sa iyo ang Biblia.",
+            "Itinuro ko sa iyo ang Biblia."
+          ]
+        },
+        {
+          "s": "「他已教導了真理」Tagalog？",
+          "b": "Itinuro niya ang katotohanan.",
+          "h": "過去式：i-in- 插入詞根前 = itin-uro",
+          "zh": "W13：I-verb 過去式",
+          "c": [
+            "Itinuro niya ang katotohanan.",
+            "Ituturo niya ang katotohanan.",
+            "Itinuturo niya ang katotohanan.",
+            "Ituro niya ang katotohanan."
+          ]
+        },
+        {
+          "s": "「把書給他」Tagalog？",
+          "b": "Ibigay mo sa kanya ang libro.",
+          "h": "Ibigay = i-verb 不定式；命令句直接用",
+          "zh": "W13：I-verb 命令句",
+          "c": [
+            "Bigyan mo siya ng libro.",
+            "Ibigay mo sa kanya ang libro.",
+            "Ibinigay mo sa kanya ang libro.",
+            "Ibibigay mo sa kanya ang libro."
+          ]
+        },
+        {
+          "s": "I-verb 讓句子中哪個元素成為主語？",
+          "b": "被移動的東西（直接受詞）",
+          "h": "i-verb 強調被給/移動的東西，an-verb 強調接受者",
+          "zh": "W13：I-verb 概念理解",
+          "c": [
+            "做動作的人",
+            "被移動的東西（直接受詞）",
+            "動作發生的地點",
+            "動作的接受者（人）"
+          ]
+        }
+      ]
+    },
+    {
+      "wk": 14,
+      "key": "w14_ma_verb",
+      "label": "W14 Ma-Verb",
+      "items": [
+        {
+          "s": "「他昨天聆聽了」Tagalog？",
+          "b": "Nakinig siya kahapon.",
+          "h": "Ma-verb 過去式：ma- → na-（m 換 n）",
+          "zh": "W14：Ma-verb 過去式",
+          "c": [
+            "Makinig siya kahapon.",
+            "Nakinig siya kahapon.",
+            "Nakikinig siya kahapon.",
+            "Makikinig siya kahapon."
+          ]
+        },
+        {
+          "s": "「他現在正在聆聽」Tagalog？",
+          "b": "Nakikinig siya ngayon.",
+          "h": "現在式：na- + 重複首音節（na-ki-kinig）",
+          "zh": "W14：Ma-verb 現在式",
+          "c": [
+            "Nakinig siya ngayon.",
+            "Nakikinig siya ngayon.",
+            "Makikinig siya ngayon.",
+            "Makinig siya ngayon."
+          ]
+        },
+        {
+          "s": "「你需要睡覺」Tagalog？",
+          "b": "Kailangan kang matulog.",
+          "h": "ka + ng = kang；matulog 是不定式",
+          "zh": "W14：Ma-verb 不定式 + Kailangan",
+          "c": [
+            "Kailangan kang natulog.",
+            "Kailangan kang matulog.",
+            "Kailangan mo matulog.",
+            "Gusto kang matulog."
+          ]
+        },
+        {
+          "s": "Makinig 的過去式是什麼？",
+          "b": "Nakinig",
+          "h": "規則：ma- 開頭換成 na- = 過去式",
+          "zh": "W14：ma→na 規則",
+          "c": [
+            "Minakinig",
+            "Nakinig",
+            "Inakinig",
+            "Makinigan"
+          ]
+        },
+        {
+          "s": "「不要害怕」Tagalog？",
+          "b": "Huwag kang matakot.",
+          "h": "Huwag = 不要；kang = ka + ng；matakot = 害怕",
+          "zh": "W14：Ma-verb 否定命令",
+          "c": [
+            "Huwag kang natakot.",
+            "Huwag kang matakot.",
+            "Hindi kang matakot.",
+            "Ayaw kang matakot."
+          ]
+        }
+      ]
+    },
+    {
+      "wk": 15,
+      "key": "w15_an_verb",
+      "label": "W15 An-Verb",
+      "items": [
+        {
+          "s": "「給你傳道冊子」Tagalog？",
+          "b": "Bigyan kita ng tract.",
+          "h": "Bigyan = bigay + -an（強調接受者 kita）",
+          "zh": "W15：An-verb 受者焦點",
+          "c": [
+            "Ibigay kita ng tract.",
+            "Bigyan kita ng tract.",
+            "Binigyan kita ng tract.",
+            "Ibigay ko sa iyo ng tract."
+          ]
+        },
+        {
+          "s": "「我來幫助你」Tagalog？",
+          "b": "Tulungan kita.",
+          "h": "Tulungan = tulong + -an（幫助某人）",
+          "zh": "W15：Tulungan",
+          "c": [
+            "Tulungan kita.",
+            "Itulungan kita.",
+            "Tulong kita.",
+            "Tinulungan kita."
+          ]
+        },
+        {
+          "s": "「我給了他書」（過去式）Tagalog？",
+          "b": "Binigyan ko siya ng libro.",
+          "h": "過去式：in- + bigyan = binigyan",
+          "zh": "W15：An-verb 過去式",
+          "c": [
+            "Bigyan ko siya ng libro.",
+            "Binigyan ko siya ng libro.",
+            "Ibinigay ko siya ng libro.",
+            "Bibigyan ko siya ng libro."
+          ]
+        },
+        {
+          "s": "「星期六來探訪我」Tagalog？",
+          "b": "Dalawin mo ako sa Sabado.",
+          "h": "Dalawin = an-verb（dala + -win），探訪某人",
+          "zh": "W15：Dalawin 探訪",
+          "c": [
+            "Dalawhan mo ako sa Sabado.",
+            "Dalawin mo ako sa Sabado.",
+            "Idalawin mo ako sa Sabado.",
+            "Dalawi mo ako sa Sabado."
+          ]
+        },
+        {
+          "s": "An-verb 讓句子中哪個元素成為主語？",
+          "b": "動作的接受者（人）",
+          "h": "an-verb 強調「給誰/在誰身上」，接受者成主語",
+          "zh": "W15：An-verb 概念理解",
+          "c": [
+            "被移動的東西",
+            "動作的接受者（人）",
+            "做動作的人",
+            "動作發生的時間"
+          ]
+        }
+      ]
+    }
+  ]
+}

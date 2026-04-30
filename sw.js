@@ -1,4 +1,4 @@
-const CACHE = 'tagalog-v1';
+const CACHE = 'tagalog-v2';
 const ASSETS = [
   './',
   './index.html',
